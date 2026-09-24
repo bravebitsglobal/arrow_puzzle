@@ -1,0 +1,20 @@
+I. Mô tả	
+- Màn chơi gồm 1 lưới ô vuông, trên đó có nhiều mũi tên dài	
+- Mỗi mũi tên gồm: thân đi qua 1 hoặc nhiều ô + đầu mũi chỉ hướng ra biên lưới	
+- Thân mũi tên là vật cản: nếu nằm trên đường đi của mũi khác → mũi đó bị chặn	
+- Người chơi tìm mũi tên có đường ra hoàn toàn trống → bấm vào vị trí mũi tên (thân hoặc đầu) → mũi tên đó di chuyển ra biên rồi biến mất	
+- Lặp lại cho đến khi hết mũi tên → hoàn thành màn chơi	
+	
+II. Quy tắc	
+	
+Thành phần game	Mô tả
+Lưới chơi	Lưới ô vuông N×M, mỗi mũi tên là 1 đường đi qua 1 hoặc nhiều ô lưới
+Hướng mũi tên	4 hướng: ⬆️ Lên, ⬇️ Xuống, ⬅️ Trái, ➡️ Phải
+Thân mũi tên	Độ dài thân mũi tên = tổng số ô nó đi qua = vật cản chặn các mũi tên khác. Thân mũi tên có các đường: Thẳng, L, U, S, Zic Zắc và không được giao cắt chính nó
+Độ dài mũi tên	2-12 ô lưới, phụ thuộc level design
+Góc rẽ mũi tên	Chỉ có góc rẽ 90 độ, không có góc rẽ chéo ô lưới
+Không chồng thân	Không có trường hợp 2 mũi tên/ thân mũi tên cùng chung 1 ô lưới
+Màu mũi tên	Những mũi tên có màu sắc khác màu đen thông thường sẽ mang kèm tính năng đặc biệt
+Quy tắc ra đi	Mũi tên chỉ có thể bay ra khi toàn bộ đường đi đến biên lưới trống hoàn toàn
+Va chạm	Bấm mũi tên bị chặn → mất 1 mạng (mặc định 3 mạng/màn), khi mất mạng không thay đổi trạng thái màn chơi
+Mục tiêu	Loại bỏ toàn bộ mũi tên khỏi lưới

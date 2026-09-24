@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://b5tidnylue4h5"]
+
+[ext_resource type="Script" uid="uid://b2lsawcng18fs" path="res://scene/game.gd" id="1_5kiuu"]
+[ext_resource type="PackedScene" uid="uid://08iwkk13f8v1" path="res://arrow/arrow.tscn" id="2_33cqm"]
+[ext_resource type="Script" uid="uid://dxame55jjjn2k" path="res://helper/camera_controller.gd" id="3_cam"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d2qln"]
+
+[sub_resource type="Gradient" id="Gradient_xwcet"]
+colors = PackedColorArray(0.012617188, 0.012617188, 0.012617188, 1, 1, 1, 1, 1)
+
+[node name="Game" type="Node2D" unique_id=552907864]
+script = ExtResource("1_5kiuu")
+arrow_scene = ExtResource("2_33cqm")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=522349686]
+visible = false
+texture_repeat = 2
+material = SubResource("CanvasItemMaterial_d2qln")
+points = PackedVector2Array(545, 345, 50, 307, 146, 67.675, 476, 188, 657, 226, 637, 142, 342, 20)
+width = 100.0
+gradient = SubResource("Gradient_xwcet")
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="LineContainer" type="Node2D" parent="." unique_id=1856850075]
+position = Vector2(-2500, -2500)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=733687426]
+script = ExtResource("3_cam")

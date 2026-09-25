@@ -29,12 +29,10 @@ position = Vector2(-2500, -2500)
 
 [node name="PanelGame" type="Panel" parent="UI" unique_id=718461675]
 self_modulate = Color(0.3953672, 0.39536718, 0.39536715, 1)
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -916.0
+offset_bottom = 80.0
 grow_horizontal = 2
-grow_vertical = 2
 theme = ExtResource("5_p1ry8")
 
 [node name="LabelLive" type="Label" parent="UI/PanelGame" unique_id=222997159]

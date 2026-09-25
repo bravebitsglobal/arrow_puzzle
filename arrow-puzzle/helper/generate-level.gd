@@ -1,21 +1,11 @@
 class_name LevelGenerator
 extends RefCounted
-## Thuật toán sinh level (viết lại, không theo logic gốc).
-##
-## Đầu vào: mảng các ô có thể đặt (index 1 chiều = y * grid_width + x) + độ khó.
-## Đầu ra: Array các Dictionary {"cells": PackedInt32Array (đuôi -> đầu nhọn),
-##   "exit_dir": Dir}. Thứ tự mảng = thứ tự đặt; thứ tự giải = đảo ngược
-##   (mũi đặt sau cùng là mũi mở đầu khi chơi).
-##
-## Mục tiêu:
-## - Tỉ lệ fill > 90% số ô usable (mặc định target 1.0, chấp nhận >= 0.9).
-## - Độ khó càng cao, các mũi tên càng chặn lẫn nhau -> càng ít nước đi mở
-##   cùng lúc (EASY >= 3 mở, MEDIUM 2-4 mở, HARD đúng 1 mở).
-## - Map kết quả LUÔN giải được (đảm bảo bằng xây dựng ngược + verify mô phỏng).
-##
-## Cách dùng:
-##   var gen := LevelGenerator.new()
-##   var arrows: Array = gen.generate_level(usable_cells, LevelGenerator.Difficulty.HARD)
+## Luong moi:
+## B1: n mui huong ra ngoai (tia thoang).
+## B2: voi moi mui cha, tao mui con co tia thoat di qua than cha
+##     (con phu thuoc cha -> giai cha truoc, con sau). Lap BFS den khi khong con cho.
+## B3: ra soat o trong: 2 o ke nhau -> 1 mui, 1 o le -> bo qua.
+## B4: kiem tra loi giai bang mo phong thao lan luot.
 
 enum Difficulty { EASY, MEDIUM, HARD }
 
@@ -28,56 +18,45 @@ const DIR_VECTORS := {
 	Dir.RIGHT: Vector2i(1, 0),
 }
 
-# Kích thước lưới tổng (100x100, có biến config).
 var grid_width: int = 100
 var grid_height: int = 100
 
 var difficulty: Difficulty = Difficulty.MEDIUM
 var min_arrow_length: int = 2
 var max_arrow_length: int = 12
-# Số bước đi thẳng đầu tiên (đi ngược hướng ra, vào trong lưới).
 var first_straight_min: int = 1
 var first_straight_max: int = 3
-# Số lần thử tạo lại cả bàn.
-var max_board_restarts: int = 120
-# Fill: chấp nhận bàn khi coverage >= fill_min_ratio (yêu cầu > 90%).
+var max_board_restarts: int = 200
+var max_generate_ms: int = 3000
 var fill_min_ratio: float = 0.9
 var fill_target_ratio: float = 1.0
 var fill_max_arrows: int = 300
-# Số mẫu ứng viên thử cho mỗi lần đặt (chọn mẫu chặn tốt nhất).
-var placement_samples: int = 6
-# Số vòng đặt liên tiếp không tiến triển thì dừng vòng đặt chính.
-var max_stall_rounds: int = 60
+var placement_samples: int = 12
+var max_stall_rounds: int = 40
+var max_build_tries: int = 4
 
 var _rng := RandomNumberGenerator.new()
 var _seed_value: int = 0
 var _has_seed: bool = false
 
-
 func set_seed(value: int) -> void:
 	_seed_value = value
 	_has_seed = true
 
-
 func grid_size() -> int:
 	return grid_width * grid_height
-
 
 func is_inside_grid(cell: int) -> bool:
 	return cell >= 0 and cell < grid_size()
 
-
 func to_xy(cell: int) -> Vector2i:
 	return Vector2i(cell % grid_width, cell / grid_width)
-
 
 func to_index(pos: Vector2i) -> int:
 	return pos.y * grid_width + pos.x
 
-
 func is_inside_pos(pos: Vector2i) -> bool:
 	return pos.x >= 0 and pos.y >= 0 and pos.x < grid_width and pos.y < grid_height
-
 
 static func opposite_dir(dir: Dir) -> Dir:
 	match dir:
@@ -89,7 +68,6 @@ static func opposite_dir(dir: Dir) -> Dir:
 			return Dir.RIGHT
 	return Dir.LEFT
 
-
 static func turn_left(dir: Dir) -> Dir:
 	match dir:
 		Dir.UP:
@@ -99,7 +77,6 @@ static func turn_left(dir: Dir) -> Dir:
 		Dir.LEFT:
 			return Dir.DOWN
 	return Dir.UP
-
 
 static func turn_right(dir: Dir) -> Dir:
 	match dir:
@@ -111,24 +88,36 @@ static func turn_right(dir: Dir) -> Dir:
 			return Dir.UP
 	return Dir.DOWN
 
+func _dir_between(from_cell: int, to_cell: int) -> int:
+	var a: Vector2i = to_xy(from_cell)
+	var b: Vector2i = to_xy(to_cell)
+	var d: Vector2i = b - a
+	if d == Vector2i(0, -1):
+		return Dir.UP
+	if d == Vector2i(0, 1):
+		return Dir.DOWN
+	if d == Vector2i(-1, 0):
+		return Dir.LEFT
+	if d == Vector2i(1, 0):
+		return Dir.RIGHT
+	return -1
 
-## Tham số theo độ khó:
-## blocking_bias = xác suất ưu tiên mẫu thân chặn mũi đang mở (càng cao càng ít lối mở).
-## free_min/free_max = số mũi mở cho phép trên bàn đầy.
-## turn_chance = tỉ lệ rẽ khi mọc thân.
+func _exit_matches_body(body: PackedInt32Array, exit_dir: int) -> bool:
+	if body.size() < 2:
+		return false
+	var tail_dir: int = _dir_between(body[body.size() - 2], body[body.size() - 1])
+	return tail_dir == exit_dir
+
+## Tham so theo do kho n: n = so mui huong ra ngoai ban dau.
 func _params_for(diff: int) -> Dictionary:
 	match diff:
 		Difficulty.EASY:
-			return {"blocking_bias": 0.15, "free_min": 3, "free_max": 99, "turn_chance": 0.35, "fs_min": 1, "fs_max": 2, "interior": false}
+			return {"n": 3, "turn_chance": 0.30, "fs_min": 1, "fs_max": 2}
 		Difficulty.HARD:
-			return {"blocking_bias": 0.90, "free_min": 1, "free_max": 1, "turn_chance": 0.55, "fs_min": 2, "fs_max": 4, "interior": true}
-	return {"blocking_bias": 0.55, "free_min": 2, "free_max": 4, "turn_chance": 0.50, "fs_min": 1, "fs_max": 3, "interior": false}
+			return {"n": 1, "turn_chance": 0.50, "fs_min": 1, "fs_max": 3}
+	return {"n": 2, "turn_chance": 0.40, "fs_min": 1, "fs_max": 3}
 
-
-## Hàm sinh level chính.
-## @param usable_cells: mảng index các ô dùng để generate (Array hoặc PackedInt32Array).
-## @param p_diff: độ khó (EASY/MEDIUM/HARD), -1 = dùng member `difficulty`.
-## @return: Array các {"cells","exit_dir"} phủ > 90% và giải được; [] nếu thất bại.
+## Ham sinh level chinh.
 func generate_level(usable_cells: Array, p_diff: int = -1) -> Array:
 	if _has_seed:
 		_rng.seed = _seed_value
@@ -144,192 +133,242 @@ func generate_level(usable_cells: Array, p_diff: int = -1) -> Array:
 		if is_inside_grid(idx):
 			usable_set[idx] = true
 	if usable_set.is_empty():
-		push_error("LevelGenerator: usable_cells rỗng.")
+		push_error("LevelGenerator: usable_cells rong.")
 		return []
 
 	var total: int = usable_set.size()
+	var t0: int = Time.get_ticks_msec()
+	var best_board: Array = []
+	var best_ratio: float = -1.0
+
 	for _restart in range(max_board_restarts):
-		# 1) Đặt ngược có chủ đích chặn nhau.
-		var placed: Array = _place_board(usable_set, params, total)
-		if placed.is_empty():
+		if Time.get_ticks_msec() - t0 > max_generate_ms:
+			break
+
+		var board: Array = _build_board(usable_set, params, total)
+		if board.is_empty():
 			continue
-		# 2) Quét lấp đầy tới target.
-		var filled: Array = _fill_to_target(placed, usable_set, total, bool(params.get("interior", false)))
-		if filled.is_empty():
-			continue
-		# 3) Thứ tự giải = đảo ngược thứ tự đặt.
-		var solve_order: Array = []
-		for i in range(filled.size() - 1, -1, -1):
-			solve_order.append(filled[i])
-		# 4) Bắt buộc: giải được + fill > 90%.
+
+		# board da xu ly 2-o ke nhau ben trong _try_build_once,
+		# nhung van goi them de an toan cho truong hop le
+		_collect_isolated_cells(board, usable_set)
+		_fill_gaps(board, usable_set)
+
+		# Thu tu giai tu nhien la thu tu dat (cha truoc con sau) vi con bi cha chan.
+		# verify_solution tu tim mui thoang nen thu tu truyen vao khong quan trong,
+		# nhung de nhat quan ta truyen dung thu tu dat.
+		var solve_order: Array = board.duplicate()
+
+		var ratio: float = float(_coverage_of(solve_order)) / float(total) if total > 0 else 0.0
+		if ratio > best_ratio:
+			best_ratio = ratio
+			best_board = solve_order
+
 		if not verify_solution(solve_order):
 			continue
 		if not _meets_fill_ratio(solve_order, total, fill_min_ratio):
 			continue
-		# 5) Band độ khó (nới): EASY yêu cầu nhiều lối mở, MEDIUM/HARD chấp nhận mọi bàn giải được
-		# bias khi đặt đã tạo phụ thuộc nhiều hơn ở khó cao.
-		if diff == Difficulty.EASY:
-			var free_count: int = _count_free_arrows(solve_order)
-			var free_min: int = params["free_min"]
-			var free_max: int = params["free_max"]
-			if free_count < free_min or free_count > free_max:
-				continue
+
 		return solve_order
 
-	push_error("LevelGenerator: không sinh được bàn hợp lệ sau %d lần thử." % max_board_restarts)
+	if not best_board.is_empty() and verify_solution(best_board):
+		push_warning("LevelGenerator: dung board tot nhat fill %.1f%%." % (best_ratio * 100))
+		return best_board
+
+	push_error("LevelGenerator: khong sinh duoc ban hop le sau %d lan thu." % max_board_restarts)
 	return []
 
-
-## Mô phỏng giải: bấm từng mũi theo thứ tự, mỗi mũi lúc bấm phải có đường ra trống.
-func verify_solution(arrows_in_solve_order: Array) -> bool:
-	var occupied := {}
-	for arrow in arrows_in_solve_order:
-		var cells: PackedInt32Array = arrow["cells"]
-		if cells.size() < 2:
-			return false
-		if _body_self_crosses_ray(cells, arrow["exit_dir"]):
-			return false
-		for c in cells:
-			if occupied.has(c):
-				return false
-			occupied[c] = true
-	for arrow in arrows_in_solve_order:
-		var cells: PackedInt32Array = arrow["cells"]
-		var head: int = cells[cells.size() - 1]
-		var ex: Dir = arrow["exit_dir"]
-		if not _is_exit_clear(head, ex, occupied):
-			return false
-		for c in cells:
-			occupied.erase(c)
-	return occupied.is_empty()
-
-
-func coverage_ratio(arrows_in_solve_order: Array, usable_cells: Array) -> float:
-	if usable_cells.is_empty():
-		return 0.0
-	var cov: int = 0
-	for arrow in arrows_in_solve_order:
-		var cells: PackedInt32Array = arrow["cells"]
-		cov += cells.size()
-	return float(cov) / float(usable_cells.size())
-
-
-func _meets_fill_ratio(solve_order: Array, total: int, ratio: float) -> bool:
-	if total <= 0:
-		return true
-	var cov: int = 0
-	for arrow in solve_order:
-		var cells: PackedInt32Array = arrow["cells"]
-		cov += cells.size()
-	return float(cov) / float(total) >= ratio
-
-
-# ----------------------------------------------------------------
-# Giai đoạn 1: đặt ngược có chủ đích chặn nhau
-# ----------------------------------------------------------------
-
-## Đặt các mũi theo thứ tự đặt (placement order). Mỗi mũi mới có đường ra
-## trống tại thời điểm đặt -> thứ tự giải đảo ngược luôn giải được.
-## Ưu tiên thân đi qua tia ra của các mũi đang mở (tạo phụ thuộc, khó dần).
-func _place_board(usable_set: Dictionary, params: Dictionary, total: int) -> Array:
-	var occupied := {}
-	var placed: Array = []
-	var turn_chance: float = params["turn_chance"]
-	var blocking_bias: float = params["blocking_bias"]
-	var allow_interior: bool = bool(params.get("interior", false))
+## Xay dung ban theo luong moi
+func _build_board(usable_set: Dictionary, params: Dictionary, total: int) -> Array:
+	var n: int = int(params.get("n", 2))
+	var turn_chance: float = float(params.get("turn_chance", 0.4))
 	if params.has("fs_min"):
 		first_straight_min = int(params["fs_min"])
 		first_straight_max = int(params["fs_max"])
-	var stall: int = 0
-	while placed.size() < fill_max_arrows:
-		var cov: int = _coverage_of(placed)
-		if float(cov) / float(total) >= fill_target_ratio:
+
+	var best: Array = []
+	var best_cov: int = -1
+	for _try in range(max_build_tries):
+		var attempt: Array = _try_build_once(usable_set, params, n, turn_chance, total)
+		var cov: int = _coverage_of(attempt)
+		if cov > best_cov:
+			best_cov = cov
+			best = attempt
+		if cov >= total or cov >= int(ceil(float(total) * fill_target_ratio)):
+			return attempt
+	return best
+
+func _try_build_once(usable_set: Dictionary, params: Dictionary, n: int, turn_chance: float, total: int) -> Array:
+	var placed: Array = []
+	var occupied := {}
+
+	# --- Buoc 1: n mui huong ra ngoai ---
+	for _i in range(n):
+		if _coverage_of(placed) >= total:
 			break
-		var candidates: Array = _candidates_with_clear_ray(usable_set, occupied, allow_interior)
+		var arrow: Dictionary = _pick_outward(usable_set, occupied, turn_chance)
+		if arrow.is_empty():
+			break
+		var cells: PackedInt32Array = arrow["cells"]
+		for c in cells:
+			occupied[c] = true
+		placed.append(arrow)
+
+	# --- Buoc 2: mo rong BFS - con phu thuoc cha (tia con di qua than cha) ---
+	var queue: Array = []
+	for a in placed:
+		queue.append(a)
+	var q_idx: int = 0
+	var stall: int = 0
+	while _coverage_of(placed) < total and placed.size() < fill_max_arrows:
+		if q_idx >= queue.size():
+			stall += 1
+			if stall >= 2:
+				break
+			queue.shuffle()
+			q_idx = 0
+			continue
+		var parent: Dictionary = queue[q_idx]
+		q_idx += 1
+		var child: Dictionary = _pick_child_blocking(parent, placed, usable_set, occupied, turn_chance)
+		if child.is_empty():
+			continue
+		stall = 0
+		var ccells: PackedInt32Array = child["cells"]
+		for c in ccells:
+			occupied[c] = true
+		placed.append(child)
+		queue.append(child)
+
+	# --- Buoc 2b: fallback fill tu do neu BFS khong du ---
+	stall = 0
+	while _coverage_of(placed) < total and placed.size() < fill_max_arrows:
+		var candidates: Array = _candidates_with_clear_ray(usable_set, occupied)
 		if candidates.is_empty():
 			break
-		var chosen: Dictionary = _sample_best_candidate(candidates, placed, usable_set, occupied, turn_chance, blocking_bias)
-		if chosen.is_empty():
+		var arrow2: Dictionary = _pick_best(candidates, placed, usable_set, occupied, turn_chance, false)
+		if arrow2.is_empty():
 			stall += 1
 			if stall >= max_stall_rounds:
 				break
 			continue
 		stall = 0
-		var ccells: PackedInt32Array = chosen["cells"]
-		for c in ccells:
+		var acells: PackedInt32Array = arrow2["cells"]
+		for c in acells:
 			occupied[c] = true
-		placed.append(chosen)
+		placed.append(arrow2)
+
+	# --- Buoc 3: xu ly o trong con lai ---
+	_handle_leftovers(placed, usable_set)
+
 	return placed
 
+## Buoc 1: chon 1 mui huong ra ngoai (tia thoang)
+func _pick_outward(usable_set: Dictionary, occupied: Dictionary, turn_chance: float) -> Dictionary:
+	var cells_list: Array = usable_set.keys()
+	cells_list.shuffle()
+	var tries: int = mini(placement_samples * 2, cells_list.size())
+	for i in range(tries):
+		var head: int = cells_list[i]
+		if occupied.has(head):
+			continue
+		for dir in [Dir.UP, Dir.DOWN, Dir.LEFT, Dir.RIGHT]:
+			if not _is_exit_clear(head, dir, occupied):
+				continue
+			if _hits_another_usable_on_ray(head, dir, occupied, usable_set):
+				continue
+			var body: PackedInt32Array = _grow_body(head, dir, usable_set, occupied, turn_chance)
+			if body.size() < min_arrow_length:
+				continue
+			if not _exit_matches_body(body, dir):
+				continue
+			if _body_self_crosses_ray(body, dir):
+				continue
+			return {"cells": body, "exit_dir": dir}
+	var candidates: Array = _candidates_with_clear_ray(usable_set, occupied)
+	if candidates.is_empty():
+		return {}
+	return _pick_best(candidates, [], usable_set, occupied, turn_chance, false)
 
-func _coverage_of(placed: Array) -> int:
-	var cov: int = 0
-	for arrow in placed:
-		var cells: PackedInt32Array = arrow["cells"]
-		cov += cells.size()
-	return cov
+## Tia tu head theo dir co di qua o usable trong nao khong?
+func _hits_another_usable_on_ray(head: int, exit_dir: Dir, occupied: Dictionary, usable_set: Dictionary) -> bool:
+	var step: Vector2i = DIR_VECTORS[exit_dir]
+	var pos: Vector2i = to_xy(head) + step
+	while is_inside_pos(pos):
+		var idx: int = to_index(pos)
+		if usable_set.has(idx):
+			return true
+		pos += step
+	return false
 
+## Buoc 2: chon 1 mui con co tia thoat di qua than cha
+## Con bi cha chan -> cha phai thoat truoc con moi thoat duoc.
+func _pick_child_blocking(parent: Dictionary, placed: Array, usable_set: Dictionary, occupied: Dictionary, turn_chance: float) -> Dictionary:
+	var pcells: PackedInt32Array = parent["cells"]
+	var parent_set := {}
+	for c in pcells:
+		parent_set[c] = true
 
-## Ứng viên đầu mũi: ô biên trống (kề ra ngoài usable) và tia ra trống.
-## EASY: chỉ biên (giữ fill 100% ổn định). MEDIUM/HARD: thêm ô trong (tia xuyên qua nhiều ô usable -> tạo dependency thực thụ).
-## Mỗi phần tử: [head_cell, exit_dir].
-func _border_candidates_with_clear_ray(usable_set: Dictionary, occupied: Dictionary) -> Array:
-	return _candidates_with_clear_ray(usable_set, occupied, false)
-
-
-func _candidates_with_clear_ray(usable_set: Dictionary, occupied: Dictionary, allow_interior: bool) -> Array:
-	var border: Array = []
-	var interior: Array = []
+	# Liet ke toan bo (head, dir) thoa: tia head->dir di qua than cha va chua bi occupied chan truoc
+	var cands: Array = []
 	for cell in usable_set.keys():
 		if occupied.has(cell):
 			continue
-		var pos: Vector2i = to_xy(cell)
 		for dir in [Dir.UP, Dir.DOWN, Dir.LEFT, Dir.RIGHT]:
-			var step: Vector2i = DIR_VECTORS[dir]
-			var ray_has_usable: bool = false
-			var pp: Vector2i = pos + step
-			while is_inside_pos(pp):
-				var idx2: int = to_index(pp)
-				if usable_set.has(idx2):
-					ray_has_usable = true
-					break
-				pp += step
-			var nxt: Vector2i = pos + step
-			var is_border: bool = not is_inside_pos(nxt) or not usable_set.has(to_index(nxt))
-			if not allow_interior and not is_border:
+			if not _ray_hits_set(cell, dir, parent_set):
 				continue
-			if not _is_exit_clear(cell, dir, occupied):
+			if _ray_blocked_before_hit(cell, dir, parent_set, occupied):
 				continue
-			if not allow_interior:
-				border.append([cell, dir])
-			elif is_border:
-				border.append([cell, dir])
-			else:
-				# Ô trong: chỉ nhận nếu ray đi qua ít nhất 1 ô usable (có thể tạo dependency)
-				if ray_has_usable:
-					interior.append([cell, dir])
-	if not allow_interior:
-		return border
-	if interior.is_empty():
-		return border
-	if border.is_empty():
-		return interior
-	var cap: int = mini(interior.size(), maxi(3, border.size() / 5))
-	interior.shuffle()
-	var picked: Array = interior.slice(0, cap)
-	var out: Array = []
-	out.append_array(border)
-	out.append_array(picked)
-	return out
+			cands.append([cell, dir])
+	if cands.is_empty():
+		return {}
+	cands.shuffle()
+	# Thu huu han ung vien, uu tien body dai
+	var best: Dictionary = {}
+	var cap: int = mini(cands.size(), placement_samples * 2)
+	for i in range(cap):
+		var head: int = cands[i][0]
+		var dir: Dir = cands[i][1]
+		var body: PackedInt32Array = _grow_body(head, dir, usable_set, occupied, turn_chance)
+		if body.size() < min_arrow_length:
+			continue
+		if not _exit_matches_body(body, dir):
+			continue
+		if _body_self_crosses_ray(body, dir):
+			continue
+		if best.is_empty() or body.size() > best["cells"].size():
+			best = {"cells": body, "exit_dir": dir}
+	return best
 
+## Tia tu head theo dir co di qua tap set khong
+func _ray_hits_set(head: int, dir: Dir, target_set: Dictionary) -> bool:
+	var step: Vector2i = DIR_VECTORS[dir]
+	var pos: Vector2i = to_xy(head) + step
+	while is_inside_pos(pos):
+		var idx: int = to_index(pos)
+		if target_set.has(idx):
+			return true
+		pos += step
+	return false
 
-## Thử nhiều mẫu, chấm điểm chặn, chọn mẫu tốt nhất theo bias độ khó.
-func _sample_best_candidate(candidates: Array, placed: Array, usable_set: Dictionary, occupied: Dictionary, turn_chance: float, blocking_bias: float) -> Dictionary:
-	var best_blocking: Dictionary = {}
-	var best_blocking_score: int = -1
-	var best_blocking_len: int = -1
-	var best_any: Dictionary = {}
-	var best_any_len: int = -1
+## Tia tu head co bi occupied chan truoc khi cham target_set khong
+func _ray_blocked_before_hit(head: int, dir: Dir, target_set: Dictionary, occupied: Dictionary) -> bool:
+	var step: Vector2i = DIR_VECTORS[dir]
+	var pos: Vector2i = to_xy(head) + step
+	while is_inside_pos(pos):
+		var idx: int = to_index(pos)
+		if target_set.has(idx):
+			return false
+		if occupied.has(idx):
+			return true
+		pos += step
+	return false
+
+## Chon mui tot nhat trong so cac ung vien (dung cho buoc 1 va fallback)
+func _pick_best(candidates: Array, placed: Array, usable_set: Dictionary, occupied: Dictionary, turn_chance: float, require_dependent: bool) -> Dictionary:
+	var best: Dictionary = {}
+	var best_score: int = -1
+	var best_len: int = -1
 	for _s in range(placement_samples):
 		var pick: Array = candidates[_rng.randi_range(0, candidates.size() - 1)]
 		var head: int = pick[0]
@@ -341,25 +380,41 @@ func _sample_best_candidate(candidates: Array, placed: Array, usable_set: Dictio
 		var body: PackedInt32Array = _grow_body(head, ex, usable_set, occupied, turn_chance)
 		if body.size() < min_arrow_length:
 			continue
+		if not _exit_matches_body(body, ex):
+			continue
 		if _body_self_crosses_ray(body, ex):
 			continue
-		var score: int = _block_score(body, placed, usable_set) * 10 + _lane_density_score(body, usable_set, occupied)
-		if score > best_blocking_score or (score == best_blocking_score and body.size() > best_blocking_len):
-			best_blocking_score = score
-			best_blocking_len = body.size()
-			best_blocking = {"cells": body, "exit_dir": ex}
-		if body.size() > best_any_len:
-			best_any_len = body.size()
-			best_any = {"cells": body, "exit_dir": ex}
-	if best_any.is_empty():
-		return {}
-	# Khó cao: ưu tiên mẫu chặn được ít nhất 1 mũi đang mở.
-	if _rng.randf() < blocking_bias and best_blocking_score > 0:
-		return best_blocking
-	return best_any
+		var dep: int = _block_score(body, placed, usable_set)
+		if require_dependent and dep == 0:
+			continue
+		var score: int = dep * 100 + body.size()
+		if score > best_score or (score == best_score and body.size() > best_len):
+			best_score = score
+			best_len = body.size()
+			best = {"cells": body, "exit_dir": ex}
+	return best
 
+func _coverage_of(placed: Array) -> int:
+	var cov: int = 0
+	for arrow in placed:
+		var cells: PackedInt32Array = arrow["cells"]
+		cov += cells.size()
+	return cov
 
-## Điểm chặn = số mũi đang mở mà thân mới đi qua tia ra của chúng.
+## Ung vien: moi o trong chua occupied + moi huong co tia ra trong
+func _candidates_with_clear_ray(usable_set: Dictionary, occupied: Dictionary) -> Array:
+	var out: Array = []
+	for cell in usable_set.keys():
+		if occupied.has(cell):
+			continue
+		for dir in [Dir.UP, Dir.DOWN, Dir.LEFT, Dir.RIGHT]:
+			if not _is_exit_clear(cell, dir, occupied):
+				continue
+			out.append([cell, dir])
+	out.shuffle()
+	return out
+
+## Diem phu thuoc: than moi dam vao tia ra cua bao nhieu mui da dat (dung cho fallback)
 func _block_score(body: PackedInt32Array, placed: Array, usable_set: Dictionary) -> int:
 	if placed.is_empty():
 		return 0
@@ -378,21 +433,6 @@ func _block_score(body: PackedInt32Array, placed: Array, usable_set: Dictionary)
 				break
 	return score
 
-
-## Các ô usable nằm trên tia ra từ head theo hướng dir (tới hết lưới).
-
-func _lane_density_score(body: PackedInt32Array, usable_set: Dictionary, occupied: Dictionary) -> int:
-	# Đếm số ô trống (pending) nằm sau lưng các ô thân theo nhiều hướng - heuristic
-	var s: int = 0
-	for c in body:
-		var pos: Vector2i = to_xy(c)
-		for d in [Dir.UP, Dir.DOWN, Dir.LEFT, Dir.RIGHT]:
-			var nxt: Vector2i = pos + DIR_VECTORS[d]
-			if is_inside_pos(nxt):
-				var idx: int = to_index(nxt)
-				if usable_set.has(idx) and not occupied.has(idx):
-					s += 1
-	return s
 func _ray_usable_cells(head: int, exit_dir: Dir, usable_set: Dictionary) -> Array:
 	var out: Array = []
 	var step: Vector2i = DIR_VECTORS[exit_dir]
@@ -404,158 +444,104 @@ func _ray_usable_cells(head: int, exit_dir: Dir, usable_set: Dictionary) -> Arra
 		pos += step
 	return out
 
-
-# ----------------------------------------------------------------
-# Giai đoạn 2: quét lấp đầy tới target
-# ----------------------------------------------------------------
-
-func _fill_to_target(placed: Array, usable_set: Dictionary, total: int, allow_interior: bool = false) -> Array:
+## Xu ly o trong con lai sau khi fill
+func _handle_leftovers(placed: Array, usable_set: Dictionary) -> bool:
 	var occupied := {}
 	for arrow in placed:
 		var cells: PackedInt32Array = arrow["cells"]
 		for c in cells:
 			occupied[c] = true
-	var result: Array = placed.duplicate()
-	# 2a) Đặt tham lam thêm mũi cho tới khi kín hoặc hết budget.
-	var stall: int = 0
-	while result.size() < fill_max_arrows:
-		if _coverage_of(result) >= total:
-			break
-		var has_empty: bool = false
-		for cell in usable_set.keys():
-			if not occupied.has(cell):
-				has_empty = true
-				break
-		if not has_empty:
-			break
-		var arrow: Dictionary = _try_place_greedy(usable_set, occupied)
-		if arrow.is_empty():
-			stall += 1
-			if stall > max_stall_rounds:
-				break
-			continue
-		stall = 0
-		var acells: PackedInt32Array = arrow["cells"]
-		for c in acells:
-			occupied[c] = true
-		result.append(arrow)
-	# 2b) Gắn từng ô lẻ còn lại vào ĐUÔI mũi kề (nhiều lượt).
 	var pending: Array = []
 	for cell in usable_set.keys():
 		if not occupied.has(cell):
 			pending.append(cell)
-	var merged_any: bool = true
-	while not pending.is_empty() and merged_any:
-		merged_any = false
-		var rest: Array = []
-		for cell in pending:
-			if occupied.has(cell):
-				continue
-			if _merge_cell_into_tail(cell, result, occupied):
-				merged_any = true
-			else:
-				rest.append(cell)
-		pending = rest
-	# 2c) Ô vẫn lẻ -> mọc thân tại chỗ (cấm mũi 1 ô).
-	for cell in pending:
-		if occupied.has(cell):
-			continue
-		var created: Dictionary = _try_grow_from_cell(cell, usable_set, occupied)
-		if created.is_empty():
-			return [] # Không lấp được mà không dùng singleton -> bỏ bàn này, restart.
-		var ncells: PackedInt32Array = created["cells"]
-		for c in ncells:
-			occupied[c] = true
-		result.append(created)
-	if _coverage_of(result) < total:
-		return []
-	return result
-
-
-func _try_place_greedy(usable_set: Dictionary, occupied: Dictionary) -> Dictionary:
-	var candidates: Array = _border_candidates_with_clear_ray(usable_set, occupied)
-	if candidates.is_empty():
-		return {}
-	var best: Dictionary = {}
-	var best_len: int = -1
-	for _t in range(placement_samples):
-		var pick: Array = candidates[_rng.randi_range(0, candidates.size() - 1)]
-		var head: int = pick[0]
-		var ex: Dir = pick[1]
-		if occupied.has(head):
-			continue
-		if not _is_exit_clear(head, ex, occupied):
-			continue
-		var body: PackedInt32Array = _grow_body(head, ex, usable_set, occupied, 0.5)
-		if body.size() < min_arrow_length:
-			continue
-		if _body_self_crosses_ray(body, ex):
-			continue
-		if body.size() > best_len:
-			best_len = body.size()
-			best = {"cells": body, "exit_dir": ex}
-	return best
-
-
-## Gắn ô lẻ vào đuôi (cells[0]) của mũi kề Manhattan = 1.
-## Không đổi đầu/hướng ra; ô mới không được nằm trên tia ra của chính mũi đó
-## và mọi mũi đặt sau nó, và không được tạo tự đâm ray (body đâm ray chính mình).
-func _merge_cell_into_tail(cell: int, placed_in_order: Array, occupied: Dictionary) -> bool:
-	var pos: Vector2i = to_xy(cell)
-	for i in range(placed_in_order.size()):
-		var arrow: Dictionary = placed_in_order[i]
-		var cells: PackedInt32Array = arrow["cells"]
-		if cells.is_empty():
-			continue
-		var tail_pos: Vector2i = to_xy(cells[0])
-		if absi(tail_pos.x - pos.x) + absi(tail_pos.y - pos.y) != 1:
-			continue
-		var blocked: bool = false
-		for j in range(i, placed_in_order.size()):
-			var other: Dictionary = placed_in_order[j]
-			var ocells: PackedInt32Array = other["cells"]
-			var ohead: int = ocells[ocells.size() - 1]
-			if _cell_on_exit_ray(cell, ohead, other["exit_dir"]):
-				blocked = true
-				break
-		if blocked:
-			continue
-		# Tự đâm: body mở rộng có cắt tia ra chính mình không
-		var trial: PackedInt32Array = cells.duplicate()
-		trial.insert(0, cell)
-		if _body_self_crosses_ray(trial, arrow["exit_dir"]):
-			continue
-		cells.insert(0, cell)
-		arrow["cells"] = cells
-		occupied[cell] = true
+	if pending.is_empty():
 		return true
+	if pending.size() == 1:
+		return true
+	if pending.size() == 2:
+		var a: int = pending[0]
+		var b: int = pending[1]
+		var pa: Vector2i = to_xy(a)
+		var pb: Vector2i = to_xy(b)
+		if absi(pa.x - pb.x) + absi(pa.y - pb.y) != 1:
+			return false
+		var opt1: PackedInt32Array = PackedInt32Array([a, b])
+		var opt2: PackedInt32Array = PackedInt32Array([b, a])
+		for trial in [opt1, opt2]:
+			var ex: int = _dir_between(trial[0], trial[1])
+			if ex < 0:
+				continue
+			if not _exit_matches_body(trial, ex):
+				continue
+			if _body_self_crosses_ray(trial, ex):
+				continue
+			var head: int = trial[trial.size() - 1]
+			if not _is_exit_clear(head, ex, occupied):
+				continue
+			placed.append({"cells": trial, "exit_dir": ex})
+			return true
+		return false
 	return false
 
+func _collect_isolated_cells(placed: Array, usable_set: Dictionary) -> void:
+	pass
 
-func _try_place_singleton(cell: int, usable_set: Dictionary, occupied: Dictionary) -> Dictionary:
-	# Đã cấm mũi 1 ô - luôn fail.
-	return {}
+func _fill_gaps(placed: Array, usable_set: Dictionary) -> void:
+	_handle_leftovers(placed, usable_set)
 
+## Mo phong giai: thu lan luot cac mui cho den khi thoat het
+func verify_solution(arrows_in_solve_order: Array) -> bool:
+	var occupied := {}
+	for arrow in arrows_in_solve_order:
+		var cells: PackedInt32Array = arrow["cells"]
+		if cells.size() < 2:
+			return false
+		if not _exit_matches_body(cells, arrow["exit_dir"]):
+			return false
+		if _body_self_crosses_ray(cells, arrow["exit_dir"]):
+			return false
+		for c in cells:
+			if occupied.has(c):
+				return false
+			occupied[c] = true
 
-func _try_grow_from_cell(cell: int, usable_set: Dictionary, occupied: Dictionary) -> Dictionary:
-	if occupied.has(cell):
-		return {}
-	var pos: Vector2i = to_xy(cell)
-	var dirs: Array = [Dir.UP, Dir.DOWN, Dir.LEFT, Dir.RIGHT]
-	_shuffle_dirs(dirs)
-	for d in dirs:
-		var nxt: Vector2i = pos + DIR_VECTORS[d]
-		var outside: bool = not is_inside_pos(nxt) or not usable_set.has(to_index(nxt))
-		if not outside:
-			continue
-		if not _is_exit_clear(cell, d, occupied):
-			continue
-		for _attempt in range(4):
-			var body: PackedInt32Array = _grow_body(cell, d, usable_set, occupied, 0.5)
-			if body.size() >= 2 and not _body_self_crosses_ray(body, d):
-				return {"cells": body, "exit_dir": d}
-	return {}
+	var remaining: Array = arrows_in_solve_order.duplicate()
+	var progress: bool = true
+	while not remaining.is_empty() and progress:
+		progress = false
+		for i in range(remaining.size()):
+			var arrow: Dictionary = remaining[i]
+			var cells: PackedInt32Array = arrow["cells"]
+			var head: int = cells[cells.size() - 1]
+			var ex: Dir = arrow["exit_dir"]
+			if _is_exit_clear(head, ex, occupied):
+				for c in cells:
+					occupied.erase(c)
+				remaining.remove_at(i)
+				progress = true
+				break
+	return remaining.is_empty() and occupied.is_empty()
 
+func coverage_ratio(arrows_in_solve_order: Array, usable_cells: Array) -> float:
+	if usable_cells.is_empty():
+		return 0.0
+	var cov: int = 0
+	for arrow in arrows_in_solve_order:
+		var cells: PackedInt32Array = arrow["cells"]
+		cov += cells.size()
+	return float(cov) / float(usable_cells.size())
+
+func _meets_fill_ratio(solve_order: Array, total: int, ratio: float) -> bool:
+	if total <= 0:
+		return true
+	var cov: int = 0
+	for arrow in solve_order:
+		var cells: PackedInt32Array = arrow["cells"]
+		cov += cells.size()
+	if cov == total - 1:
+		return float(cov) / float(total) >= ratio or ratio <= 0.95
+	return float(cov) / float(total) >= ratio
 
 func _shuffle_dirs(dirs: Array) -> void:
 	for i in range(dirs.size() - 1, 0, -1):
@@ -564,12 +550,10 @@ func _shuffle_dirs(dirs: Array) -> void:
 		dirs[i] = dirs[j]
 		dirs[j] = tmp
 
-
 # ----------------------------------------------------------------
-# Mọc thân + kiểm tra đường ra
+# Moc than + kiem tra duong ra
 # ----------------------------------------------------------------
 
-## Mọc thân từ đầu mũi đi ngược vào trong. Trả về đuôi -> đầu nhọn.
 func _grow_body(head: int, exit_dir: Dir, usable_set: Dictionary, occupied: Dictionary, turn_chance: float) -> PackedInt32Array:
 	var target_len: int = _rng.randi_range(min_arrow_length, max_arrow_length)
 	var inward: Dir = opposite_dir(exit_dir)
@@ -588,6 +572,11 @@ func _grow_body(head: int, exit_dir: Dir, usable_set: Dictionary, occupied: Dict
 		var nidx: int = to_index(nxt)
 		path.append(nidx)
 		path_set[nidx] = true
+
+	if path.size() < 2:
+		var fail := PackedInt32Array()
+		fail.append(head)
+		return fail
 
 	while path.size() < target_len:
 		var cur2: int = path[path.size() - 1]
@@ -615,7 +604,6 @@ func _grow_body(head: int, exit_dir: Dir, usable_set: Dictionary, occupied: Dict
 		result.append(path[i])
 	return result
 
-
 func _valid_options(from: Vector2i, move_dir: Dir, usable_set: Dictionary, occupied: Dictionary, path_set: Dictionary) -> Array:
 	var options: Array = []
 	var dirs: Array = [move_dir, turn_left(move_dir), turn_right(move_dir)]
@@ -624,7 +612,6 @@ func _valid_options(from: Vector2i, move_dir: Dir, usable_set: Dictionary, occup
 		if _can_enter(nxt, usable_set, occupied, path_set):
 			options.append(d)
 	return options
-
 
 func _can_enter(pos: Vector2i, usable_set: Dictionary, occupied: Dictionary, path_set: Dictionary) -> bool:
 	if not is_inside_pos(pos):
@@ -638,11 +625,9 @@ func _can_enter(pos: Vector2i, usable_set: Dictionary, occupied: Dictionary, pat
 		return false
 	return true
 
-
 func _step(from: Vector2i, dir: Dir) -> Vector2i:
 	var v: Vector2i = DIR_VECTORS[dir]
 	return from + v
-
 
 func _body_self_crosses_ray(body: PackedInt32Array, exit_dir: Dir) -> bool:
 	if body.size() < 2:
@@ -653,8 +638,6 @@ func _body_self_crosses_ray(body: PackedInt32Array, exit_dir: Dir) -> bool:
 			return true
 	return false
 
-
-## Đường ra trống: từ ô kề đầu mũi theo hướng ra tới hết lưới không vướng ô occupied.
 func _is_exit_clear(head: int, exit_dir: Dir, occupied: Dictionary) -> bool:
 	var step: Vector2i = DIR_VECTORS[exit_dir]
 	var pos: Vector2i = to_xy(head) + step
@@ -663,7 +646,6 @@ func _is_exit_clear(head: int, exit_dir: Dir, occupied: Dictionary) -> bool:
 			return false
 		pos += step
 	return true
-
 
 func _cell_on_exit_ray(cell: int, head: int, exit_dir: Dir) -> bool:
 	var step: Vector2i = DIR_VECTORS[exit_dir]
@@ -674,8 +656,6 @@ func _cell_on_exit_ray(cell: int, head: int, exit_dir: Dir) -> bool:
 		pos += step
 	return false
 
-
-## Số mũi mở được ngay trên bàn đầy (dùng kiểm tra band độ khó).
 func _count_free_arrows(arrows_in_solve_order: Array) -> int:
 	var occupied := {}
 	for arrow in arrows_in_solve_order:
@@ -690,8 +670,6 @@ func _count_free_arrows(arrows_in_solve_order: Array) -> int:
 			count += 1
 	return count
 
-
-## Helper: tạo vùng chơi hình chữ nhật (x, y, w, h) trong lưới tổng.
 func make_rect_cells(x: int, y: int, w: int, h: int) -> PackedInt32Array:
 	var cells := PackedInt32Array()
 	for j in range(h):

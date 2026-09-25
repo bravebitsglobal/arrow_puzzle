@@ -26,14 +26,14 @@ var min_arrow_length: int = 2
 var max_arrow_length: int = 12
 var first_straight_min: int = 1
 var first_straight_max: int = 3
-var max_board_restarts: int = 200
-var max_generate_ms: int = 3000
-var fill_min_ratio: float = 0.9
-var fill_target_ratio: float = 1.0
-var fill_max_arrows: int = 300
-var placement_samples: int = 12
-var max_stall_rounds: int = 40
-var max_build_tries: int = 4
+var max_board_restarts: int = 80
+var max_generate_ms: int = 1500
+var fill_min_ratio: float = 0.88
+var fill_target_ratio: float = 0.96
+var fill_max_arrows: int = 250
+var placement_samples: int = 8
+var max_stall_rounds: int = 20
+var max_build_tries: int = 2
 
 var _rng := RandomNumberGenerator.new()
 var _seed_value: int = 0
@@ -147,8 +147,8 @@ func generate_level(usable_cells: Array, n: int = -1, turn_chance: float = 0.4) 
 	var best_ratio: float = -1.0
 	var attempt_count: int = 0
 
-	# Lap vo han cho den khi tao duoc level hop le
-	while true:
+	# Lap cho den khi tao duoc level hop le
+	while attempt_count < 10:  # Gioi han 10 lan thu de tranh vo han
 		attempt_count += 1
 		var t0: int = Time.get_ticks_msec()
 
@@ -166,8 +166,6 @@ func generate_level(usable_cells: Array, n: int = -1, turn_chance: float = 0.4) 
 			_fill_gaps(board, usable_set)
 
 			# Thu tu giai tu nhien la thu tu dat (cha truoc con sau) vi con bi cha chan.
-			# verify_solution tu tim mui thoang nen thu tu truyen vao khong quan trong,
-			# nhung de nhat quan ta truyen dung thu tu dat.
 			var solve_order: Array = board.duplicate()
 
 			var ratio: float = float(_coverage_of(solve_order)) / float(total) if total > 0 else 0.0
@@ -175,23 +173,29 @@ func generate_level(usable_cells: Array, n: int = -1, turn_chance: float = 0.4) 
 				best_ratio = ratio
 				best_board = solve_order
 
-			if not verify_solution(solve_order):
+			# Kiem tra nhanh truoc khi verify day du
+			if ratio < fill_min_ratio:
 				continue
-			if not _meets_fill_ratio(solve_order, total, fill_min_ratio):
+
+			if not verify_solution(solve_order):
 				continue
 
 			print("LevelGenerator: thanh cong sau %d lan thu." % attempt_count)
 			return solve_order
 
 		# Neu khong thanh cong, thu lai voi seed moi
-		if not best_board.is_empty() and verify_solution(best_board):
+		if not best_board.is_empty() and best_ratio >= fill_min_ratio * 0.95 and verify_solution(best_board):
 			push_warning("LevelGenerator: dung board tot nhat fill %.1f%% sau %d lan thu." % [best_ratio * 100, attempt_count])
 			return best_board
 
-		push_warning("LevelGenerator: lan thu %d khong thanh cong, thu lai..." % attempt_count)
+		push_warning("LevelGenerator: lan thu %d khong thanh cong (best: %.1f%%), thu lai..." % [attempt_count, best_ratio * 100])
 		_rng.randomize()  # Thay doi seed de thu cach khac
 
-	# Khong bao gio den day vi while true, nhung can return de compiler khong bao loi
+	# Neu het 10 lan, tra ve best co the
+	if not best_board.is_empty():
+		push_warning("LevelGenerator: tra ve best board sau 10 lan thu, fill %.1f%%." % (best_ratio * 100))
+		return best_board
+
 	return []
 
 ## Xay dung ban theo luong moi
@@ -515,12 +519,23 @@ func verify_solution(arrows_in_solve_order: Array) -> bool:
 			return false
 		if not _exit_matches_body(cells, arrow["exit_dir"]):
 			return false
-		if _body_self_crosses_ray(cells, arrow["exit_dir"]):
-			return false
 		for c in cells:
 			if occupied.has(c):
 				return false
 			occupied[c] = true
+
+	# Early exit: dem so mui co the thoat ngay
+	var free_count: int = 0
+	for arrow in arrows_in_solve_order:
+		var cells: PackedInt32Array = arrow["cells"]
+		var head: int = cells[cells.size() - 1]
+		var ex: Dir = arrow["exit_dir"]
+		if _is_exit_clear(head, ex, occupied):
+			free_count += 1
+
+	# Neu khong co mui nao thoat duoc thi ko hop le
+	if free_count == 0:
+		return false
 
 	var remaining: Array = arrows_in_solve_order.duplicate()
 	var progress: bool = true

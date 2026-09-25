@@ -10,13 +10,17 @@ var data
 @onready var collision_polygon_2d: CollisionPolygon2D = $Area2D/CollisionPolygon2D
 @onready var area_2d: Area2D = $Area2D
 var tween: Tween
-const SPEED = 10
+const SPEED: float = 1000
 var exit_path: PackedInt32Array
 var move_progress: float = 0
 var moving: bool = false
+signal move_finish
+signal on_click
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	render()
+
 func update_line_collision() -> void:
 	if line_2d.points.size() < 2:
 		return
@@ -26,16 +30,29 @@ func update_line_collision() -> void:
 	area_2d.input_event.connect(_on_area_2d_input_event)
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		moving = true
-		if !tween:
-			tween = create_tween()
-		tween.tween_property(self, 'move_progress', exit_path.size() * CELL_SIZE, 3)
-		tween.finished.connect(func():
-			moving = false)
-		tween.tween_callback(update_line)
+		if !is_moving():
+			on_click.emit()
 func set_data(_data):
 	data = _data
 	render()
+func is_moving():
+	return tween && tween.is_running()
+func exit(result: Game.ExitPathResult):
+	exit_path = result.exit_path
+	move_progress = 0
+	moving = true
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	var move_distance = (exit_path.size() - data.cells.size())* CELL_SIZE
+	var dur = float(move_distance) / SPEED
+	tween.tween_property(self, 'move_progress', move_distance, dur)
+	if !result.can_exit:
+		tween.tween_property(self, 'move_progress', 0, dur)
+	tween.finished.connect(func():
+		update_line()
+		move_finish.emit()
+		)
 func render():
 	if !data:
 		return
@@ -50,37 +67,13 @@ func render():
 	head.position = Vector2(pos.x * CELL_SIZE, pos.y * CELL_SIZE)
 	head.rotation_degrees = ROTATES[data.exit_dir]
 	head.visible = true
-	calculate_exit_path()
 	update_line_collision()
-func calculate_exit_path():
-	exit_path = data.cells.duplicate()
-	var head_index = data.cells[data.cells.size()-1]
-	var head_pos = Utils.to_xy(head_index)
-	match(data.exit_dir):
-		0:
-			for i in range(head_pos.y-1, 0, -1):
-				exit_path.append(Utils.to_index(Vector2(head_pos.x, i)))
-		1:
-			for i in range(head_pos.y+1, Utils.grid_width):
-				exit_path.append(Utils.to_index(Vector2(head_pos.x, i)))
-		2:
-			for i in range(head_pos.x-1, 0, -1):
-				exit_path.append(Utils.to_index(Vector2(i, head_pos.y)))
-		3:
-			for i in range(head_pos.x+1, Utils.grid_width):
-				exit_path.append(Utils.to_index(Vector2(i, head_pos.y)))
 func update_line():
-	if !moving:
-		return
 	var start = int(move_progress / CELL_SIZE)
 	var end = start + data.cells.size()-1
-	
-	if end >= exit_path.size()-2:
-		return
 	var weight = float((int(move_progress) % CELL_SIZE) / float(CELL_SIZE))
 	line_2d.set_point_position(0, Utils.index_to_pos(exit_path[start]).lerp(Utils.index_to_pos(exit_path[start+1]),weight))
-	line_2d.set_point_position(data.cells.size()-1, Utils.index_to_pos(exit_path[end]).lerp(Utils.index_to_pos(exit_path[end+1]),weight))
-	for i in range(start+1, start + data.cells.size()-1):
+	for i in range(start+1, start + data.cells.size()):
 		if i > exit_path.size()-1:
 			return
 		var xy = Utils.to_xy(exit_path[i])
@@ -88,7 +81,12 @@ func update_line():
 			return
 		var pos = Vector2(xy.x * CELL_SIZE, xy.y * CELL_SIZE)
 		line_2d.set_point_position(i - start, pos)
-	head.position = line_2d.points[line_2d.points.size()-1]
 	
+	if end < exit_path.size()-1:
+		line_2d.set_point_position(data.cells.size()-1, Utils.index_to_pos(exit_path[end]).lerp(Utils.index_to_pos(exit_path[end+1]),weight))
+	else:
+		line_2d.set_point_position(data.cells.size()-1, Utils.index_to_pos(exit_path[exit_path.size()-1]))
+	head.position = line_2d.points[line_2d.points.size()-1]
 func _process(_delta: float) -> void:
-	update_line()
+	if is_moving():
+		update_line()

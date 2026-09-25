@@ -118,14 +118,20 @@ func _params_for(diff: int) -> Dictionary:
 	return {"n": 2, "turn_chance": 0.40, "fs_min": 1, "fs_max": 3}
 
 ## Ham sinh level chinh.
-func generate_level(usable_cells: Array, p_diff: int = -1) -> Array:
+## n: so mui huong ra ngoai ban dau (neu < 0 thi dung difficulty mac dinh)
+func generate_level(usable_cells: Array, n: int = -1, turn_chance: float = 0.4) -> Array:
 	if _has_seed:
 		_rng.seed = _seed_value
 	else:
 		_rng.randomize()
 
-	var diff: int = difficulty if p_diff < 0 else p_diff
-	var params: Dictionary = _params_for(diff)
+	var params: Dictionary
+	if n < 0:
+		# Dung difficulty mac dinh
+		params = _params_for(difficulty)
+	else:
+		# Dung tham so truc tiep
+		params = {"n": n, "turn_chance": turn_chance, "fs_min": first_straight_min, "fs_max": first_straight_max}
 
 	var usable_set := {}
 	for c in usable_cells:
@@ -137,45 +143,55 @@ func generate_level(usable_cells: Array, p_diff: int = -1) -> Array:
 		return []
 
 	var total: int = usable_set.size()
-	var t0: int = Time.get_ticks_msec()
 	var best_board: Array = []
 	var best_ratio: float = -1.0
+	var attempt_count: int = 0
 
-	for _restart in range(max_board_restarts):
-		if Time.get_ticks_msec() - t0 > max_generate_ms:
-			break
+	# Lap vo han cho den khi tao duoc level hop le
+	while true:
+		attempt_count += 1
+		var t0: int = Time.get_ticks_msec()
 
-		var board: Array = _build_board(usable_set, params, total)
-		if board.is_empty():
-			continue
+		for _restart in range(max_board_restarts):
+			if Time.get_ticks_msec() - t0 > max_generate_ms:
+				break
 
-		# board da xu ly 2-o ke nhau ben trong _try_build_once,
-		# nhung van goi them de an toan cho truong hop le
-		_collect_isolated_cells(board, usable_set)
-		_fill_gaps(board, usable_set)
+			var board: Array = _build_board(usable_set, params, total)
+			if board.is_empty():
+				continue
 
-		# Thu tu giai tu nhien la thu tu dat (cha truoc con sau) vi con bi cha chan.
-		# verify_solution tu tim mui thoang nen thu tu truyen vao khong quan trong,
-		# nhung de nhat quan ta truyen dung thu tu dat.
-		var solve_order: Array = board.duplicate()
+			# board da xu ly 2-o ke nhau ben trong _try_build_once,
+			# nhung van goi them de an toan cho truong hop le
+			_collect_isolated_cells(board, usable_set)
+			_fill_gaps(board, usable_set)
 
-		var ratio: float = float(_coverage_of(solve_order)) / float(total) if total > 0 else 0.0
-		if ratio > best_ratio:
-			best_ratio = ratio
-			best_board = solve_order
+			# Thu tu giai tu nhien la thu tu dat (cha truoc con sau) vi con bi cha chan.
+			# verify_solution tu tim mui thoang nen thu tu truyen vao khong quan trong,
+			# nhung de nhat quan ta truyen dung thu tu dat.
+			var solve_order: Array = board.duplicate()
 
-		if not verify_solution(solve_order):
-			continue
-		if not _meets_fill_ratio(solve_order, total, fill_min_ratio):
-			continue
+			var ratio: float = float(_coverage_of(solve_order)) / float(total) if total > 0 else 0.0
+			if ratio > best_ratio:
+				best_ratio = ratio
+				best_board = solve_order
 
-		return solve_order
+			if not verify_solution(solve_order):
+				continue
+			if not _meets_fill_ratio(solve_order, total, fill_min_ratio):
+				continue
 
-	if not best_board.is_empty() and verify_solution(best_board):
-		push_warning("LevelGenerator: dung board tot nhat fill %.1f%%." % (best_ratio * 100))
-		return best_board
+			print("LevelGenerator: thanh cong sau %d lan thu." % attempt_count)
+			return solve_order
 
-	push_error("LevelGenerator: khong sinh duoc ban hop le sau %d lan thu." % max_board_restarts)
+		# Neu khong thanh cong, thu lai voi seed moi
+		if not best_board.is_empty() and verify_solution(best_board):
+			push_warning("LevelGenerator: dung board tot nhat fill %.1f%% sau %d lan thu." % [best_ratio * 100, attempt_count])
+			return best_board
+
+		push_warning("LevelGenerator: lan thu %d khong thanh cong, thu lai..." % attempt_count)
+		_rng.randomize()  # Thay doi seed de thu cach khac
+
+	# Khong bao gio den day vi while true, nhung can return de compiler khong bao loi
 	return []
 
 ## Xay dung ban theo luong moi

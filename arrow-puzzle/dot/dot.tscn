@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://n1f34bw1jtcs"]
+
+[ext_resource type="Texture2D" uid="uid://b44cf2hk4t1d6" path="res://dot/circle.png" id="1_vlo0v"]
+
+[node name="Dot" type="Sprite2D" unique_id=28077749]
+self_modulate = Color(0.80784315, 0.6666667, 1, 0.38431373)
+position = Vector2(46, 21)
+texture = ExtResource("1_vlo0v")

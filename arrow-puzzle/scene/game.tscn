@@ -2,14 +2,170 @@
 
 [ext_resource type="Script" uid="uid://b2lsawcng18fs" path="res://scene/game.gd" id="1_5kiuu"]
 [ext_resource type="PackedScene" uid="uid://08iwkk13f8v1" path="res://arrow/arrow.tscn" id="2_33cqm"]
+[ext_resource type="PackedScene" uid="uid://n1f34bw1jtcs" path="res://dot/dot.tscn" id="2_xwcet"]
 [ext_resource type="Script" uid="uid://dxame55jjjn2k" path="res://helper/camera_controller.gd" id="3_cam"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://ui_theme.tres" id="5_p1ry8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_p1ry8"]
+font_size = 56
+font_color = Color(0.5641601, 0.56416, 0.56416, 1)
 
 [node name="Game" type="Node2D" unique_id=552907864]
 script = ExtResource("1_5kiuu")
+dot_scene = ExtResource("2_xwcet")
 arrow_scene = ExtResource("2_33cqm")
-
-[node name="LineContainer" type="Node2D" parent="." unique_id=1856850075]
-position = Vector2(-2500, -2500)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=733687426]
 script = ExtResource("3_cam")
+
+[node name="MapContainer" type="Node2D" parent="." unique_id=521716433]
+position = Vector2(-2500, -2500)
+
+[node name="DotContainer" type="Node2D" parent="MapContainer" unique_id=1390953202]
+
+[node name="LineContainer" type="Node2D" parent="MapContainer" unique_id=1856850075]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=75495182]
+
+[node name="PanelGame" type="Panel" parent="UI" unique_id=718461675]
+self_modulate = Color(0.3953672, 0.39536718, 0.39536715, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -916.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_p1ry8")
+
+[node name="LabelLive" type="Label" parent="UI/PanelGame" unique_id=222997159]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 77.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "LIVE: "
+label_settings = SubResource("LabelSettings_p1ry8")
+horizontal_alignment = 1
+
+[node name="PanelWelcome" type="Panel" parent="UI" unique_id=1689975266]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("5_p1ry8")
+
+[node name="Label" type="Label" parent="UI/PanelWelcome" unique_id=1904408302]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -166.0
+offset_bottom = -89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Arrow Puzzle"
+label_settings = SubResource("LabelSettings_p1ry8")
+horizontal_alignment = 1
+
+[node name="ButtonStartGame" type="Button" parent="UI/PanelWelcome" unique_id=166527942]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = 39.0
+offset_right = 48.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 56
+text = "Start Game"
+
+[node name="PanelLose" type="Panel" parent="UI" unique_id=1160994286]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("5_p1ry8")
+
+[node name="Label" type="Label" parent="UI/PanelLose" unique_id=1715709441]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -166.0
+offset_bottom = -89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "You LOSE!"
+label_settings = SubResource("LabelSettings_p1ry8")
+horizontal_alignment = 1
+
+[node name="ButtonRestart" type="Button" parent="UI/PanelLose" unique_id=1190985063]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = 39.0
+offset_right = 48.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 56
+text = "Restart Game"
+
+[node name="PanelWin" type="Panel" parent="UI" unique_id=1426066406]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("5_p1ry8")
+
+[node name="Label" type="Label" parent="UI/PanelWin" unique_id=365879325]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -166.0
+offset_bottom = -89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "You WIN!"
+label_settings = SubResource("LabelSettings_p1ry8")
+horizontal_alignment = 1
+
+[node name="ButtonNextLevel" type="Button" parent="UI/PanelWin" unique_id=292368811]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = 39.0
+offset_right = 48.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 56
+text = "Next Level"

@@ -79,11 +79,11 @@ func exit(result: Game.ExitPathResult):
 		tween.parallel().tween_property(self, 'head_progress', arrow_size, dur)
 	tween.finished.connect(func():
 		update_line()
-		move_finish.emit()
 		if result.can_exit:
 			action = Action.Exited
 		else:
 			action = Action.Idle
+		move_finish.emit()
 		)
 func render():
 	if !data:

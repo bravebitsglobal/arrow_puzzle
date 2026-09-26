@@ -69,7 +69,12 @@ func on_move_finish():
 		panel_lose.visible = true
 		return
 	if !used_cells.size():
-		panel_win.visible = true
+		var is_done = true
+		for a in arrows:
+			if a.action != Arrow.Action.Exited:
+				is_done = false
+		if is_done:
+			panel_win.visible = true
 func remove_arrow(idx: int):
 	for c in level[idx].cells:
 		used_cells.erase(c)

@@ -63,11 +63,13 @@ func _on_arrow_clicked(idx: int):
 		live = live - 1
 		label_live.text = "LIVE: " + str(live)
 	arrows[idx].exit(rs)
-	if !used_cells.size():
-		panel_win.visible = true
+	
 func on_move_finish():
 	if !live:
 		panel_lose.visible = true
+		return
+	if !used_cells.size():
+		panel_win.visible = true
 func remove_arrow(idx: int):
 	for c in level[idx].cells:
 		used_cells.erase(c)

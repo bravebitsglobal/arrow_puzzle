@@ -191,11 +191,12 @@ func generate_level(usable_cells: Array, n: int = -1, turn_chance: float = 0.4) 
 		push_warning("LevelGenerator: lan thu %d khong thanh cong (best: %.1f%%), thu lai..." % [attempt_count, best_ratio * 100])
 		_rng.randomize()  # Thay doi seed de thu cach khac
 
-	# Neu het 10 lan, tra ve best co the
-	if not best_board.is_empty():
+	# Neu het 10 lan, chi tra ve neu best board co the verify
+	if not best_board.is_empty() and verify_solution(best_board):
 		push_warning("LevelGenerator: tra ve best board sau 10 lan thu, fill %.1f%%." % (best_ratio * 100))
 		return best_board
 
+	push_error("LevelGenerator: khong sinh duoc level hop le sau 10 lan thu.")
 	return []
 
 ## Xay dung ban theo luong moi

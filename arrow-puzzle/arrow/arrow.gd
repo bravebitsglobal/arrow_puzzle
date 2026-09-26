@@ -9,11 +9,19 @@ var data
 @onready var line_2d: Line2D = $Line2D
 @onready var collision_polygon_2d: CollisionPolygon2D = $Area2D/CollisionPolygon2D
 @onready var area_2d: Area2D = $Area2D
+enum Action{
+	Idle,
+	GoingIn,
+	GoingOut,
+	Exited
+}
+var action: Action = Action.Idle
 var tween: Tween
 const SPEED: float = 1000
+const GO_IN_SPEED: float = 300
 var exit_path: PackedInt32Array
-var move_progress: float = 0
-var moving: bool = false
+var tail_progress: float = 0
+var head_progress: float = 0
 signal move_finish
 signal on_click
 
@@ -30,28 +38,52 @@ func update_line_collision() -> void:
 	area_2d.input_event.connect(_on_area_2d_input_event)
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if !is_moving():
+		if action == Action.Idle:
 			on_click.emit()
 func set_data(_data):
 	data = _data
 	render()
-func is_moving():
-	return tween && tween.is_running()
+func is_going_out():
+	return tween && tween.is_running() && action==Action.GoingOut
+func go_in():
+	exit_path = data.cells
+	tail_progress = 0
+	head_progress = 0
+	action = Action.GoingIn
+	var arrow_size = data.cells.size() * CELL_SIZE
+	var dur = float(arrow_size) / GO_IN_SPEED
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(self, 'head_progress', arrow_size, dur)
+	tween.finished.connect(func():
+		update_line()
+		action = Action.Idle
+		update_line_collision()
+		)
 func exit(result: Game.ExitPathResult):
 	exit_path = result.exit_path
-	move_progress = 0
-	moving = true
+	var arrow_size = data.cells.size() * CELL_SIZE
+	tail_progress = 0
+	head_progress = arrow_size
+	action = Action.GoingOut
 	if tween:
 		tween.kill()
 	tween = create_tween()
 	var move_distance = (exit_path.size() - data.cells.size())* CELL_SIZE
 	var dur = float(move_distance) / SPEED
-	tween.tween_property(self, 'move_progress', move_distance, dur)
+	tween.tween_property(self, 'tail_progress', move_distance, dur)
+	tween.parallel().tween_property(self, 'head_progress', move_distance + arrow_size, dur)
 	if !result.can_exit:
-		tween.tween_property(self, 'move_progress', 0, dur)
+		tween.tween_property(self, 'tail_progress', 0, dur)
+		tween.parallel().tween_property(self, 'head_progress', arrow_size, dur)
 	tween.finished.connect(func():
 		update_line()
 		move_finish.emit()
+		if result.can_exit:
+			action = Action.Exited
+		else:
+			action = Action.Idle
 		)
 func render():
 	if !data:
@@ -60,33 +92,33 @@ func render():
 	for i in range(data.cells.size()):
 		var c = data.cells[i]
 		pos = Utils.to_xy(c)
-		var point = Utils.index_to_pos(c)
-		var path_follow = PathFollow2D.new()
-		path_follow.progress = i * CELL_SIZE
-		line_2d.add_point(point)
+		line_2d.add_point(Utils.index_to_pos(data.cells[0]))
 	head.position = Vector2(pos.x * CELL_SIZE, pos.y * CELL_SIZE)
-	head.rotation_degrees = ROTATES[data.exit_dir]
 	head.visible = true
-	update_line_collision()
+	go_in()
 func update_line():
-	var start = int(move_progress / CELL_SIZE)
-	var end = start + data.cells.size()-1
-	var weight = float((int(move_progress) % CELL_SIZE) / float(CELL_SIZE))
-	line_2d.set_point_position(0, Utils.index_to_pos(exit_path[start]).lerp(Utils.index_to_pos(exit_path[start+1]),weight))
+	var start = floor(tail_progress / CELL_SIZE)
+	var end = ceil(head_progress / CELL_SIZE) - 1
+	var tail_weight = float((int(tail_progress) % CELL_SIZE) / float(CELL_SIZE))
+	line_2d.set_point_position(0, Utils.index_to_pos(exit_path[start]).lerp(Utils.index_to_pos(exit_path[start+1]), tail_weight))
 	for i in range(start+1, start + data.cells.size()):
-		if i > exit_path.size()-1:
+		if i > exit_path.size() - 1:
 			return
 		var xy = Utils.to_xy(exit_path[i])
 		if xy.x > Utils.grid_width || xy.y > Utils.grid_width:
 			return
-		var pos = Vector2(xy.x * CELL_SIZE, xy.y * CELL_SIZE)
+		var pos: Vector2
+		if i > end:
+			pos = line_2d.points[i-start-1]
+		else:
+			pos = Utils.index_to_pos(exit_path[i])
 		line_2d.set_point_position(i - start, pos)
-	
-	if end < exit_path.size()-1:
-		line_2d.set_point_position(data.cells.size()-1, Utils.index_to_pos(exit_path[end]).lerp(Utils.index_to_pos(exit_path[end+1]),weight))
+	if end < exit_path.size() - 1:
+		var head_weight = float((int(head_progress) % CELL_SIZE) / float(CELL_SIZE))
+		line_2d.set_point_position(data.cells.size()-1, Utils.index_to_pos(exit_path[end]).lerp(Utils.index_to_pos(exit_path[end+1]),head_weight))
 	else:
-		line_2d.set_point_position(data.cells.size()-1, Utils.index_to_pos(exit_path[exit_path.size()-1]))
+		line_2d.set_point_position(data.cells.size()-1, Utils.index_to_pos(exit_path[end]))
 	head.position = line_2d.points[line_2d.points.size()-1]
 func _process(_delta: float) -> void:
-	if is_moving():
+	if action != Action.Idle:
 		update_line()

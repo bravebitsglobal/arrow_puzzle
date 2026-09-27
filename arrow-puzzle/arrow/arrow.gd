@@ -25,6 +25,10 @@ var head_progress: float = 0
 signal move_finish
 signal on_click
 
+var _mouse_pressed_pos: Vector2 = Vector2.ZERO
+var _is_mouse_pressed: bool = false
+const CLICK_THRESHOLD: float = 5.0  # Nguong phan biet click va drag (pixels)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	render()
@@ -36,10 +40,19 @@ func update_line_collision() -> void:
 	if polygons.size() > 0:
 		collision_polygon_2d.polygon = polygons[0]
 	area_2d.input_event.connect(_on_area_2d_input_event)
+
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if action == Action.Idle:
-			on_click.emit()
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			# Luu vi tri nhan chuot
+			_mouse_pressed_pos = event.position
+			_is_mouse_pressed = true
+		elif _is_mouse_pressed:
+			# Tha chuot - kiem tra co phai click khong
+			var distance = event.position.distance_to(_mouse_pressed_pos)
+			if distance < CLICK_THRESHOLD and action == Action.Idle:
+				on_click.emit()
+			_is_mouse_pressed = false
 func set_data(_data):
 	data = _data
 	render()

@@ -5,6 +5,43 @@
 [ext_resource type="PackedScene" uid="uid://n1f34bw1jtcs" path="res://dot/dot.tscn" id="2_xwcet"]
 [ext_resource type="Script" uid="uid://dxame55jjjn2k" path="res://helper/camera_controller.gd" id="3_cam"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://ui_theme.tres" id="5_p1ry8"]
+[ext_resource type="Script" uid="uid://dd2wwim3mrik1" path="res://scene/ui.gd" id="5_xlg7c"]
+[ext_resource type="Texture2D" uid="uid://ch6bkl47jj4nq" path="res://ui/coin_frame.png" id="7_ll5lq"]
+[ext_resource type="Texture2D" uid="uid://s7w0y5v2ytt5" path="res://ui/coin.png" id="8_17rxn"]
+[ext_resource type="Texture2D" uid="uid://iw3ffs5i3536" path="res://ui/bt_plus.png" id="9_17rxn"]
+[ext_resource type="Texture2D" uid="uid://dimpt62rlgxkg" path="res://ui/Frame_level_normal.png" id="10_yq8tf"]
+[ext_resource type="Texture2D" uid="uid://baliumf5sidoy" path="res://ui/heart_miss.png" id="11_sng2h"]
+[ext_resource type="Texture2D" uid="uid://vyt0d8kv0yd" path="res://ui/heart.png" id="12_5g16k"]
+[ext_resource type="Texture2D" uid="uid://dvwvtiqaqm43i" path="res://ui/setting.png" id="13_5g16k"]
+[ext_resource type="Texture2D" uid="uid://cobf6l40cl504" path="res://ui/arrow_quantity.png" id="14_81276"]
+[ext_resource type="Texture2D" uid="uid://b7iadh2ckqmnm" path="res://ui/bt_booster2.png" id="15_0lu6w"]
+[ext_resource type="Texture2D" uid="uid://d2pvhsc03q1ie" path="res://ui/bt_booster1.png" id="15_i6gbm"]
+[ext_resource type="Texture2D" uid="uid://njjgcsmsijxr" path="res://ui/booster_hint.png" id="16_i6gbm"]
+[ext_resource type="Texture2D" uid="uid://bytm58ytl8kho" path="res://ui/bt_quantity.png" id="18_ux4dc"]
+[ext_resource type="Texture2D" uid="uid://bwxixr301i2lw" path="res://ui/bt_booster_locked.png" id="19_jrd6n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]
+font_size = 48
+font_color = Color(0.38039216, 0.16470589, 0.05882353, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ve75"]
+font_size = 32
+outline_size = 5
+outline_color = Color(0.38039216, 0.16470589, 0.05882353, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dyrae"]
+font_size = 48
+outline_size = 4
+outline_color = Color(0.38039216, 0.16470589, 0.05882353, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_81276"]
+font_size = 32
+font_color = Color(0.42352942, 0.4, 0.59607846, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bf12e"]
+font_size = 28
+outline_size = 6
+outline_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_p1ry8"]
 font_size = 56
@@ -26,25 +63,397 @@ position = Vector2(-2500, -2500)
 [node name="LineContainer" type="Node2D" parent="MapContainer" unique_id=1856850075]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=75495182]
+script = ExtResource("5_xlg7c")
 
 [node name="PanelGame" type="Panel" parent="UI" unique_id=718461675]
 self_modulate = Color(0.3953672, 0.39536718, 0.39536715, 1)
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 80.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 theme = ExtResource("5_p1ry8")
 
-[node name="LabelLive" type="Label" parent="UI/PanelGame" unique_id=222997159]
+[node name="TopPanel" type="VBoxContainer" parent="UI/PanelGame" unique_id=1029020527]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 77.0
+offset_top = 31.0
+offset_bottom = 175.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "LIVE: "
-label_settings = SubResource("LabelSettings_p1ry8")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelGame/TopPanel" unique_id=889814970]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Coin" type="Control" parent="UI/PanelGame/TopPanel/HBoxContainer" unique_id=1198315297]
+custom_minimum_size = Vector2(275.37, 139.32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ImageFrame" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/Coin" unique_id=1244805258]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 29.0
+offset_right = 258.0
+offset_bottom = 114.0
+texture = ExtResource("7_ll5lq")
+stretch_mode = 4
+
+[node name="ImageCoin" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/Coin" unique_id=397459352]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 95.0
+offset_bottom = 128.0
+texture = ExtResource("8_17rxn")
+stretch_mode = 4
+
+[node name="ImagePlus" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/Coin" unique_id=1308389156]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 93.0
+offset_right = 109.0
+offset_bottom = 151.0
+texture = ExtResource("9_17rxn")
+stretch_mode = 4
+
+[node name="LabelScore" type="Label" parent="UI/PanelGame/TopPanel/HBoxContainer/Coin" unique_id=1032450818]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 37.0
+offset_right = 235.0
+offset_bottom = 103.0
+text = "1245"
+label_settings = SubResource("LabelSettings_6ai3d")
 horizontal_alignment = 1
+
+[node name="Level" type="Control" parent="UI/PanelGame/TopPanel/HBoxContainer" unique_id=939197945]
+custom_minimum_size = Vector2(278.21, 85.85)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ImageFrame" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/Level" unique_id=198017039]
+layout_mode = 0
+offset_right = 253.0
+offset_bottom = 91.021385
+texture = ExtResource("10_yq8tf")
+stretch_mode = 4
+
+[node name="TextLevel" type="Label" parent="UI/PanelGame/TopPanel/HBoxContainer/Level" unique_id=641604393]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 19.0
+offset_right = 97.0
+offset_bottom = 63.0
+text = "Level"
+label_settings = SubResource("LabelSettings_0ve75")
+horizontal_alignment = 1
+
+[node name="LabelLevel" type="Label" parent="UI/PanelGame/TopPanel/HBoxContainer/Level" unique_id=1254112284]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 10.0
+offset_right = 239.0
+offset_bottom = 76.0
+text = "999"
+label_settings = SubResource("LabelSettings_dyrae")
+horizontal_alignment = 1
+
+[node name="LiveContainer" type="HBoxContainer" parent="UI/PanelGame/TopPanel/HBoxContainer" unique_id=61217003]
+custom_minimum_size = Vector2(173.21, 41.29)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ImageLive1" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer" unique_id=626005864]
+layout_mode = 2
+texture = ExtResource("11_sng2h")
+stretch_mode = 2
+
+[node name="ImageFull" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer/ImageLive1" unique_id=1130725981]
+layout_mode = 0
+texture = ExtResource("12_5g16k")
+stretch_mode = 2
+
+[node name="ImageLive2" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer" unique_id=626279718]
+layout_mode = 2
+texture = ExtResource("11_sng2h")
+stretch_mode = 2
+
+[node name="ImageFull" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer/ImageLive2" unique_id=914600928]
+layout_mode = 0
+texture = ExtResource("12_5g16k")
+stretch_mode = 2
+
+[node name="ImageLive3" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer" unique_id=1341567901]
+layout_mode = 2
+texture = ExtResource("11_sng2h")
+stretch_mode = 2
+
+[node name="ImageFull" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer/ImageLive3" unique_id=1025728354]
+layout_mode = 0
+texture = ExtResource("12_5g16k")
+stretch_mode = 2
+
+[node name="ButtonSetting" type="TextureButton" parent="UI/PanelGame/TopPanel/HBoxContainer" unique_id=1515433849]
+custom_minimum_size = Vector2(131.885, 135.735)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("13_5g16k")
+ignore_texture_size = true
+
+[node name="Panel" type="Panel" parent="UI/PanelGame/TopPanel" unique_id=624172472]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/PanelGame/TopPanel/Panel" unique_id=72214491]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 27.0
+offset_right = 231.0
+offset_bottom = 92.0
+texture = ExtResource("14_81276")
+stretch_mode = 2
+
+[node name="LabelLine" type="Label" parent="UI/PanelGame/TopPanel/Panel/TextureRect" unique_id=1370495897]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 14.0
+offset_right = 156.0
+offset_bottom = 58.0
+text = "18"
+label_settings = SubResource("LabelSettings_81276")
+horizontal_alignment = 1
+
+[node name="BottomPanel" type="HBoxContainer" parent="UI/PanelGame" unique_id=1673585549]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -293.0
+offset_bottom = -82.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TextureButton" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=2079020333]
+layout_mode = 2
+texture_normal = ExtResource("15_i6gbm")
+
+[node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton" unique_id=141732299]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -62.0
+offset_right = 47.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_0lu6w")
+stretch_mode = 2
+
+[node name="TextureIcon" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton/TextureBackground" unique_id=44708875]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -62.0
+offset_right = 47.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_i6gbm")
+stretch_mode = 2
+
+[node name="TexturePlus" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton" unique_id=537779728]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 28.5
+offset_top = 44.5
+offset_right = 99.5
+offset_bottom = 122.28342
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_17rxn")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TextureButton2" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=1309223707]
+layout_mode = 2
+texture_normal = ExtResource("15_i6gbm")
+
+[node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton2" unique_id=210307831]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -62.0
+offset_right = 47.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_0lu6w")
+stretch_mode = 2
+
+[node name="TextureIcon" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton2/TextureBackground" unique_id=1452157694]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -62.0
+offset_right = 47.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_i6gbm")
+stretch_mode = 2
+
+[node name="TexturePlus" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton2" unique_id=458296414]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = 47.5
+offset_right = 88.0
+offset_bottom = 105.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_ux4dc")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="UI/PanelGame/BottomPanel/TextureButton2/TexturePlus" unique_id=2018685838]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "2"
+label_settings = SubResource("LabelSettings_bf12e")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureButton3" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=1275947394]
+layout_mode = 2
+texture_normal = ExtResource("15_i6gbm")
+
+[node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton3" unique_id=923472563]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -62.0
+offset_right = 47.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_0lu6w")
+stretch_mode = 2
+
+[node name="TextureIcon" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton3/TextureBackground" unique_id=1595968986]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -62.0
+offset_right = 47.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_i6gbm")
+stretch_mode = 2
+
+[node name="TexturePlus" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton3" unique_id=131164681]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = 47.5
+offset_right = 88.0
+offset_bottom = 105.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_ux4dc")
+stretch_mode = 2
+
+[node name="Label2" type="Label" parent="UI/PanelGame/BottomPanel/TextureButton3/TexturePlus" unique_id=1933966679]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "2"
+label_settings = SubResource("LabelSettings_bf12e")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureButton4" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=1326910989]
+layout_mode = 2
+texture_normal = ExtResource("15_i6gbm")
+
+[node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/TextureButton4" unique_id=1290132517]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -62.0
+offset_right = 47.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_jrd6n")
+stretch_mode = 2
+
+[node name="Label3" type="Label" parent="UI/PanelGame/BottomPanel/TextureButton4" unique_id=296736118]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -77.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Level 12"
+label_settings = SubResource("LabelSettings_bf12e")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PanelWelcome" type="Panel" parent="UI" unique_id=1689975266]
 anchors_preset = 15

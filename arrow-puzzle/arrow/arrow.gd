@@ -101,6 +101,9 @@ func exit(result: Game.ExitPathResult):
 func render():
 	if !data:
 		return
+	if !is_node_ready():
+		return
+	print("render" , data)
 	var pos: Vector2i = Vector2.ZERO
 	for i in range(data.cells.size()):
 		var c = data.cells[i]

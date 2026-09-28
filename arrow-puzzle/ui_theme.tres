@@ -1,7 +1,10 @@
 [gd_resource type="Theme" format=3 uid="uid://qg7210sv585g"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1ry8"]
-bg_color = Color(1, 1, 1, 1)
+[ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="1_touxu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_touxu"]
+bg_color = Color(0.012617188, 0.012617188, 0.012617188, 0)
 
 [resource]
-Panel/styles/panel = SubResource("StyleBoxFlat_p1ry8")
+Label/fonts/font = ExtResource("1_touxu")
+Panel/styles/panel = SubResource("StyleBoxFlat_touxu")

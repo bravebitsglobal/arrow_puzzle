@@ -11,14 +11,17 @@ config_version=5
 [application]
 
 config/name="Arrow Puzzle"
-run/main_scene="uid://b5tidnylue4h5"
+run/main_scene="uid://b7p0tflhctaw"
 config/features=PackedStringArray("4.7", "Forward Plus")
+boot_splash/show_image=false
+boot_splash/use_filter=false
+boot_splash/image="uid://be5uijgjmb6va"
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=600
-window/size/viewport_height=1000
+window/size/viewport_width=1080
+window/size/viewport_height=1920
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -30,4 +33,4 @@ window/stretch/aspect="expand"
 
 rendering_device/driver.windows="d3d12"
 textures/vram_compression/import_etc2_astc=true
-environment/defaults/default_clear_color=Color(1, 1, 1, 1)
+environment/defaults/default_clear_color=Color(0.92941177, 0.92156863, 0.99215686, 1)

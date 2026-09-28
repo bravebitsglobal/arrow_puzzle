@@ -6,7 +6,6 @@ var grid = [4248,4249,4250,4251,4252,4253,4348,4349,4350,4351,4352,4353,4448,444
 @onready var panel_welcome: Panel = $UI/PanelWelcome
 @onready var panel_lose: Panel = $UI/PanelLose
 @onready var button_restart: Button = $UI/PanelLose/ButtonRestart
-@onready var label_live: Label = $UI/PanelGame/LabelLive
 @onready var button_next_level: Button = $UI/PanelWin/ButtonNextLevel
 @onready var panel_win: Panel = $UI/PanelWin
 
@@ -14,24 +13,40 @@ var used_cells: Dictionary = {}
 @export var dot_scene: PackedScene
 var level_generator = LevelGenerator.new()
 @onready var dot_container: Node2D = $MapContainer/DotContainer
+@onready var live_container: HBoxContainer = $UI/PanelGame/TopPanel/HBoxContainer/LiveContainer
+@onready var label_line: Label = $UI/PanelGame/TopPanel/Panel/TextureRect/LabelLine
 
 @export var arrow_scene: PackedScene
-var level
+var level: Array
 var arrows: Array[Arrow] = []
+var total_line: int = 0
+var remain_line: int = 0:
+	set(value):
+		remain_line = value
+		label_line.text = str(remain_line)
 const MAX_LIVE = 3
-var live: int = MAX_LIVE
+var live: int:
+	set(value):
+		live = value
+		render_live()
 class ExitPathResult:
 	var can_exit: bool
 	var exit_path: PackedInt32Array
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	button_start_game.pressed.connect(_on_button_start_game_click)
 	button_restart.pressed.connect(_on_button_restart_game_click)
-	label_live.text = "LIVE: " + str(live)
 	button_next_level.pressed.connect(_on_button_start_game_click)
+	live = 2
+	remain_line = 123
+func render_live()->void:
+	if !live_container:
+		return
+	for i in range(MAX_LIVE):
+		live_container.get_child(i).get_child(0).visible = i < live
 func render_level():
 	live = MAX_LIVE
-	label_live.text = "LIVE: " + str(live)
+	total_line = level.size()
+	remain_line = total_line
 	for c in line_container.get_children():
 		c.queue_free()
 	for a in arrows:
@@ -59,9 +74,9 @@ func _on_arrow_clicked(idx: int):
 	var rs = calculate_exit_path(level[idx])
 	if rs.can_exit:
 		remove_arrow(idx)
+		remain_line = remain_line - 1
 	else:
 		live = live - 1
-		label_live.text = "LIVE: " + str(live)
 	arrows[idx].exit(rs)
 	
 func on_move_finish():

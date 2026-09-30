@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://doogqst4lx4vj"]
+
+[ext_resource type="Texture2D" uid="uid://be5uijgjmb6va" path="res://ui/loading/BG.png" id="1_g0qo3"]
+[ext_resource type="Texture2D" uid="uid://inyqrwckl8to" path="res://effect/c1.png" id="2_bq37b"]
+[ext_resource type="Texture2D" uid="uid://sylskqp12fr5" path="res://effect/c2.png" id="3_32ycj"]
+[ext_resource type="Texture2D" uid="uid://vnkhhrs7gdhl" path="res://effect/c3.png" id="4_86mj7"]
+[ext_resource type="Texture2D" uid="uid://cy0ha33gfbc7p" path="res://effect/c4.png" id="5_gsudd"]
+
+[sub_resource type="Gradient" id="Gradient_dpcc6"]
+offsets = PackedFloat32Array(0, 0.75619835, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Finish" type="Control" unique_id=1534269906]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="." unique_id=39599993]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_g0qo3")
+expand_mode = 1
+
+[node name="Effect" type="Control" parent="." unique_id=119619838]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Effect" unique_id=1103792130]
+position = Vector2(524, -128)
+texture = ExtResource("2_bq37b")
+lifetime = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(500, 100)
+gravity = Vector2(0, 200)
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+color_ramp = SubResource("Gradient_dpcc6")
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Effect" unique_id=2086719166]
+position = Vector2(524, -128)
+texture = ExtResource("3_32ycj")
+lifetime = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(500, 100)
+gravity = Vector2(0, 200)
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+color_ramp = SubResource("Gradient_dpcc6")
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="Effect" unique_id=1634245115]
+position = Vector2(524, -128)
+texture = ExtResource("4_86mj7")
+lifetime = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(500, 100)
+gravity = Vector2(0, 200)
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+color_ramp = SubResource("Gradient_dpcc6")
+
+[node name="CPUParticles2D4" type="CPUParticles2D" parent="Effect" unique_id=1645195999]
+position = Vector2(524, -128)
+texture = ExtResource("5_gsudd")
+lifetime = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(500, 100)
+gravity = Vector2(0, 200)
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+color_ramp = SubResource("Gradient_dpcc6")

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cweainaq47u2x"]
+
+[ext_resource type="Script" uid="uid://duwvc3ij8u64e" path="res://component/button_effect.gd" id="1_yyh3q"]
+
+[node name="ButtonEffect" type="Control" unique_id=941576423]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_yyh3q")

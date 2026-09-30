@@ -83,7 +83,7 @@ func exit(result: Game.ExitPathResult):
 	if tween:
 		tween.kill()
 	tween = create_tween()
-	var move_distance = (exit_path.size() - data.cells.size())* CELL_SIZE
+	var move_distance = (exit_path.size() - data.cells.size()) * CELL_SIZE
 	var dur = float(move_distance) / SPEED
 	tween.tween_property(self, 'tail_progress', move_distance, dur)
 	tween.parallel().tween_property(self, 'head_progress', move_distance + arrow_size, dur)
@@ -103,7 +103,6 @@ func render():
 		return
 	if !is_node_ready():
 		return
-	print("render" , data)
 	var pos: Vector2i = Vector2.ZERO
 	for i in range(data.cells.size()):
 		var c = data.cells[i]
@@ -113,7 +112,7 @@ func render():
 	head.visible = true
 	go_in()
 func update_line():
-	var start = floor(tail_progress / CELL_SIZE)
+	var start = ceil(tail_progress / CELL_SIZE)
 	var end = ceil(head_progress / CELL_SIZE) - 1
 	var tail_weight = float((int(tail_progress) % CELL_SIZE) / float(CELL_SIZE))
 	line_2d.set_point_position(0, Utils.index_to_pos(exit_path[start]).lerp(Utils.index_to_pos(exit_path[start+1]), tail_weight))

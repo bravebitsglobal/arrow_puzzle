@@ -26,6 +26,10 @@ var _last_pinch_dist: float = 0.0
 var _last_pinch_center: Vector2 = Vector2.ZERO
 var _is_pinch: bool = false
 var _is_dragging: bool = false
+# Sau khi pinch, khóa pan 1 ngón cho tới khi nhấc hết tay (tránh giật khi nhấc ngón lệch nhau)
+var _pinch_lock: bool = false
+# Điểm màn hình giữ cố định khi zoom (áp dụng dần trong _process theo zoom thực tế)
+var _zoom_anchor: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -36,15 +40,22 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if zoom_smooth_speed > 0.0:
+	var old_zoom: Vector2 = zoom
+	if zoom_smooth_speed > 0.0 and not _is_pinch:
 		zoom = zoom.lerp(_target_zoom, clampf(delta * zoom_smooth_speed, 0.0, 1.0))
 	else:
+		# Pinch: bám tay 1:1, không làm mượt để không trôi sau khi nhả
 		zoom = _target_zoom
+	if old_zoom != zoom:
+		_apply_anchor_compensation(old_zoom, zoom)
 	if limit_bounds:
 		_clamp_position_to_bounds()
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Bỏ qua sự kiện chuột giả lập từ touch, touch đã được xử lý riêng
+	if event is InputEventMouse and event.device == InputEvent.DEVICE_ID_EMULATION:
+		return
 	# Chuột: wheel zoom
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
@@ -80,7 +91,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			# Không đang pinch bằng touch thì mới pan bằng chuột
 			var delta: Vector2 = event.relative
 			# relative ở screen space -> chia cho zoom để ra world space, đảo chiều
-			position -= delta / _target_zoom
+			position -= delta / zoom
 			if limit_bounds:
 				_clamp_position_to_bounds()
 			get_viewport().set_input_as_handled()
@@ -91,22 +102,24 @@ func _handle_screen_touch(event: InputEventScreenTouch) -> void:
 		_touches[event.index] = event.position
 	else:
 		_touches.erase(event.index)
-		_is_pinch = _touches.size() >= 2
 
-	if _touches.size() == 2:
+	if _touches.size() >= 2:
 		_is_pinch = true
+		_pinch_lock = true
 		var pts: Array = _touch_points()
 		_last_pinch_dist = pts[0].distance_to(pts[1])
 		_last_pinch_center = (pts[0] + pts[1]) * 0.5
-	elif _touches.size() < 2:
+	else:
 		_last_pinch_dist = 0.0
 		_is_pinch = false
+		if _touches.is_empty():
+			_pinch_lock = false
 
 
 func _handle_screen_drag(event: InputEventScreenDrag) -> void:
 	_touches[event.index] = event.position
 
-	if _touches.size() >= 2 and pan_enabled:
+	if _touches.size() >= 2:
 		var pts: Array = _touch_points()
 		var cur_dist: float = pts[0].distance_to(pts[1])
 		var cur_center: Vector2 = (pts[0] + pts[1]) * 0.5
@@ -119,18 +132,18 @@ func _handle_screen_drag(event: InputEventScreenDrag) -> void:
 			_add_zoom(factor, cur_center)
 			# Pan theo di chuyển của tâm pinch (hai ngón trượt cùng chiều)
 			var center_delta: Vector2 = cur_center - _last_pinch_center
-			if center_delta.length_squared() > 0.01:
-				position -= center_delta / _target_zoom
+			if pan_enabled and center_delta.length_squared() > 0.01:
+				position -= center_delta / zoom
 				if limit_bounds:
 					_clamp_position_to_bounds()
 
 		_last_pinch_dist = cur_dist
 		_last_pinch_center = cur_center
 		get_viewport().set_input_as_handled()
-	elif _touches.size() == 1 and pan_enabled:
+	elif _touches.size() == 1 and pan_enabled and not _pinch_lock:
 		# 1 ngón: pan theo finger
 		var delta: Vector2 = event.relative
-		position -= delta / _target_zoom
+		position -= delta / zoom
 		if limit_bounds:
 			_clamp_position_to_bounds()
 		get_viewport().set_input_as_handled()
@@ -149,24 +162,30 @@ func _add_zoom(factor: float, screen_anchor: Vector2) -> void:
 	var new_zoom: Vector2 = _target_zoom * factor
 	new_zoom.x = clampf(new_zoom.x, min_zoom_value, max_zoom_value)
 	new_zoom.y = clampf(new_zoom.y, min_zoom_value, max_zoom_value)
-
-	if zoom_at_cursor:
-		# Giữ điểm thế giới dưới con trỏ cố định khi đổi zoom.
-		var vp_size: Vector2 = get_viewport_rect().size
-		# Công thức: world = pos + (screen - vp/2) / zoom
-		# => new_pos = old_pos + (screen - vp/2) * (1/old_zoom - 1/new_zoom)
-		var screen_offset: Vector2 = screen_anchor - vp_size * 0.5
-		# Tránh chia 0
-		if _target_zoom.x != 0.0 and _target_zoom.y != 0.0 and new_zoom.x != 0.0 and new_zoom.y != 0.0:
-			var diff: Vector2 = Vector2(
-				screen_offset.x * (1.0 / _target_zoom.x - 1.0 / new_zoom.x),
-				screen_offset.y * (1.0 / _target_zoom.y - 1.0 / new_zoom.y)
-			)
-			position += diff
-
 	_target_zoom = new_zoom
-	if limit_bounds:
-		_clamp_position_to_bounds()
+	_zoom_anchor = screen_anchor
+
+	if _is_pinch or zoom_smooth_speed <= 0.0:
+		# Áp ngay để camera bám tay; bù vị trí theo zoom thực tế
+		var old_zoom: Vector2 = zoom
+		zoom = _target_zoom
+		_apply_anchor_compensation(old_zoom, zoom)
+		if limit_bounds:
+			_clamp_position_to_bounds()
+
+
+## Giữ điểm thế giới dưới _zoom_anchor cố định khi zoom thực tế đổi từ old_zoom -> new_zoom.
+## world = pos + (screen - vp/2) / zoom  =>  pos += (screen - vp/2) * (1/old - 1/new)
+func _apply_anchor_compensation(old_zoom: Vector2, new_zoom: Vector2) -> void:
+	if not zoom_at_cursor:
+		return
+	if old_zoom.x == 0.0 or old_zoom.y == 0.0 or new_zoom.x == 0.0 or new_zoom.y == 0.0:
+		return
+	var screen_offset: Vector2 = _zoom_anchor - get_viewport_rect().size * 0.5
+	position += Vector2(
+		screen_offset.x * (1.0 / old_zoom.x - 1.0 / new_zoom.x),
+		screen_offset.y * (1.0 / old_zoom.y - 1.0 / new_zoom.y)
+	)
 
 
 func _clamp_target_zoom() -> void:

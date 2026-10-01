@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://08iwkk13f8v1"]
 
 [ext_resource type="Script" uid="uid://cw7vlvo1hvmjq" path="res://arrow/arrow.gd" id="1_jp72l"]
-[ext_resource type="Texture2D" uid="uid://0nkudhmgvs17" path="res://arrow/dau.png" id="14_6wsgo"]
-[ext_resource type="Texture2D" uid="uid://detmpcvjg87rc" path="res://arrow/than ngang.png" id="14_8do8b"]
+[ext_resource type="Texture2D" uid="uid://b0dtngvrchg58" path="res://arrow/body_7.png" id="2_d2qln"]
+[ext_resource type="Texture2D" uid="uid://b8nxuvoentg6e" path="res://arrow/kid_pink_light.png" id="3_d2qln"]
 
 [node name="Arrow" type="Node2D" unique_id=1825271717]
 self_modulate = Color(0, 0, 0, 1)
@@ -11,20 +11,21 @@ script = ExtResource("1_jp72l")
 
 [node name="Line2D" type="Line2D" parent="." unique_id=678615301]
 width = 40.0
-texture = ExtResource("14_8do8b")
+texture = ExtResource("2_d2qln")
 texture_mode = 1
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
+round_precision = 16
 
 [node name="Head" type="Node2D" parent="." unique_id=1303642838]
 scale = Vector2(1.3167543, 1.3167543)
 
 [node name="Dau" type="Sprite2D" parent="Head" unique_id=1780429543]
-scale = Vector2(0.5208063, 0.5208063)
-texture = ExtResource("14_6wsgo")
+scale = Vector2(0.51444364, 0.51444364)
+texture = ExtResource("3_d2qln")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2055958979]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1159130842]
-polygon = PackedVector2Array(-21, 8, 28, -32, 43, 5)
+polygon = PackedVector2Array(-31, 24, -31, -36, 40, -36, 40, 24)

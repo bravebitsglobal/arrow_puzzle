@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://pk33wb3a1drh"]
+
+[ext_resource type="Script" uid="uid://dp4ny58hye3m8" path="res://scene/global/ad_manager.gd" id="1_pacd0"]
+
+[node name="AdManager" type="Control" unique_id=2111333994]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_pacd0")

@@ -38,7 +38,7 @@ func _init(uid: int):
 var _on_user_earned_reward_listener: OnUserEarnedRewardListener
 
 
-func show(on_user_earned_reward_listener := OnUserEarnedRewardListener.new()) -> void:
+func show_reward_ads(on_user_earned_reward_listener := OnUserEarnedRewardListener.new()) -> void:
 	if _plugin:
 		self._on_user_earned_reward_listener = on_user_earned_reward_listener
 		_plugin.show(_uid)

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://drbwjccs4vt5v"]
 
 [ext_resource type="Script" uid="uid://cvxy3peiusjwn" path="res://scene/global/global.gd" id="1_7dyo8"]
+[ext_resource type="PackedScene" uid="uid://pk33wb3a1drh" path="res://scene/global/ad_manager.tscn" id="2_388lc"]
 
 [node name="Global" type="Control" unique_id=89037677]
 layout_mode = 3
@@ -10,3 +11,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7dyo8")
+
+[node name="AdManager" parent="." unique_id=2111333994 instance=ExtResource("2_388lc")]
+layout_mode = 0

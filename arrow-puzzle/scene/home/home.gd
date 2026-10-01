@@ -11,15 +11,15 @@ const DEFAULT_ACTIVE_TAB = 2
 func _ready() -> void:
 	change_active_tab(DEFAULT_ACTIVE_TAB)
 	bind_tab_buttons()
-	Global.level.subscribe(func (level):
+	Global.game_data.level.subscribe(func (level):
 		label_level.text = "Level " + str(level)
 		label_level.visible = level > 0
 		)
 	button_play.pressed.connect(func():
 		get_tree().change_scene_to_file("res://scene/game/game.tscn")
-		Global.level.value = Global.level.value + 1
+		Global.game_data.level.value = Global.game_data.level.value + 1
 		)
-	Global.coins.subscribe(func (coins):
+	Global.game_data.coins.subscribe(func (coins):
 		label_coins.text = str(coins)
 		)
 func bind_tab_buttons():

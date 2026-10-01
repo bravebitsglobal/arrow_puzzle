@@ -110,10 +110,11 @@ func render():
 		line_2d.add_point(Utils.index_to_pos(data.cells[0]))
 	head.position = Vector2(pos.x * CELL_SIZE, pos.y * CELL_SIZE)
 	head.visible = true
+	#head.rotation_degrees = ROTATES[data.exit_dir]
 	go_in()
 func update_line():
-	var start = ceil(tail_progress / CELL_SIZE)
-	var end = ceil(head_progress / CELL_SIZE) - 1
+	var start = floor(tail_progress / CELL_SIZE)
+	var end = floor(head_progress / CELL_SIZE) - 1
 	var tail_weight = float((int(tail_progress) % CELL_SIZE) / float(CELL_SIZE))
 	line_2d.set_point_position(0, Utils.index_to_pos(exit_path[start]).lerp(Utils.index_to_pos(exit_path[start+1]), tail_weight))
 	for i in range(start+1, start + data.cells.size()):

@@ -2,12 +2,8 @@ extends Node2D
 class_name Game
 var grid = [4248,4249,4250,4251,4252,4253,4348,4349,4350,4351,4352,4353,4448,4449,4450,4451,4452,4453,4548,4549,4550,4551,4552,4553,4648,4649,4650,4651,4652,4653,4748,4749,4750,4751,4752,4753,4848,4849,4850,4851,4852,4853,4948,4949,4950,4951,4952,4953,5048,5049,5050,5051,5052,5053,5148,5149,5150,5151,5152,5153,5248,5249,5250,5251,5252,5253,5348,5349,5350,5351,5352,5353,5448,5449,5450,5451,5452,5453,5548,5549,5550,5551,5552,5553]
 @onready var line_container: Node2D = $MapContainer/LineContainer
-@onready var button_start_game: Button = $UI/PanelWelcome/ButtonStartGame
-@onready var panel_welcome: Panel = $UI/PanelWelcome
-@onready var panel_lose: Panel = $UI/PanelLose
 @onready var button_restart: Button = $UI/PanelLose/ButtonRestart
 @onready var button_next_level: Button = $UI/PanelWin/ButtonNextLevel
-@onready var panel_win: Panel = $UI/PanelWin
 
 var used_cells: Dictionary = {}
 @export var dot_scene: PackedScene
@@ -38,20 +34,13 @@ class ExitPathResult:
 	var can_exit: bool
 	var exit_path: PackedInt32Array
 func _ready() -> void:
-	button_start_game.pressed.connect(_on_button_start_game_click)
-	button_restart.pressed.connect(_on_button_restart_game_click)
-	button_next_level.pressed.connect(_on_button_start_game_click)
 	next_level()
-	button_claim.pressed.connect(claim_win_reward)
-	Global.level.subscribe(func(lvl):
+	Global.game_data.level.subscribe(func(lvl):
 		label_level.text = str(lvl))
-	Global.coins.subscribe(func(coins):
+	Global.game_data.coins.subscribe(func(coins):
 		label_coin.text = str(coins))
-func claim_win_reward():
-	Global.level.value = Global.level.value + 1
-	Global.coins.value = Global.coins.value + Global.COINS_PER_LEVEL
-	Global.save_data()
-	next_level()
+	Global.game_event.game_next_level.connect(func():
+		next_level())
 func render_live()->void:
 	if !live_container:
 		return
@@ -113,7 +102,7 @@ func move_camera_to_center()->void:
 	print("move camera to ", center)
 func on_move_finish():
 	if !live:
-		panel_lose.visible = true
+		Global.game_event.request_visible_game_panel.emit("panel_game_try_again", true)
 		return
 	if !used_cells.size():
 		var is_done = true
@@ -121,7 +110,7 @@ func on_move_finish():
 			if a.action != Arrow.Action.Exited:
 				is_done = false
 		if is_done:
-			panel_win.visible = true
+			Global.game_event.request_visible_game_panel.emit("panel_game_win", true)
 func remove_arrow(idx: int):
 	for c in level[idx].cells:
 		used_cells.erase(c)
@@ -162,16 +151,8 @@ func calculate_exit_path(data)->ExitPathResult:
 					break
 	result.exit_path = exit_path
 	return result
-func _on_button_start_game_click():
-	next_level()
 func next_level()->void:
 	level = level_generator.generate_level(grid, 3)
 	live = 2
 	move_camera_to_center()
 	render_level()
-	panel_welcome.visible = false
-	panel_win.visible = false
-func _on_button_restart_game_click():
-	render_level()
-	move_camera_to_center()
-	panel_lose.visible = false

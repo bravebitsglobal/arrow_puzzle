@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dervte5l8du6m"]
 
-[ext_resource type="Script" uid="uid://bpfs85jywhrik" path="res://scene/panel/try_again/panel_try_again.gd" id="1_qbc25"]
+[ext_resource type="Script" uid="uid://bpfs85jywhrik" path="res://scene/popup/popup_try_again/popup_try_again.gd" id="1_78cf6"]
 [ext_resource type="Texture2D" uid="uid://c88crrkv61f0j" path="res://ui/lose/Pop-up BG.png" id="2_pwda7"]
 [ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="3_6foxi"]
 [ext_resource type="Texture2D" uid="uid://bm4h0hoomixua" path="res://ui/lose/bt_close.png" id="4_t45hy"]
@@ -30,25 +30,16 @@ font_color = Color(0.9607843, 0.8901961, 0.78039217, 1)
 shadow_size = 15
 shadow_color = Color(0.18039216, 0.37254903, 0.15686275, 1)
 
-[node name="PanelTryAgain" type="Control" unique_id=747965437]
+[node name="PopupTryAgain" type="Control" unique_id=1951886399]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_qbc25")
+script = ExtResource("1_78cf6")
 
-[node name="Background" type="ColorRect" parent="." unique_id=68818815]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.78431374)
-
-[node name="Window" type="TextureRect" parent="Background" unique_id=761001646]
+[node name="Window" type="TextureRect" parent="." unique_id=761001646]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,7 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_pwda7")
 
-[node name="LabelTitle" type="Label" parent="Background/Window" unique_id=1825850572]
+[node name="LabelTitle" type="Label" parent="Window" unique_id=1825850572]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -74,7 +65,7 @@ text = "Level 20"
 label_settings = SubResource("LabelSettings_pwda7")
 horizontal_alignment = 1
 
-[node name="ButtonClose" type="TextureButton" parent="Background/Window" unique_id=883166287]
+[node name="ButtonClose" type="TextureButton" parent="Window" unique_id=883166287]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -86,10 +77,10 @@ offset_bottom = 128.0
 grow_horizontal = 0
 texture_normal = ExtResource("4_t45hy")
 
-[node name="ButtonEffect" parent="Background/Window/ButtonClose" unique_id=941576423 instance=ExtResource("5_46pam")]
+[node name="ButtonEffect" parent="Window/ButtonClose" unique_id=941576423 instance=ExtResource("5_46pam")]
 layout_mode = 0
 
-[node name="Content" type="TextureRect" parent="Background/Window" unique_id=1374292639]
+[node name="Content" type="TextureRect" parent="Window" unique_id=1374292639]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -104,7 +95,7 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("6_6ribx")
 
-[node name="TextureRect" type="TextureRect" parent="Background/Window/Content" unique_id=1719092622]
+[node name="TextureRect" type="TextureRect" parent="Window/Content" unique_id=1719092622]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -119,7 +110,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_k54kv")
 
-[node name="TextureRect" type="TextureRect" parent="Background/Window/Content/TextureRect" unique_id=1964698740]
+[node name="TextureRect" type="TextureRect" parent="Window/Content/TextureRect" unique_id=1964698740]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -134,7 +125,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("8_k54kv")
 
-[node name="Label" type="Label" parent="Background/Window/Content/TextureRect" unique_id=474397779]
+[node name="Label" type="Label" parent="Window/Content/TextureRect" unique_id=474397779]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -148,7 +139,7 @@ text = "Level Failed!"
 label_settings = SubResource("LabelSettings_ipw5r")
 horizontal_alignment = 1
 
-[node name="ButtonTryAgain" type="TextureButton" parent="Background/Window/Content" unique_id=1164125819]
+[node name="ButtonTryAgain" type="TextureButton" parent="Window/Content" unique_id=1164125819]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -163,7 +154,7 @@ grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("8_ipw5r")
 
-[node name="Label" type="Label" parent="Background/Window/Content/ButtonTryAgain" unique_id=140708135]
+[node name="Label" type="Label" parent="Window/Content/ButtonTryAgain" unique_id=140708135]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -175,5 +166,5 @@ label_settings = SubResource("LabelSettings_6ai3d")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonEffect" parent="Background/Window/Content/ButtonTryAgain" unique_id=77911909 instance=ExtResource("5_46pam")]
+[node name="ButtonEffect" parent="Window/Content/ButtonTryAgain" unique_id=77911909 instance=ExtResource("5_46pam")]
 layout_mode = 0

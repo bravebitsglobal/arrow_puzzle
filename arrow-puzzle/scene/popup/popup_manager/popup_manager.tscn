@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cr7rrwr8t3mi3"]
+
+[ext_resource type="Script" uid="uid://dctrcpen1n26e" path="res://scene/popup/popup_manager/popup_manager.gd" id="1_tyu2s"]
+[ext_resource type="PackedScene" uid="uid://xow6tcdxccv1" path="res://scene/popup/popup_win/popup_win.tscn" id="2_1st13"]
+[ext_resource type="PackedScene" uid="uid://dervte5l8du6m" path="res://scene/popup/popup_try_again/popup_try_again.tscn" id="3_gg3ps"]
+
+[node name="PopupManager" type="Control" unique_id=999376964]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_tyu2s")
+popup_scene = Dictionary[int, PackedScene]({
+0: ExtResource("2_1st13"),
+1: ExtResource("3_gg3ps")
+})

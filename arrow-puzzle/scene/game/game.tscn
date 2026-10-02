@@ -14,12 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://vyt0d8kv0yd" path="res://ui/heart.png" id="12_5g16k"]
 [ext_resource type="Texture2D" uid="uid://dvwvtiqaqm43i" path="res://ui/setting.png" id="13_5g16k"]
 [ext_resource type="Texture2D" uid="uid://cobf6l40cl504" path="res://ui/arrow_quantity.png" id="14_81276"]
+[ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="14_mq16h"]
 [ext_resource type="Texture2D" uid="uid://b7iadh2ckqmnm" path="res://ui/bt_booster2.png" id="15_0lu6w"]
 [ext_resource type="Texture2D" uid="uid://d2pvhsc03q1ie" path="res://ui/bt_booster1.png" id="15_i6gbm"]
 [ext_resource type="Texture2D" uid="uid://njjgcsmsijxr" path="res://ui/booster_hint.png" id="16_i6gbm"]
 [ext_resource type="Texture2D" uid="uid://bytm58ytl8kho" path="res://ui/bt_quantity.png" id="18_ux4dc"]
 [ext_resource type="Texture2D" uid="uid://bwxixr301i2lw" path="res://ui/bt_booster_locked.png" id="19_jrd6n"]
-[ext_resource type="PackedScene" uid="uid://xow6tcdxccv1" path="res://scene/panel/panel_win.tscn" id="20_mq16h"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]
 font_size = 48
@@ -203,6 +203,9 @@ layout_mode = 2
 size_flags_vertical = 4
 texture_normal = ExtResource("13_5g16k")
 ignore_texture_size = true
+
+[node name="ButtonEffect" parent="UI/PanelGame/TopPanel/HBoxContainer/ButtonSetting" unique_id=941576423 instance=ExtResource("14_mq16h")]
+layout_mode = 0
 
 [node name="Panel" type="Panel" parent="UI/PanelGame/TopPanel" unique_id=624172472]
 custom_minimum_size = Vector2(0, 100)
@@ -496,6 +499,3 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 56
 text = "Restart Game"
-
-[node name="PanelWin2" parent="UI" unique_id=1661973021 instance=ExtResource("20_mq16h")]
-visible = false

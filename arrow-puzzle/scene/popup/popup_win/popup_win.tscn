@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://xow6tcdxccv1"]
 
-[ext_resource type="Script" uid="uid://b8c3n3h3x17g0" path="res://scene/panel/panel_win.gd" id="1_5rx4v"]
+[ext_resource type="Script" uid="uid://b8c3n3h3x17g0" path="res://scene/popup/popup_win/popup_win.gd" id="1_5rx4v"]
 [ext_resource type="Texture2D" uid="uid://inyqrwckl8to" path="res://effect/c1.png" id="2_lh1a0"]
 [ext_resource type="Texture2D" uid="uid://sylskqp12fr5" path="res://effect/c2.png" id="3_h3cli"]
 [ext_resource type="Texture2D" uid="uid://vnkhhrs7gdhl" path="res://effect/c3.png" id="4_3wcf4"]
@@ -42,7 +42,7 @@ font_color = Color(0.972549, 0.92941177, 0.827451, 1)
 outline_size = 15
 outline_color = Color(0.5254902, 0.19215687, 0.003921569, 1)
 
-[node name="PanelWin" type="Control" unique_id=1661973021]
+[node name="PopupWin" type="Control" unique_id=1661973021]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,16 +50,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5rx4v")
-
-[node name="ColorRect" type="ColorRect" parent="." unique_id=79039165]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.76862746)
-metadata/_edit_lock_ = true
 
 [node name="ButtonNextLevel" type="Button" parent="." unique_id=1026478304]
 visible = false

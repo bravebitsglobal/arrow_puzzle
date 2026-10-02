@@ -39,8 +39,10 @@ func _ready() -> void:
 		label_level.text = str(lvl))
 	Global.game_data.coins.subscribe(func(coins):
 		label_coin.text = str(coins))
-	Global.game_event.game_next_level.connect(func():
+	Global.game_event.game_start.connect(func():
 		next_level())
+	Global.game_event.game_restart.connect(func():
+		restart())
 func render_live()->void:
 	if !live_container:
 		return
@@ -57,6 +59,7 @@ func render_level():
 	arrows.clear()
 	for d in dot_container.get_children():
 		d.queue_free()
+	await get_tree().process_frame
 	for arrow_idx in range(level.size()):
 		var a = level[arrow_idx]
 		var arrow: Arrow = arrow_scene.instantiate()
@@ -99,10 +102,9 @@ func move_camera_to_center()->void:
 		(left_top.x + right_bottom.x) / 2 * Utils.cell_size, 
 		(left_top.y + right_bottom.y) / 2 * Utils.cell_size)
 	camera_2d.position = center
-	print("move camera to ", center)
 func on_move_finish():
 	if !live:
-		Global.game_event.request_visible_game_panel.emit("panel_game_try_again", true)
+		Global.game_event.request_visible_popup.emit(PopupManager.PopupType.GameTryAgain, true)
 		return
 	if !used_cells.size():
 		var is_done = true
@@ -110,7 +112,7 @@ func on_move_finish():
 			if a.action != Arrow.Action.Exited:
 				is_done = false
 		if is_done:
-			Global.game_event.request_visible_game_panel.emit("panel_game_win", true)
+			Global.game_event.request_visible_popup.emit(PopupManager.PopupType.GameWin, true)
 func remove_arrow(idx: int):
 	for c in level[idx].cells:
 		used_cells.erase(c)
@@ -153,6 +155,10 @@ func calculate_exit_path(data)->ExitPathResult:
 	return result
 func next_level()->void:
 	level = level_generator.generate_level(grid, 3)
+	live = 2
+	move_camera_to_center()
+	render_level()
+func restart()->void:
 	live = 2
 	move_camera_to_center()
 	render_level()

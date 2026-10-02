@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cvxy3peiusjwn" path="res://scene/global/global.gd" id="1_7dyo8"]
 [ext_resource type="PackedScene" uid="uid://pk33wb3a1drh" path="res://scene/global/ad_manager.tscn" id="2_388lc"]
+[ext_resource type="PackedScene" uid="uid://cr7rrwr8t3mi3" path="res://scene/popup/popup_manager/popup_manager.tscn" id="3_2q1o6"]
 
 [node name="Global" type="Control" unique_id=89037677]
 layout_mode = 3
@@ -10,7 +11,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_7dyo8")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=695521333]
+layer = 10
+
+[node name="PopupManager" parent="CanvasLayer" unique_id=999376964 instance=ExtResource("3_2q1o6")]
+z_index = 100
+
 [node name="AdManager" parent="." unique_id=2111333994 instance=ExtResource("2_388lc")]
-layout_mode = 0
+layout_mode = 1

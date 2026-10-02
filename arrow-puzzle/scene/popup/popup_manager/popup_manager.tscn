@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dctrcpen1n26e" path="res://scene/popup/popup_manager/popup_manager.gd" id="1_tyu2s"]
 [ext_resource type="PackedScene" uid="uid://xow6tcdxccv1" path="res://scene/popup/popup_win/popup_win.tscn" id="2_1st13"]
 [ext_resource type="PackedScene" uid="uid://dervte5l8du6m" path="res://scene/popup/popup_try_again/popup_try_again.tscn" id="3_gg3ps"]
+[ext_resource type="PackedScene" uid="uid://nu2fkq0bwtof" path="res://ui/loading/popup_loading.tscn" id="4_gg3ps"]
 
 [node name="PopupManager" type="Control" unique_id=999376964]
 layout_mode = 3
@@ -17,3 +18,7 @@ popup_scene = Dictionary[int, PackedScene]({
 0: ExtResource("2_1st13"),
 1: ExtResource("3_gg3ps")
 })
+
+[node name="PopupLoading" parent="." unique_id=1307776011 instance=ExtResource("4_gg3ps")]
+visible = false
+layout_mode = 1

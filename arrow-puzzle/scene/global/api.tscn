@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://fe1erw0naqke"]
+
+[ext_resource type="Script" uid="uid://diko45vy74ekx" path="res://scene/global/api.gd" id="1_api"]
+
+[node name="API" type="Control" unique_id=1940940579]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_api")
+api_endpoint = "https://gamehub.bravebits.ai/api"
+game_token = "ghk_wxMMS4E4_E_UMYuBZEtaLmmCBN1jhg4B"

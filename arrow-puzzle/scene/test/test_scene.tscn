@@ -30,6 +30,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 30
 
+[node name="ButtonRegister" type="Button" parent="VBoxContainer" unique_id=148574508]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Register"
+
+[node name="ButtonGetLevel" type="Button" parent="VBoxContainer" unique_id=412958575]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Get Level"
+
 [node name="ButtonReward" type="Button" parent="VBoxContainer" unique_id=1607050619]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48

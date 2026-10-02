@@ -67,15 +67,15 @@ func render_level():
 		arrow.set_data(a)
 		arrow.move_finish.connect(on_move_finish)
 		arrows.append(arrow)
-		for c in a.cells:
+		for c in a:
 			var pos = Utils.index_to_pos(c)
 			var dot = dot_scene.instantiate()
 			dot.position = pos
 			dot_container.add_child(dot)
+			used_cells[c] = true
 		arrow.on_click.connect(func ():
 			_on_arrow_clicked(arrow_idx))
-		for i in a.cells:
-			used_cells[i] = true
+			
 func _on_arrow_clicked(idx: int):
 	var rs = calculate_exit_path(level[idx])
 	if rs.can_exit:
@@ -85,10 +85,10 @@ func _on_arrow_clicked(idx: int):
 		live = live - 1
 	arrows[idx].exit(rs)
 func move_camera_to_center()->void:
-	var left_top: Vector2 = Utils.to_xy(level[0].cells[0])
-	var right_bottom: Vector2 = Utils.to_xy(level[0].cells[0])
+	var left_top: Vector2 = Utils.to_xy(level[0][0])
+	var right_bottom: Vector2 = Utils.to_xy(level[0][0])
 	for arrow in level:
-		for cell in arrow.cells:
+		for cell in arrow:
 			var xy = Utils.to_xy(cell)
 			if left_top.x > xy.x:
 				left_top.x = xy.x
@@ -114,37 +114,37 @@ func on_move_finish():
 		if is_done:
 			Global.game_event.request_visible_popup.emit(PopupManager.PopupType.GameWin, true)
 func remove_arrow(idx: int):
-	for c in level[idx].cells:
+	for c in level[idx]:
 		used_cells.erase(c)
 func calculate_exit_path(data)->ExitPathResult:
 	var result = ExitPathResult.new()
-	var exit_path = data.cells.duplicate()
-	var head_index = data.cells[data.cells.size()-1]
+	var exit_path = data.duplicate()
+	var head_index = data[data.size()-1]
 	var head_pos = Utils.to_xy(head_index)
 	result.can_exit = true
-	match(data.exit_dir):
-		0:
+	match(Utils.get_exit_dir(data)):
+		Utils.Direction.Up:
 			for i in range(head_pos.y-1, 0, -1):
 				var idx = Utils.to_index(Vector2(head_pos.x, i))
 				exit_path.append(idx)
 				if used_cells.has(idx):
 					result.can_exit = false
 					break
-		1:
+		Utils.Direction.Down:
 			for i in range(head_pos.y+1, Utils.grid_width):
 				var idx = Utils.to_index(Vector2(head_pos.x, i))
 				exit_path.append(idx)
 				if used_cells.has(idx):
 					result.can_exit = false
 					break
-		2:
+		Utils.Direction.Left:
 			for i in range(head_pos.x-1, 0, -1):
 				var idx = Utils.to_index(Vector2(i, head_pos.y))
 				exit_path.append(idx)
 				if used_cells.has(idx):
 					result.can_exit = false
 					break
-		3:
+		Utils.Direction.Right:
 			for i in range(head_pos.x+1, Utils.grid_width):
 				var idx = Utils.to_index(Vector2(i, head_pos.y))
 				exit_path.append(idx)
@@ -154,7 +154,8 @@ func calculate_exit_path(data)->ExitPathResult:
 	result.exit_path = exit_path
 	return result
 func next_level()->void:
-	level = level_generator.generate_level(grid, 3)
+	level = Utils.convert_level(level_generator.generate_level(grid, 3))
+	print("Level ", level)
 	live = 2
 	move_camera_to_center()
 	render_level()

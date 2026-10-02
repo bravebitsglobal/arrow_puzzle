@@ -1,8 +1,10 @@
 extends Control
 class_name PopupManager
+@onready var popup_loading: Control = $PopupLoading
+
 enum PopupType {
 	GameWin,
-	GameTryAgain
+	GameTryAgain,
 }
 @export var popup_scene: Dictionary[PopupType, PackedScene] = {}
 var popup_node: Dictionary[PopupType, Control] = {}
@@ -16,6 +18,10 @@ func _ready() -> void:
 		else:
 			hide_popup(type)
 		)
+func show_loading()->void:
+	popup_loading.visible = true
+func hide_loading()->void:
+	popup_loading.visible = false
 func show_popup(type: PopupType)->void:
 	last_z_index = last_z_index + 1
 	if !popup_node.has(type):

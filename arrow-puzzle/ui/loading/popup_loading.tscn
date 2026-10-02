@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://nu2fkq0bwtof"]
+
+[ext_resource type="Texture2D" uid="uid://5368a2qc2eg4" path="res://ui/win/coin.png" id="1_jbfxe"]
+
+[sub_resource type="Gradient" id="Gradient_jbfxe"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0ve75"]
+gradient = SubResource("Gradient_jbfxe")
+fill = 1
+fill_from = Vector2(0.48122868, 0.47269624)
+fill_to = Vector2(0.77474403, 0.28498295)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]
+font_size = 46
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_asclo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jbfxe"]
+resource_name = "loading_icon"
+length = 2.0333333
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2.0333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(-1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_asclo"]
+_data = {
+&"RESET": SubResource("Animation_asclo"),
+&"loading_icon": SubResource("Animation_jbfxe")
+}
+
+[node name="PopupLoading" type="Control" unique_id=1307776011]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=383863649]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -435.0
+offset_top = -429.0
+offset_right = 481.0
+offset_bottom = 487.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_0ve75")
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1841903185]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.5
+offset_top = -80.0
+offset_right = 73.5
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_jbfxe")
+
+[node name="Label" type="Label" parent="." unique_id=1070146000]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = 80.0
+offset_right = 88.0
+offset_bottom = 144.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading"
+label_settings = SubResource("LabelSettings_6ai3d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1595523936]
+libraries/ = SubResource("AnimationLibrary_asclo")

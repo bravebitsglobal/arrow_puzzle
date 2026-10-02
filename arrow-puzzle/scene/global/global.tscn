@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cvxy3peiusjwn" path="res://scene/global/global.gd" id="1_7dyo8"]
 [ext_resource type="PackedScene" uid="uid://pk33wb3a1drh" path="res://scene/global/ad_manager.tscn" id="2_388lc"]
 [ext_resource type="PackedScene" uid="uid://cr7rrwr8t3mi3" path="res://scene/popup/popup_manager/popup_manager.tscn" id="3_2q1o6"]
+[ext_resource type="PackedScene" uid="uid://fe1erw0naqke" path="res://scene/global/api.tscn" id="4_api"]
 
 [node name="Global" type="Control" unique_id=89037677]
 layout_mode = 3
@@ -21,4 +22,7 @@ layer = 10
 z_index = 100
 
 [node name="AdManager" parent="." unique_id=2111333994 instance=ExtResource("2_388lc")]
+layout_mode = 1
+
+[node name="API" parent="." unique_id=1940940579 instance=ExtResource("4_api")]
 layout_mode = 1

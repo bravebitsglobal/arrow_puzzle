@@ -193,8 +193,49 @@ func claim_mail(mail_id: String) -> Dictionary:
 # Level
 # ----------------------------------------------------------------
 
-func get_level(level_id: int) -> Dictionary:
-	return await request(HTTPClient.METHOD_GET, "/levels/%d" % level_id)
+## Lấy level theo levelId (1, 2, 3, ...).
+## Tài liệu: https://gamehub.bravebits.ai/api/docs (GET /api/levels/{levelId}).
+## Server lưu nội dung level trong field `data` (xem SaveLevelDto { data: object }).
+## Hàm bóc `data` ra, nếu là chuỗi JSON thì parse thành object/array rồi gán lại res.data.
+## points_as_int = true: JSON parse số thành float, nên ép các phần tử trong mảng "points" về int.
+func get_level(level_id: int, points_as_int: bool = true) :
+	var res := await request(HTTPClient.METHOD_GET, "/levels/%d" % level_id)
+	if res.ok and res.data is Dictionary and res.data.has("data"):
+		var level_data: Variant = res.data["data"]
+		if level_data is String:
+			var parsed: Variant = JSON.parse_string(level_data)
+			if parsed != null:
+				level_data = parsed
+		if points_as_int:
+			_points_to_int(level_data)
+		res.data = level_data
+		return level_data.points
+	return null
+
+
+## Duyệt đệ quy, ép mọi số bên trong mảng ứng với key "points" về int.
+func _points_to_int(value: Variant) -> void:
+	if value is Array:
+		for item in value:
+			_points_to_int(item)
+	elif value is Dictionary:
+		for key in value:
+			if key == "points":
+				value[key] = _deep_floats_to_int(value[key])
+			else:
+				_points_to_int(value[key])
+
+
+## Ép mọi float thành int, giữ nguyên cấu trúc mảng (hỗ trợ mảng lồng nhau).
+func _deep_floats_to_int(value: Variant) -> Variant:
+	if value is Array:
+		var out: Array = []
+		for item in value:
+			out.append(_deep_floats_to_int(item))
+		return out
+	if value is float:
+		return roundi(value)
+	return value
 
 
 # ----------------------------------------------------------------

@@ -32,7 +32,7 @@ var live: int:
 		render_live()
 class ExitPathResult:
 	var can_exit: bool
-	var exit_path: PackedInt32Array
+	var exit_path: Array[PackedInt32Array]
 func _ready() -> void:
 	next_level()
 	Global.game_data.level.subscribe(func(lvl):
@@ -61,18 +61,20 @@ func render_level():
 		d.queue_free()
 	await get_tree().process_frame
 	for arrow_idx in range(level.size()):
-		var a = level[arrow_idx]
+		var points = level[arrow_idx]
+		var a: Array[PackedInt32Array] = [];
+		for p in points:
+			a.append(p)
 		var arrow: Arrow = arrow_scene.instantiate()
 		line_container.add_child(arrow)
 		arrow.set_data(a)
-		arrow.move_finish.connect(on_move_finish)
 		arrows.append(arrow)
 		for c in a:
-			var pos = Utils.index_to_pos(c)
+			var pos = Utils.to_pos(c)
 			var dot = dot_scene.instantiate()
 			dot.position = pos
 			dot_container.add_child(dot)
-			used_cells[c] = true
+			used_cells[Utils.to_index(c)] = true
 		arrow.on_click.connect(func ():
 			_on_arrow_clicked(arrow_idx))
 			
@@ -84,78 +86,89 @@ func _on_arrow_clicked(idx: int):
 	else:
 		live = live - 1
 	arrows[idx].exit(rs)
+	check_end_game()
 func move_camera_to_center()->void:
-	var left_top: Vector2 = Utils.to_xy(level[0][0])
-	var right_bottom: Vector2 = Utils.to_xy(level[0][0])
+	var left_top = level[0][0].duplicate()
+	var right_bottom = level[0][0].duplicate()
 	for arrow in level:
 		for cell in arrow:
-			var xy = Utils.to_xy(cell)
-			if left_top.x > xy.x:
-				left_top.x = xy.x
-			if left_top.y > xy.y:
-				left_top.y = xy.y
-			if right_bottom.x < xy.x:
-				right_bottom.x = xy.x
-			if right_bottom.y < xy.y:
-				right_bottom.y = xy.y
+			if left_top[0] > cell[0]:
+				left_top[0] = cell[0]
+			if left_top[1] > cell[1]:
+				left_top[1] = cell[1]
+			if right_bottom[0] < cell[0]:
+				right_bottom[0] = cell[0]
+			if right_bottom[1] < cell[1]:
+				right_bottom[1] = cell[1]
 	var center = Vector2(
-		(left_top.x + right_bottom.x) / 2 * Utils.cell_size, 
-		(left_top.y + right_bottom.y) / 2 * Utils.cell_size)
+		(left_top[0] + right_bottom[0]) / 2 * Utils.cell_size, 
+		(left_top[1] + right_bottom[1]) / 2 * Utils.cell_size)
 	camera_2d.position = center
-func on_move_finish():
+func check_end_game():
 	if !live:
+		await get_tree().create_timer(1).timeout
 		Global.game_event.request_visible_popup.emit(PopupManager.PopupType.GameTryAgain, true)
 		return
 	if !used_cells.size():
-		var is_done = true
-		for a in arrows:
-			if a.action != Arrow.Action.Exited:
-				is_done = false
-		if is_done:
-			Global.game_event.request_visible_popup.emit(PopupManager.PopupType.GameWin, true)
+		await get_tree().create_timer(1).timeout
+		Global.game_event.request_visible_popup.emit(PopupManager.PopupType.GameWin, true)
 func remove_arrow(idx: int):
 	for c in level[idx]:
-		used_cells.erase(c)
+		used_cells.erase(Utils.to_index(c))
 func calculate_exit_path(data)->ExitPathResult:
 	var result = ExitPathResult.new()
-	var exit_path = data.duplicate()
-	var head_index = data[data.size()-1]
-	var head_pos = Utils.to_xy(head_index)
+	var exit_path:Array[PackedInt32Array]
+	for d in data:
+		exit_path.append(d)
+	var head = data[data.size() - 1]
+	var out = 100
 	result.can_exit = true
+	print("used cells ", used_cells)
 	match(Utils.get_exit_dir(data)):
 		Utils.Direction.Up:
-			for i in range(head_pos.y-1, 0, -1):
-				var idx = Utils.to_index(Vector2(head_pos.x, i))
-				exit_path.append(idx)
+			for i in range(head[1]-1, head[1] - out, -1):
+				var next_pos = [head[0], i]
+				var idx = Utils.to_index(next_pos)
+				exit_path.append(next_pos)
 				if used_cells.has(idx):
+					print("used ", next_pos)
+					print("used ", idx)
 					result.can_exit = false
 					break
 		Utils.Direction.Down:
-			for i in range(head_pos.y+1, Utils.grid_width):
-				var idx = Utils.to_index(Vector2(head_pos.x, i))
-				exit_path.append(idx)
+			for i in range(head[1]+1, head[1] + out):
+				var next_pos = [head[0], i]
+				var idx = Utils.to_index(next_pos)
+				exit_path.append(next_pos)
 				if used_cells.has(idx):
+					print("used ", idx)
 					result.can_exit = false
 					break
 		Utils.Direction.Left:
-			for i in range(head_pos.x-1, 0, -1):
-				var idx = Utils.to_index(Vector2(i, head_pos.y))
-				exit_path.append(idx)
+			for i in range(head[0]-1, head[0] - out, -1):
+				var next_pos = [i, head[1]]
+				var idx = Utils.to_index(next_pos)
+				exit_path.append(next_pos)
 				if used_cells.has(idx):
+					print("used ", next_pos)
 					result.can_exit = false
 					break
 		Utils.Direction.Right:
-			for i in range(head_pos.x+1, Utils.grid_width):
-				var idx = Utils.to_index(Vector2(i, head_pos.y))
-				exit_path.append(idx)
+			for i in range(head[0]+1, head[0] + out):
+				var next_pos = [i, head[1]]
+				var idx = Utils.to_index(next_pos)
+				exit_path.append(next_pos)
 				if used_cells.has(idx):
+					print("used ", next_pos)
+					print("used ", idx)
 					result.can_exit = false
 					break
 	result.exit_path = exit_path
+	print("exit path ", exit_path)
 	return result
 func next_level()->void:
-	level = Utils.convert_level(level_generator.generate_level(grid, 3))
-	print("Level ", level)
+	#level = Utils.convert_level(level_generator.generate_level(grid, 3))
+	level = await Global.api.get_level(Global.game_data.level.value)
 	live = 2
 	move_camera_to_center()
 	render_level()

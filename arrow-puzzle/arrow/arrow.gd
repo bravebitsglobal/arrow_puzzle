@@ -5,7 +5,7 @@ var COLORS = ["#FF2A4B","#E60039","#FF3366","#FF4081","#FF007F","#FF5252","#D81B
 @onready var head: Node2D = $Head
 const ROTATES = [0, 180, -90, 90]
 const CELL_SIZE = 50
-var data
+var data: Array[PackedInt32Array]
 @onready var line_2d: Line2D = $Line2D
 @onready var collision_polygon_2d: CollisionPolygon2D = $Area2D/CollisionPolygon2D
 @onready var area_2d: Area2D = $Area2D
@@ -19,12 +19,11 @@ var action: Action = Action.Idle
 var tween: Tween
 const SPEED: float = 1000
 const GO_IN_SPEED: float = 300
-var exit_path: PackedInt32Array
+var exit_path: Array[PackedInt32Array]
 var tail_progress: float = 0
 var head_progress: float = 0
-signal move_finish
 signal on_click
-
+var is_exit: bool = false
 var _mouse_pressed_pos: Vector2 = Vector2.ZERO
 var _is_mouse_pressed: bool = false
 const CLICK_THRESHOLD: float = 5.0  # Nguong phan biet click va drag (pixels)
@@ -53,7 +52,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 			if distance < CLICK_THRESHOLD and action == Action.Idle:
 				on_click.emit()
 			_is_mouse_pressed = false
-func set_data(_data):
+func set_data(_data: Array[PackedInt32Array]):
 	data = _data
 	render()
 func is_going_out():
@@ -96,43 +95,43 @@ func exit(result: Game.ExitPathResult):
 			action = Action.Exited
 		else:
 			action = Action.Idle
-		move_finish.emit()
 		)
 func render():
 	if !data:
 		return
 	if !is_node_ready():
 		return
-	var pos: Vector2i = Vector2.ZERO
-	for i in range(data.size()):
-		var c = data[i]
-		pos = Utils.to_xy(c)
-	head.position = Vector2(pos.x * CELL_SIZE, pos.y * CELL_SIZE)
+	for i in data:
+		line_2d.add_point(Vector2(0,0))
+	var head_pos = data[data.size()-1]
+	head.position = Utils.to_pos(head_pos)
 	head.visible = true
 	go_in()
 func update_line():
-	var start = floor(tail_progress / CELL_SIZE)
-	var end = floor(head_progress / CELL_SIZE) - 1
+	var start: int = floor(tail_progress / CELL_SIZE)
+	var end:int = floor(head_progress / CELL_SIZE) - 1
 	var tail_weight = float((int(tail_progress) % CELL_SIZE) / float(CELL_SIZE))
-	line_2d.set_point_position(0, Utils.index_to_pos(exit_path[start]).lerp(Utils.index_to_pos(exit_path[start+1]), tail_weight))
+	line_2d.set_point_position(0, Utils.to_pos(exit_path[start]).lerp(Utils.to_pos(exit_path[start+1]), tail_weight))
 	for i in range(start+1, start + data.size()):
 		if i > exit_path.size() - 1:
-			return
-		var xy = Utils.to_xy(exit_path[i])
-		if xy.x > Utils.grid_width || xy.y > Utils.grid_width:
-			return
+			break
+		var e = exit_path[i]
+		if e[0] > Utils.grid_width || e[1] > Utils.grid_width:
+			break
 		var pos: Vector2
 		if i > end:
 			pos = line_2d.points[i-start-1]
 		else:
-			pos = Utils.index_to_pos(exit_path[i])
+			pos = Utils.to_pos(exit_path[i])
 		line_2d.set_point_position(i - start, pos)
 	if end < exit_path.size() - 1:
 		var head_weight = float((int(head_progress) % CELL_SIZE) / float(CELL_SIZE))
-		line_2d.set_point_position(data.size()-1, Utils.index_to_pos(exit_path[end]).lerp(Utils.index_to_pos(exit_path[end+1]),head_weight))
+		line_2d.set_point_position(data.size()-1, Utils.to_pos(exit_path[end]).lerp(Utils.to_pos(exit_path[end+1]),head_weight))
 	else:
-		line_2d.set_point_position(data.size()-1, Utils.index_to_pos(exit_path[end]))
+		line_2d.set_point_position(data.size()-1, Utils.to_pos(exit_path[end]))
 	head.position = line_2d.points[line_2d.points.size()-1]
+	if start > data.size() && !is_exit:
+		is_exit = true
 func _physics_process(_delta: float) -> void:
 	if action != Action.Idle:
 		update_line()

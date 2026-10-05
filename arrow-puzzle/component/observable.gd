@@ -10,3 +10,5 @@ var value:
 func subscribe(callback: Callable)->void:
 	callback.call(value)
 	on_change.connect(callback)
+func _init(default_value=null) -> void:
+	value = default_value

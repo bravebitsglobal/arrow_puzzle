@@ -10,5 +10,4 @@ func _init() -> void:
 	gen.set_seed(7)
 	# Instrument: monkey patch by checking how many merges fail
 	# Instead just check raw _try_place_all_arrows coverage
-	print("diag start")
 	quit()

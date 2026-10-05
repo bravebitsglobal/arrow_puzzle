@@ -8,6 +8,10 @@ const CELL_SIZE = 50
 var data: Array[PackedInt32Array]
 @onready var line_2d: Line2D = $Line2D
 @onready var collision_polygon_2d: CollisionPolygon2D = $Area2D/CollisionPolygon2D
+@onready var highlight: Line2D = $Highlight
+@onready var highlight_animation_player: AnimationPlayer = $HighlightAnimationPlayer
+@onready var ruler: Line2D = $Ruler
+
 @onready var area_2d: Area2D = $Area2D
 enum Action{
 	Idle,
@@ -27,11 +31,11 @@ var is_exit: bool = false
 var _mouse_pressed_pos: Vector2 = Vector2.ZERO
 var _is_mouse_pressed: bool = false
 const CLICK_THRESHOLD: float = 5.0  # Nguong phan biet click va drag (pixels)
-
+var highlight_tween: Tween
+const HIGHLIGHT_TIME = 3
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	render()
-
 func update_line_collision() -> void:
 	if line_2d.points.size() < 2:
 		return
@@ -39,7 +43,6 @@ func update_line_collision() -> void:
 	if polygons.size() > 0:
 		collision_polygon_2d.polygon = polygons[0]
 	area_2d.input_event.connect(_on_area_2d_input_event)
-
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
@@ -74,7 +77,10 @@ func go_in():
 		update_line_collision()
 		)
 func exit(result: Game.ExitPathResult):
+	if result.can_exit:
+		ruler.visible = false
 	exit_path = result.exit_path
+	is_exit = result.can_exit
 	var arrow_size = data.size() * CELL_SIZE
 	tail_progress = 0
 	head_progress = arrow_size
@@ -93,6 +99,7 @@ func exit(result: Game.ExitPathResult):
 		update_line()
 		if result.can_exit:
 			action = Action.Exited
+			self.visible = false
 		else:
 			action = Action.Idle
 		)
@@ -129,9 +136,20 @@ func update_line():
 		line_2d.set_point_position(data.size()-1, Utils.to_pos(exit_path[end]).lerp(Utils.to_pos(exit_path[end+1]),head_weight))
 	else:
 		line_2d.set_point_position(data.size()-1, Utils.to_pos(exit_path[end]))
-	head.position = line_2d.points[line_2d.points.size()-1]
-	if start > data.size() && !is_exit:
-		is_exit = true
+	head.position = line_2d.points[line_2d.points.size() - 1]
+	highlight.points = line_2d.points.duplicate()
 func _physics_process(_delta: float) -> void:
 	if action != Action.Idle:
 		update_line()
+func active_highlight()->void:
+	highlight.visible = true
+	highlight_animation_player.play("highlight")
+	await get_tree().create_timer(HIGHLIGHT_TIME).timeout
+	highlight.visible = false
+func erase()->void:
+	is_exit = true
+	self.visible = false
+func set_ruler(exit_path: Game.ExitPathResult)->void:
+	ruler.visible = true
+	for i in range(data.size(), exit_path.exit_path.size()):
+		ruler.add_point(Utils.to_pos(exit_path.exit_path[i]))

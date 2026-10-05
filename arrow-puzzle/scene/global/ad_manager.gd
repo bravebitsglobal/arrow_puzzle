@@ -98,7 +98,6 @@ func _on_ad_failed_to_load(error: LoadAdError) -> void:
 
 func _on_user_earned_reward(item: RewardedItem) -> void:
 	_user_earned_reward = true
-	_log("User earned reward: %d %s" % [item.amount, item.type])
 
 
 func _on_ad_dismissed() -> void:

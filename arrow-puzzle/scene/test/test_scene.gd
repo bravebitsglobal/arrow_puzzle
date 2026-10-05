@@ -9,12 +9,9 @@ func _ready() -> void:
 	button_reward.pressed.connect(_on_button_reward_pressed)
 	button_register.pressed.connect(func():
 		var rs = await Global.api.device_register("device_1", "vn", "tung beo")
-		print("rs ", rs)
 		)
 	button_get_level.pressed.connect(func():
 		var rs = await Global.api.get_level(50)
-		print("level ", rs)
 		)
 func _on_button_reward_pressed()->void:
 	var is_rewarded = await ad_manager.show_user_reward()
-	print("is rewarded ", is_rewarded)

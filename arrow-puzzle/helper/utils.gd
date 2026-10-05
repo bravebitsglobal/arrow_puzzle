@@ -27,3 +27,19 @@ static func get_exit_dir(arrow: Array)->Direction:
 	if b[0] - a[0] == -1:
 		return Direction.Left
 	return Direction.Right
+static func get_center(data)->Vector2:
+	var left_top = data[0].duplicate()
+	var right_bottom = data[0].duplicate()
+	for cell in data:
+		if left_top[0] > cell[0]:
+			left_top[0] = cell[0]
+		if left_top[1] > cell[1]:
+			left_top[1] = cell[1]
+		if right_bottom[0] < cell[0]:
+			right_bottom[0] = cell[0]
+		if right_bottom[1] < cell[1]:
+			right_bottom[1] = cell[1]
+	var center = Vector2(
+		(left_top[0] + right_bottom[0]) / 2 * Utils.cell_size, 
+		(left_top[1] + right_bottom[1]) / 2 * Utils.cell_size)
+	return center

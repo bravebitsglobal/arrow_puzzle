@@ -1,57 +1,44 @@
 extends Node2D
 class_name Game
-var grid = [4248,4249,4250,4251,4252,4253,4348,4349,4350,4351,4352,4353,4448,4449,4450,4451,4452,4453,4548,4549,4550,4551,4552,4553,4648,4649,4650,4651,4652,4653,4748,4749,4750,4751,4752,4753,4848,4849,4850,4851,4852,4853,4948,4949,4950,4951,4952,4953,5048,5049,5050,5051,5052,5053,5148,5149,5150,5151,5152,5153,5248,5249,5250,5251,5252,5253,5348,5349,5350,5351,5352,5353,5448,5449,5450,5451,5452,5453,5548,5549,5550,5551,5552,5553]
 @onready var line_container: Node2D = $MapContainer/LineContainer
-@onready var button_restart: Button = $UI/PanelLose/ButtonRestart
-@onready var button_next_level: Button = $UI/PanelWin/ButtonNextLevel
-
 var used_cells: Dictionary = {}
 @export var dot_scene: PackedScene
 var level_generator = LevelGenerator.new()
 @onready var dot_container: Node2D = $MapContainer/DotContainer
-@onready var live_container: HBoxContainer = $UI/PanelGame/TopPanel/HBoxContainer/LiveContainer
-@onready var label_line: Label = $UI/PanelGame/TopPanel/Panel/TextureRect/LabelLine
 @onready var camera_2d: CameraController = $Camera2D
-@onready var button_claim: TextureButton = $UI/PanelWin/HBoxContainer/ButtonClaim
-@onready var button_claimx_2: TextureButton = $UI/PanelWin/HBoxContainer/ButtonClaimx2
-@onready var label_level: Label = $UI/PanelGame/TopPanel/HBoxContainer/Level/LabelLevel
-@onready var label_coin: Label = $UI/PanelGame/TopPanel/HBoxContainer/Coin/LabelCoin
-
 @export var arrow_scene: PackedScene
-var level: Array
+var remain_magic_glasses: int = 0
+var level
 var arrows: Array[Arrow] = []
 var total_line: int = 0
-var remain_line: int = 0:
-	set(value):
-		remain_line = value
-		label_line.text = str(remain_line)
-const MAX_LIVE = 3
-var live: int:
-	set(value):
-		live = value
-		render_live()
+var is_using_eraser: bool = false
 class ExitPathResult:
 	var can_exit: bool
 	var exit_path: Array[PackedInt32Array]
 func _ready() -> void:
 	next_level()
-	Global.game_data.level.subscribe(func(lvl):
-		label_level.text = str(lvl))
-	Global.game_data.coins.subscribe(func(coins):
-		label_coin.text = str(coins))
 	Global.game_event.game_start.connect(func():
 		next_level())
 	Global.game_event.game_restart.connect(func():
 		restart())
-func render_live()->void:
-	if !live_container:
+	Global.game_event.active_game_booster.connect(_on_active_booster)
+	Global.game_data.is_ruler.subscribe(func (value):
+		render_ruler())
+func render_ruler()->void:
+	if !Global.game_data.is_ruler.value:
 		return
-	for i in range(MAX_LIVE):
-		live_container.get_child(i).get_child(0).visible = i < live
+	if !level:
+		return
+	for i in range(level.size()):
+		if arrows[i].is_exit:
+			continue
+		var exit_path = calculate_exit_path(level[i])
+		if exit_path.can_exit:
+			arrows[i].set_ruler(exit_path)
 func render_level():
-	live = MAX_LIVE
+	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	total_line = level.size()
-	remain_line = total_line
+	Global.game_data.remain_lines.value = total_line
 	for c in line_container.get_children():
 		c.queue_free()
 	for a in arrows:
@@ -77,16 +64,67 @@ func render_level():
 			used_cells[Utils.to_index(c)] = true
 		arrow.on_click.connect(func ():
 			_on_arrow_clicked(arrow_idx))
-			
+func _on_active_booster(booster: Global.Booster)->void:
+	match(booster):
+		Global.Booster.Hint:
+			_active_hint()
+		Global.Booster.Eraser:
+			_active_eraser()
+		Global.Booster.MagicGlasses:
+			_active_magic_glasses()
+func _active_hint()->void:
+	for i in range(level.size()):
+		if arrows[i].is_exit:
+			continue
+		var exit_path = calculate_exit_path(level[i])
+		if exit_path.can_exit:
+			arrows[i].active_highlight()
+			move_camera_to_arrow(i)
+			break
+func move_camera_to_arrow(idx)->void:
+	var tw = create_tween()
+	tw.tween_property(camera_2d, "position", Utils.get_center(level[idx]), 0.5)
+	await get_tree().create_timer(0.5).timeout
+func _active_eraser()->void:
+	Global.game_data.animating.value = true
+	is_using_eraser = true
+func _active_magic_glasses()->void:
+	remain_magic_glasses = Global.MAGIC_GLASSES_QUANTITY
+	Global.game_data.animating.value = true
+	for glass in range(remain_magic_glasses):
+		if !used_cells.size():
+			check_end_game()
+			break
+		for i in range(level.size()):
+			if arrows[i].is_exit:
+				continue
+			var exit_path = calculate_exit_path(level[i])
+			if exit_path.can_exit:
+				await move_camera_to_arrow(i)
+				arrows[i].active_highlight()
+				await get_tree().create_timer(1).timeout
+				arrows[i].exit(exit_path)
+				await get_tree().create_timer(1).timeout
+				break
+	Global.game_data.animating.value = false
 func _on_arrow_clicked(idx: int):
+	if is_using_eraser:
+		arrows[idx].erase()
+		remove_arrow(idx)
+		is_using_eraser = false
+		Global.game_event.game_booster_done.emit(Global.Booster.Eraser)
+		Global.game_data.animating.value = false
+		return
 	var rs = calculate_exit_path(level[idx])
 	if rs.can_exit:
 		remove_arrow(idx)
-		remain_line = remain_line - 1
+		Global.game_data.remain_lines.value = Global.game_data.remain_lines.value - 1
 	else:
-		live = live - 1
+		Global.game_data.lives.value = Global.game_data.lives.value - 1
 	arrows[idx].exit(rs)
 	check_end_game()
+	await get_tree().create_timer(1).timeout
+	Global.game_data.animating.value = false
 func move_camera_to_center()->void:
 	var left_top = level[0][0].duplicate()
 	var right_bottom = level[0][0].duplicate()
@@ -105,7 +143,7 @@ func move_camera_to_center()->void:
 		(left_top[1] + right_bottom[1]) / 2 * Utils.cell_size)
 	camera_2d.position = center
 func check_end_game():
-	if !live:
+	if !Global.game_data.lives.value:
 		await get_tree().create_timer(1).timeout
 		Global.game_event.request_visible_popup.emit(PopupManager.PopupType.GameTryAgain, true)
 		return
@@ -115,6 +153,7 @@ func check_end_game():
 func remove_arrow(idx: int):
 	for c in level[idx]:
 		used_cells.erase(Utils.to_index(c))
+	render_ruler()
 func calculate_exit_path(data)->ExitPathResult:
 	var result = ExitPathResult.new()
 	var exit_path:Array[PackedInt32Array]
@@ -123,7 +162,6 @@ func calculate_exit_path(data)->ExitPathResult:
 	var head = data[data.size() - 1]
 	var out = 100
 	result.can_exit = true
-	print("used cells ", used_cells)
 	match(Utils.get_exit_dir(data)):
 		Utils.Direction.Up:
 			for i in range(head[1]-1, head[1] - out, -1):
@@ -131,8 +169,6 @@ func calculate_exit_path(data)->ExitPathResult:
 				var idx = Utils.to_index(next_pos)
 				exit_path.append(next_pos)
 				if used_cells.has(idx):
-					print("used ", next_pos)
-					print("used ", idx)
 					result.can_exit = false
 					break
 		Utils.Direction.Down:
@@ -141,7 +177,6 @@ func calculate_exit_path(data)->ExitPathResult:
 				var idx = Utils.to_index(next_pos)
 				exit_path.append(next_pos)
 				if used_cells.has(idx):
-					print("used ", idx)
 					result.can_exit = false
 					break
 		Utils.Direction.Left:
@@ -150,7 +185,6 @@ func calculate_exit_path(data)->ExitPathResult:
 				var idx = Utils.to_index(next_pos)
 				exit_path.append(next_pos)
 				if used_cells.has(idx):
-					print("used ", next_pos)
 					result.can_exit = false
 					break
 		Utils.Direction.Right:
@@ -159,20 +193,17 @@ func calculate_exit_path(data)->ExitPathResult:
 				var idx = Utils.to_index(next_pos)
 				exit_path.append(next_pos)
 				if used_cells.has(idx):
-					print("used ", next_pos)
-					print("used ", idx)
 					result.can_exit = false
 					break
 	result.exit_path = exit_path
-	print("exit path ", exit_path)
 	return result
 func next_level()->void:
-	#level = Utils.convert_level(level_generator.generate_level(grid, 3))
 	level = await Global.api.get_level(Global.game_data.level.value)
-	live = 2
+	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	move_camera_to_center()
 	render_level()
 func restart()->void:
-	live = 2
+	Global.game_data.is_ruler.value = false
+	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	move_camera_to_center()
 	render_level()

@@ -104,6 +104,7 @@ func _active_magic_glasses()->void:
 				arrows[i].active_highlight()
 				await get_tree().create_timer(1).timeout
 				arrows[i].exit(exit_path)
+				remove_arrow(i)
 				await get_tree().create_timer(1).timeout
 				break
 	Global.game_data.animating.value = false

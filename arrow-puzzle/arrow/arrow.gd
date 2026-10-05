@@ -113,6 +113,7 @@ func render():
 	var head_pos = data[data.size()-1]
 	head.position = Utils.to_pos(head_pos)
 	head.visible = true
+	#head.rotation_degrees = ROTATES[Utils.get_exit_dir(data)]
 	go_in()
 func update_line():
 	var start: int = floor(tail_progress / CELL_SIZE)

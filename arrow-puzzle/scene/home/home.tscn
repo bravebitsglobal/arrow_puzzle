@@ -27,6 +27,7 @@ grow_vertical = 2
 script = ExtResource("1_1qrah")
 
 [node name="Challenge" parent="." unique_id=1245256718 instance=ExtResource("12_u0e8k")]
+visible = false
 layout_mode = 1
 
 [node name="Main" parent="." unique_id=1034398291 instance=ExtResource("11_roddw")]
@@ -38,7 +39,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -639.0
+offset_top = -235.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_dubxh")

@@ -8,20 +8,10 @@ const DEFAULT_ACTIVE_TAB = 2
 var tab_content: Array
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	tab_content = [challenge, main, challenge, main, challenge]
+	tab_content = [null, null, main, null, challenge]
 	change_active_tab(DEFAULT_ACTIVE_TAB)
 	bind_tab_buttons()
-	#Global.game_data.level.subscribe(func (level):
-		#label_level.text = "Level " + str(level)
-		#label_level.visible = level > 0
-		#)
-	#button_play.pressed.connect(func():
-		#get_tree().change_scene_to_file("res://scene/game/game.tscn")
-		#Global.game_data.level.value = Global.game_data.level.value + 1
-		#)
-	#Global.game_data.coins.subscribe(func (coins):
-		#label_coins.text = str(coins)
-		#)
+
 func bind_tab_buttons():
 	for i in range(tab.get_children().size()):
 		var node: TextureButton = tab.get_child(i)
@@ -51,4 +41,5 @@ func change_active_tab(new_tab: int)->void:
 	tween.tween_property(new_icon_node, "offset_transform_position", Vector2(0, -30), DURATION)
 	active_tab = new_tab
 	for i in range(tab_content.size()):
-		tab_content[i].visible = active_tab == i
+		if tab_content[i]:
+			tab_content[i].visible = active_tab == i

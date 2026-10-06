@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cv4lpv0w532k3"]
 
 [ext_resource type="PackedScene" uid="uid://ch2fpg8n3u371" path="res://scene/home/challenge/challenge.tscn" id="1_gu7es"]
+[ext_resource type="Script" uid="uid://6s4btn7itq3c" path="res://scene/home/main/main.gd" id="1_nqh08"]
 [ext_resource type="Texture2D" uid="uid://v4ptiqb52n1x" path="res://scene/home/img/BG.png" id="2_1b7od"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://ui_theme.tres" id="3_4xg5n"]
 [ext_resource type="Texture2D" uid="uid://bujybd3u0xfa6" path="res://scene/home/img/avt_default.png" id="4_ky6se"]
@@ -37,6 +38,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_nqh08")
 
 [node name="Challenge" parent="." unique_id=1245256718 instance=ExtResource("1_gu7es")]
 layout_mode = 1

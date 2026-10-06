@@ -26,7 +26,6 @@ func bind_tab_buttons():
 	for i in range(tab.get_children().size()):
 		var node: TextureButton = tab.get_child(i)
 		node.pressed.connect(func ():
-			print("user pressed tab ", i)
 			change_active_tab(i)
 			)
 func change_active_tab(new_tab: int)->void:

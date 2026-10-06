@@ -45,7 +45,6 @@ func _ready() -> void:
 			button_eraser.get_node("Quantity").visible = false
 			)
 	Global.game_data.booster_magic_glasses.subscribe(func (quantity):
-		print("glasses ", quantity)
 		if quantity:
 			button_magic_glasses.get_node("TexturePlus").visible = false
 			button_magic_glasses.get_node("Quantity").visible = true

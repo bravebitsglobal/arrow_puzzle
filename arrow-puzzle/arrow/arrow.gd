@@ -22,7 +22,7 @@ enum Action{
 var action: Action = Action.Idle
 var tween: Tween
 const SPEED: float = 1000
-const GO_IN_SPEED: float = 300
+const GO_IN_SPEED: float = 10
 var exit_path: Array[PackedInt32Array]
 var tail_progress: float = 0
 var head_progress: float = 0
@@ -119,7 +119,11 @@ func update_line():
 	var start: int = floor(tail_progress / CELL_SIZE)
 	var end:int = floor(head_progress / CELL_SIZE) - 1
 	var tail_weight = float((int(tail_progress) % CELL_SIZE) / float(CELL_SIZE))
-	line_2d.set_point_position(0, Utils.to_pos(exit_path[start]).lerp(Utils.to_pos(exit_path[start+1]), tail_weight))
+	if !line_2d.points.size():
+		line_2d.add_point(Vector2.ZERO)
+	var first_pos = Utils.to_pos(exit_path[start]).lerp(Utils.to_pos(exit_path[start+1]), tail_weight)
+	if line_2d.points[0] != first_pos:
+		line_2d.set_point_position(0, first_pos)
 	for i in range(start+1, start + data.size()):
 		if i > exit_path.size() - 1:
 			break
@@ -150,7 +154,7 @@ func active_highlight()->void:
 func erase()->void:
 	is_exit = true
 	self.visible = false
-func set_ruler(exit_path: Game.ExitPathResult)->void:
+func set_ruler(exit_rs: Game.ExitPathResult)->void:
 	ruler.visible = true
-	for i in range(data.size(), exit_path.exit_path.size()):
-		ruler.add_point(Utils.to_pos(exit_path.exit_path[i]))
+	for i in range(data.size(), exit_rs.exit_path.size()):
+		ruler.add_point(Utils.to_pos(exit_rs.exit_path[i]))

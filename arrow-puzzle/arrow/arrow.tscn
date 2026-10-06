@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://08iwkk13f8v1"]
 
 [ext_resource type="Script" uid="uid://cw7vlvo1hvmjq" path="res://arrow/arrow.gd" id="1_jp72l"]
-[ext_resource type="Texture2D" uid="uid://b0dtngvrchg58" path="res://arrow/body_7.png" id="2_d2qln"]
+[ext_resource type="Texture2D" uid="uid://detmpcvjg87rc" path="res://arrow/than ngang.png" id="2_d2qln"]
 [ext_resource type="Texture2D" uid="uid://b8nxuvoentg6e" path="res://arrow/kid_pink_light.png" id="3_d2qln"]
+[ext_resource type="Texture2D" uid="uid://0nkudhmgvs17" path="res://arrow/dau.png" id="4_ofxgm"]
 
 [sub_resource type="Animation" id="Animation_ofxgm"]
 length = 0.001
@@ -119,9 +120,15 @@ round_precision = 16
 scale = Vector2(1.3167543, 1.3167543)
 
 [node name="Dau" type="Sprite2D" parent="Head" unique_id=1780429543]
+visible = false
 rotation = -0.2617994
 scale = Vector2(0.51444364, 0.51444364)
 texture = ExtResource("3_d2qln")
+
+[node name="Dau2" type="Sprite2D" parent="Head" unique_id=1668950607]
+rotation = -0.2617994
+scale = Vector2(0.51444364, 0.51444364)
+texture = ExtResource("4_ofxgm")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2055958979]
 

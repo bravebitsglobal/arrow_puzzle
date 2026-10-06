@@ -1,0 +1,335 @@
+[gd_scene format=3 uid="uid://cxxiigxbvdtr"]
+
+[ext_resource type="Script" uid="uid://cxp0u2y4ir8ae" path="res://scene/popup/popup_out_of_live/popup_out_of_live.gd" id="1_oqpnr"]
+[ext_resource type="Texture2D" uid="uid://c88crrkv61f0j" path="res://ui/lose/Pop-up BG.png" id="2_2jl5g"]
+[ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="3_jn4tp"]
+[ext_resource type="Texture2D" uid="uid://bm4h0hoomixua" path="res://ui/lose/bt_close.png" id="4_cdlvm"]
+[ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="5_betm5"]
+[ext_resource type="Texture2D" uid="uid://cs42ngrt541ft" path="res://ui/lose/Pop-up content.png" id="6_d40de"]
+[ext_resource type="Texture2D" uid="uid://hy2ieye8t62d" path="res://ui/lose/Rectangle 1 copy.png" id="7_fe3yi"]
+[ext_resource type="Texture2D" uid="uid://db80lusryjinx" path="res://ui/lose/heart copy 3 - Smart Object Group.png" id="8_xvyeg"]
+[ext_resource type="Texture2D" uid="uid://idh5ve4hnljb" path="res://ui/lose/bt_green_in.png" id="9_k6srh"]
+[ext_resource type="Texture2D" uid="uid://vyt0d8kv0yd" path="res://ui/heart.png" id="10_xxv5w"]
+[ext_resource type="Texture2D" uid="uid://bpojblira7085" path="res://ui/lose/icon_ads2.png" id="11_53lg5"]
+[ext_resource type="Texture2D" uid="uid://ylo1vnnxpmym" path="res://ui/lose/bt_orange_in.png" id="12_epsrv"]
+[ext_resource type="Texture2D" uid="uid://s7w0y5v2ytt5" path="res://ui/coin.png" id="12_nqruc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pwda7"]
+font = ExtResource("3_jn4tp")
+font_size = 72
+font_color = Color(0.9529412, 0.88235295, 0.76862746, 1)
+outline_color = Color(0.12210385, 0.00025682568, 0.9213471, 1)
+shadow_size = 10
+shadow_color = Color(0.12156863, 0, 0.92156863, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ipw5r"]
+font = ExtResource("3_jn4tp")
+font_size = 72
+font_color = Color(0.13725491, 0.22352941, 0.49019608, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]
+font = ExtResource("3_jn4tp")
+font_size = 64
+font_color = Color(0.9607843, 0.8901961, 0.78039217, 1)
+shadow_size = 15
+shadow_color = Color(0.5764706, 0.2901961, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5fcqv"]
+font = ExtResource("3_jn4tp")
+font_size = 40
+font_color = Color(0.03529412, 0.41960785, 0, 1)
+shadow_size = 5
+shadow_color = Color(0.49019608, 0.85490197, 0.30588236, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ve75"]
+font = ExtResource("3_jn4tp")
+font_size = 56
+shadow_size = 5
+shadow_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_53lg5"]
+font = ExtResource("3_jn4tp")
+font_size = 48
+font_color = Color(0.972549, 0.92156863, 0.81960785, 1)
+shadow_size = 10
+shadow_color = Color(0.5764706, 0.2901961, 0, 1)
+
+[node name="PopupOutOfLive" type="Control" unique_id=1951886399]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oqpnr")
+
+[node name="Window" type="TextureRect" parent="." unique_id=761001646]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -491.0
+offset_top = -553.0
+offset_right = 491.0
+offset_bottom = 553.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2jl5g")
+
+[node name="LabelTitle" type="Label" parent="Window" unique_id=1825850572]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 12.0
+offset_bottom = 144.0
+grow_horizontal = 2
+text = "Out of lives"
+label_settings = SubResource("LabelSettings_pwda7")
+horizontal_alignment = 1
+
+[node name="ButtonClose" type="TextureButton" parent="Window" unique_id=883166287]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -138.0
+offset_top = 18.0
+offset_right = -29.0
+offset_bottom = 128.0
+grow_horizontal = 0
+texture_normal = ExtResource("4_cdlvm")
+
+[node name="ButtonEffect" parent="Window/ButtonClose" unique_id=941576423 instance=ExtResource("5_betm5")]
+layout_mode = 0
+
+[node name="Content" type="TextureRect" parent="Window" unique_id=1374292639]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -467.0
+offset_top = -965.0
+offset_right = 468.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("6_d40de")
+
+[node name="TextureRect" type="TextureRect" parent="Window/Content" unique_id=1719092622]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -382.5
+offset_top = -378.5
+offset_right = 382.5
+offset_bottom = 198.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_fe3yi")
+
+[node name="TextureRect" type="TextureRect" parent="Window/Content/TextureRect" unique_id=1964698740]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -176.5
+offset_top = -204.5
+offset_right = 176.5
+offset_bottom = 117.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_xvyeg")
+
+[node name="Label" type="Label" parent="Window/Content/TextureRect" unique_id=474397779]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -148.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Get more lives!"
+label_settings = SubResource("LabelSettings_ipw5r")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Window/Content" unique_id=450651223]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -408.0
+offset_top = -230.0
+offset_right = 408.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="ButtonGetFree" type="TextureButton" parent="Window/Content/HBoxContainer" unique_id=1164125819]
+layout_mode = 2
+texture_normal = ExtResource("9_k6srh")
+
+[node name="Label" type="Label" parent="Window/Content/HBoxContainer/ButtonGetFree" unique_id=140708135]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.5
+offset_top = -63.5
+offset_right = 111.5
+offset_bottom = 59.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Get"
+label_settings = SubResource("LabelSettings_6ai3d")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Window/Content/HBoxContainer/ButtonGetFree/Label" unique_id=193346392]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -55.5
+offset_top = -64.0
+offset_right = 55.5
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "FREE"
+label_settings = SubResource("LabelSettings_5fcqv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonEffect" parent="Window/Content/HBoxContainer/ButtonGetFree" unique_id=77911909 instance=ExtResource("5_betm5")]
+layout_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="Window/Content/HBoxContainer/ButtonGetFree" unique_id=2076827436]
+layout_mode = 0
+offset_left = 68.5
+offset_top = 43.0
+offset_right = 174.68182
+offset_bottom = 139.0
+texture = ExtResource("10_xxv5w")
+
+[node name="Label3" type="Label" parent="Window/Content/HBoxContainer/ButtonGetFree/TextureRect" unique_id=1166807941]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.09091
+offset_top = -57.0
+offset_right = 58.90909
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "+1"
+label_settings = SubResource("LabelSettings_0ve75")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Window/Content/HBoxContainer/ButtonGetFree" unique_id=1106536501]
+layout_mode = 0
+offset_left = 2.5
+offset_top = -20.0
+offset_right = 84.5
+offset_bottom = 60.0
+texture = ExtResource("11_53lg5")
+
+[node name="ButtonBuy" type="TextureButton" parent="Window/Content/HBoxContainer" unique_id=805985560]
+layout_mode = 2
+texture_normal = ExtResource("12_epsrv")
+
+[node name="Label3" type="Label" parent="Window/Content/HBoxContainer/ButtonBuy" unique_id=1555112368]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.5
+offset_top = -70.5
+offset_right = 110.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Get"
+label_settings = SubResource("LabelSettings_6ai3d")
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Window/Content/HBoxContainer/ButtonBuy/Label3" unique_id=554061648]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.5
+offset_top = 7.5
+offset_right = 87.5
+offset_bottom = 73.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "900"
+label_settings = SubResource("LabelSettings_53lg5")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Window/Content/HBoxContainer/ButtonBuy/Label3/Label4" unique_id=166297936]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -22.442102
+offset_right = 10.0
+offset_bottom = 22.4421
+grow_vertical = 2
+texture = ExtResource("12_nqruc")
+expand_mode = 1
+
+[node name="ButtonEffect" parent="Window/Content/HBoxContainer/ButtonBuy" unique_id=1149090351 instance=ExtResource("5_betm5")]
+layout_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="Window/Content/HBoxContainer/ButtonBuy" unique_id=1567528464]
+layout_mode = 0
+offset_left = 60.5
+offset_top = 43.0
+offset_right = 166.68182
+offset_bottom = 139.0
+texture = ExtResource("10_xxv5w")
+
+[node name="Label3" type="Label" parent="Window/Content/HBoxContainer/ButtonBuy/TextureRect" unique_id=779006734]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.09094
+offset_top = -57.0
+offset_right = 54.909058
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "+3"
+label_settings = SubResource("LabelSettings_0ve75")
+horizontal_alignment = 1
+vertical_alignment = 1

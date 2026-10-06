@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://xow6tcdxccv1" path="res://scene/popup/popup_win/popup_win.tscn" id="2_1st13"]
 [ext_resource type="PackedScene" uid="uid://dervte5l8du6m" path="res://scene/popup/popup_try_again/popup_try_again.tscn" id="3_gg3ps"]
 [ext_resource type="PackedScene" uid="uid://nu2fkq0bwtof" path="res://ui/loading/popup_loading.tscn" id="4_gg3ps"]
+[ext_resource type="PackedScene" uid="uid://cxxiigxbvdtr" path="res://scene/popup/popup_out_of_live/popup_out_of_live.tscn" id="4_qo0lx"]
+[ext_resource type="PackedScene" uid="uid://jkx4lnsotbcp" path="res://scene/popup/toast/toast.tscn" id="5_x606e"]
 
 [node name="PopupManager" type="Control" unique_id=999376964]
 layout_mode = 3
@@ -16,9 +18,17 @@ mouse_filter = 2
 script = ExtResource("1_tyu2s")
 popup_scene = Dictionary[int, PackedScene]({
 0: ExtResource("2_1st13"),
-1: ExtResource("3_gg3ps")
+1: ExtResource("3_gg3ps"),
+2: ExtResource("4_qo0lx")
 })
+toast_scene = ExtResource("5_x606e")
 
 [node name="PopupLoading" parent="." unique_id=1307776011 instance=ExtResource("4_gg3ps")]
 visible = false
 layout_mode = 1
+
+[node name="ToastContainer" type="Control" parent="." unique_id=1166185136]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2

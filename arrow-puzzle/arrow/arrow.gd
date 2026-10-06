@@ -22,7 +22,7 @@ enum Action{
 var action: Action = Action.Idle
 var tween: Tween
 const SPEED: float = 1000
-const GO_IN_SPEED: float = 10
+const GO_IN_SPEED: float = 300
 var exit_path: Array[PackedInt32Array]
 var tail_progress: float = 0
 var head_progress: float = 0
@@ -108,41 +108,61 @@ func render():
 		return
 	if !is_node_ready():
 		return
-	for i in data:
-		line_2d.add_point(Vector2(0,0))
 	var head_pos = data[data.size()-1]
 	head.position = Utils.to_pos(head_pos)
 	head.visible = true
 	#head.rotation_degrees = ROTATES[Utils.get_exit_dir(data)]
 	go_in()
 func update_line():
-	var start: int = floor(tail_progress / CELL_SIZE)
-	var end:int = floor(head_progress / CELL_SIZE) - 1
-	var tail_weight = float((int(tail_progress) % CELL_SIZE) / float(CELL_SIZE))
-	if !line_2d.points.size():
-		line_2d.add_point(Vector2.ZERO)
-	var first_pos = Utils.to_pos(exit_path[start]).lerp(Utils.to_pos(exit_path[start+1]), tail_weight)
-	if line_2d.points[0] != first_pos:
-		line_2d.set_point_position(0, first_pos)
-	for i in range(start+1, start + data.size()):
-		if i > exit_path.size() - 1:
-			break
-		var e = exit_path[i]
-		if e[0] > Utils.grid_width || e[1] > Utils.grid_width:
-			break
-		var pos: Vector2
-		if i > end:
-			pos = line_2d.points[i-start-1]
-		else:
-			pos = Utils.to_pos(exit_path[i])
-		line_2d.set_point_position(i - start, pos)
-	if end < exit_path.size() - 1:
-		var head_weight = float((int(head_progress) % CELL_SIZE) / float(CELL_SIZE))
-		line_2d.set_point_position(data.size()-1, Utils.to_pos(exit_path[end]).lerp(Utils.to_pos(exit_path[end+1]),head_weight))
-	else:
-		line_2d.set_point_position(data.size()-1, Utils.to_pos(exit_path[end]))
-	head.position = line_2d.points[line_2d.points.size() - 1]
-	highlight.points = line_2d.points.duplicate()
+	# Vị trí đuôi/đầu tính theo chỉ số (thực) trên exit_path.
+	var tail_index: float = tail_progress / CELL_SIZE
+	var head_index: float = head_progress / CELL_SIZE - 1
+	line_2d.points = _build_points(tail_index, head_index, line_2d.width / 2)
+	highlight.points = _build_points(tail_index, head_index, highlight.width / 2)
+	# Đầu đi theo vị trí thật, không theo điểm cuối của line (điểm này có thể bị bỏ ở góc).
+	head.position = _path_pos(head_index)
+
+func _path_pos(index: float) -> Vector2:
+	var i: int = clampi(floori(index), 0, exit_path.size() - 1)
+	var next: int = mini(i + 1, exit_path.size() - 1)
+	return Utils.to_pos(exit_path[i]).lerp(Utils.to_pos(exit_path[next]), index - i)
+
+# Dựng toàn bộ điểm của thân: đuôi nội suy, các ô lưới nằm giữa, đầu nội suy.
+# Line2D chỉ bo tròn được khớp khi 2 đoạn kề khớp đều dài >= nửa độ dày (half_width),
+# nên ở khớp có rẽ, đoạn đuôi/đầu ngắn hơn half_width bị bỏ (nắp tròn che phần thiếu).
+func _build_points(tail_index: float, head_index: float, half_width: float) -> PackedVector2Array:
+	var pts := PackedVector2Array()
+	var tail_pos := _path_pos(tail_index)
+	var head_pos := _path_pos(head_index)
+	var corners := PackedVector2Array()
+	for i in range(floori(tail_index) + 1, ceili(head_index)):
+		corners.append(Utils.to_pos(exit_path[i]))
+	if corners.is_empty():
+		pts.append(tail_pos)
+		if head_pos.distance_to(tail_pos) > 0.5:
+			pts.append(head_pos)
+		return pts
+	var last := corners.size() - 1
+	var after_first: Vector2 = corners[1] if last > 0 else head_pos
+	var before_last: Vector2 = corners[last - 1] if last > 0 else tail_pos
+	if !_should_drop_end(tail_pos, corners[0], after_first, half_width):
+		pts.append(tail_pos)
+	pts.append_array(corners)
+	if !_should_drop_end(head_pos, corners[last], before_last, half_width):
+		pts.append(head_pos)
+	return pts
+
+# Bỏ đầu mút end_pos (nối vào khớp corner, phía bên kia khớp là other) khi đoạn quá ngắn:
+# luôn bỏ nếu gần như trùng; ngắn hơn half_width thì chỉ bỏ khi tại khớp có rẽ.
+func _should_drop_end(end_pos: Vector2, corner: Vector2, other: Vector2, half_width: float) -> bool:
+	var length := end_pos.distance_to(corner)
+	if length < 0.5:
+		return true
+	if length >= half_width:
+		return false
+	var d1 := (corner - end_pos).normalized()
+	var d2 := (other - corner).normalized()
+	return absf(d1.cross(d2)) > 0.01
 func _physics_process(_delta: float) -> void:
 	if action != Action.Idle:
 		update_line()

@@ -1,0 +1,232 @@
+[gd_scene format=3 uid="uid://cv4lpv0w532k3"]
+
+[ext_resource type="PackedScene" uid="uid://ch2fpg8n3u371" path="res://scene/home/challenge/challenge.tscn" id="1_gu7es"]
+[ext_resource type="Texture2D" uid="uid://v4ptiqb52n1x" path="res://scene/home/img/BG.png" id="2_1b7od"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://ui_theme.tres" id="3_4xg5n"]
+[ext_resource type="Texture2D" uid="uid://bujybd3u0xfa6" path="res://scene/home/img/avt_default.png" id="4_ky6se"]
+[ext_resource type="Texture2D" uid="uid://cw8i1xcrdstn8" path="res://scene/home/img/frame_avt.png" id="5_yfwlg"]
+[ext_resource type="Texture2D" uid="uid://ch6bkl47jj4nq" path="res://ui/coin_frame.png" id="6_ew1yl"]
+[ext_resource type="Texture2D" uid="uid://s7w0y5v2ytt5" path="res://ui/coin.png" id="7_42kb2"]
+[ext_resource type="Texture2D" uid="uid://iw3ffs5i3536" path="res://ui/bt_plus.png" id="8_j8qdn"]
+[ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="9_wfedn"]
+[ext_resource type="Texture2D" uid="uid://dqmlc78a7algt" path="res://scene/home/img/icon_picnic.png" id="10_fyuve"]
+[ext_resource type="Texture2D" uid="uid://dvwvtiqaqm43i" path="res://ui/setting.png" id="11_fkt3c"]
+[ext_resource type="Texture2D" uid="uid://cptfkk14q18eh" path="res://scene/home/img/bt_play_normal.png" id="19_ttc14"]
+[ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="20_plyuu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sh07k"]
+font = ExtResource("9_wfedn")
+font_size = 40
+font_color = Color(0.627451, 0.39607844, 0.28235295, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_d0xfb"]
+font_size = 76
+outline_size = 20
+outline_color = Color(0, 0.2, 0.5803922, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_luo7c"]
+font_size = 42
+font_color = Color(0.0627451, 0.34509805, 0.03529412, 1)
+outline_size = 10
+outline_color = Color(0.37254903, 0.8117647, 0.11372549, 1)
+
+[node name="Main" type="Control" unique_id=1034398291]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Challenge" parent="." unique_id=1245256718 instance=ExtResource("1_gu7es")]
+layout_mode = 1
+
+[node name="Background" type="TextureRect" parent="." unique_id=617974274]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_1b7od")
+metadata/_edit_lock_ = true
+
+[node name="PanelTop" type="Panel" parent="." unique_id=181405793]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Avatar" type="Panel" parent="PanelTop" unique_id=567646802]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 240.0
+offset_bottom = 240.0
+size_flags_vertical = 4
+theme = ExtResource("3_4xg5n")
+
+[node name="Image" type="TextureRect" parent="PanelTop/Avatar" unique_id=570978882]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.0
+offset_top = -82.0
+offset_right = 82.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("4_ky6se")
+
+[node name="Frame" type="TextureRect" parent="PanelTop/Avatar" unique_id=2120191910]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.5
+offset_top = -101.5
+offset_right = 100.5
+offset_bottom = 101.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_yfwlg")
+
+[node name="Coin" type="Panel" parent="PanelTop" unique_id=535993124]
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 0
+offset_left = 561.0
+offset_top = 63.0
+offset_right = 861.0
+offset_bottom = 183.0
+size_flags_vertical = 4
+theme = ExtResource("3_4xg5n")
+
+[node name="Frame" type="TextureRect" parent="PanelTop/Coin" unique_id=1622013122]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 15.0
+offset_right = 278.0
+offset_bottom = 100.0
+texture = ExtResource("6_ew1yl")
+stretch_mode = 2
+
+[node name="Heart" type="TextureRect" parent="PanelTop/Coin" unique_id=593227418]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = 114.2879
+offset_bottom = 102.0
+texture = ExtResource("7_42kb2")
+stretch_mode = 4
+
+[node name="ImagePlus" type="TextureRect" parent="PanelTop/Coin" unique_id=1849062568]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 69.0
+offset_right = 110.56061
+offset_bottom = 112.0
+texture = ExtResource("8_j8qdn")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="LabelCoins" type="Label" parent="PanelTop/Coin" unique_id=1476178488]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 20.0
+offset_right = 262.0
+offset_bottom = 89.0
+text = "18m48s"
+label_settings = SubResource("LabelSettings_sh07k")
+vertical_alignment = 1
+
+[node name="ButtonNoAds" type="TextureButton" parent="PanelTop" unique_id=924255613]
+layout_mode = 0
+offset_left = 868.0
+offset_top = 252.0
+offset_right = 1054.0
+offset_bottom = 449.0
+texture_normal = ExtResource("10_fyuve")
+
+[node name="Setting" type="Panel" parent="PanelTop" unique_id=241581822]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 0
+offset_left = 871.0
+offset_top = 40.0
+offset_right = 1031.0
+offset_bottom = 200.0
+size_flags_vertical = 4
+theme = ExtResource("3_4xg5n")
+
+[node name="TextureButton" type="TextureButton" parent="PanelTop/Setting" unique_id=823963294]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 160.0
+texture_normal = ExtResource("11_fkt3c")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="PanelBottom" type="Panel" parent="." unique_id=848475349]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -639.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_4xg5n")
+
+[node name="ButtonPlay" type="TextureButton" parent="PanelBottom" unique_id=228617875]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -223.0
+offset_top = -597.0
+offset_right = 223.0
+offset_bottom = -425.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("19_ttc14")
+
+[node name="Label" type="Label" parent="PanelBottom/ButtonPlay" unique_id=889908184]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLAY"
+label_settings = SubResource("LabelSettings_d0xfb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelLevel" type="Label" parent="PanelBottom/ButtonPlay" unique_id=1815110263]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 39.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Level 9"
+label_settings = SubResource("LabelSettings_luo7c")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonEffect" parent="PanelBottom/ButtonPlay" unique_id=941576423 instance=ExtResource("20_plyuu")]
+layout_mode = 1

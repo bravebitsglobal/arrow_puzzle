@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://ch2fpg8n3u371"]
+
+[ext_resource type="Script" uid="uid://dwv51a210qwvv" path="res://scene/home/challenge/challenge.gd" id="1_qt1ub"]
+[ext_resource type="Texture2D" uid="uid://dw0mjctwkub41" path="res://scene/home/challenge/img/Layer 10.png" id="2_3p112"]
+[ext_resource type="Texture2D" uid="uid://8ghjtcdyi2t6" path="res://scene/home/challenge/img/cup/Layer 13.png" id="3_7ftaw"]
+[ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="4_e63bl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7ftaw"]
+font = ExtResource("4_e63bl")
+font_size = 78
+font_color = Color(0.9764706, 0.9372549, 0.8392157, 1)
+outline_size = 30
+outline_color = Color(0.72603273, 0.43861645, 3.85046e-07, 1)
+shadow_size = 10
+shadow_color = Color(0.05882353, 0.14509805, 0.6431373, 1)
+
+[node name="Challenge" type="Control" unique_id=1245256718]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qt1ub")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1940842902]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=7370139]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 538.0
+grow_horizontal = 2
+texture = ExtResource("2_3p112")
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect" unique_id=683390855]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -149.5
+offset_top = -334.0
+offset_right = 149.5
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_7ftaw")
+
+[node name="Label" type="Label" parent="TextureRect" unique_id=90118378]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -59.5
+offset_top = -369.0
+offset_right = 59.5
+offset_bottom = -346.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Daily Challenge"
+label_settings = SubResource("LabelSettings_7ftaw")
+horizontal_alignment = 1
+
+[node name="Calendar" type="Control" parent="." unique_id=381148851]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

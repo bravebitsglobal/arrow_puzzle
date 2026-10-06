@@ -1,12 +1,15 @@
 extends Control
 class_name PopupManager
 @onready var popup_loading: Control = $PopupLoading
+@onready var toast_container: Control = $ToastContainer
 
 enum PopupType {
 	GameWin,
 	GameTryAgain,
+	OutOfLive
 }
 @export var popup_scene: Dictionary[PopupType, PackedScene] = {}
+@export var toast_scene: PackedScene
 var popup_node: Dictionary[PopupType, Control] = {}
 var last_z_index: int = 100
 const ANIMATION_DURATION: float = 0.2
@@ -59,3 +62,7 @@ func hide_popup(type: PopupType)->void:
 	tw.tween_property(content_node, "offset_transform_position", Vector2(0, 100), ANIMATION_DURATION)
 	await tw.finished
 	popup_node[type].visible = false
+func show_toast(content: String)->void:
+	var node: Toast = toast_scene.instantiate()
+	toast_container.add_child(node)
+	node.set_text(content)

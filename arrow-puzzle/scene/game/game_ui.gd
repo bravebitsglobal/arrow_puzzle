@@ -68,7 +68,7 @@ func _on_booster_hint_click()->void:
 		Global.game_event.active_game_booster.emit(Global.Booster.Hint)
 	else:
 		await Global.ad_manager.show_user_reward()
-		Global.game_data.booster_hint.value = 1000
+		Global.game_data.booster_hint.value = 3
 	Global.game_data.save_data()
 func _on_booster_eraser_click()->void:
 	if Global.game_data.animating.value:
@@ -78,7 +78,7 @@ func _on_booster_eraser_click()->void:
 		Global.game_event.active_game_booster.emit(Global.Booster.Eraser)
 	else:
 		await Global.ad_manager.show_user_reward()
-		Global.game_data.booster_eraser.value = 1000
+		Global.game_data.booster_eraser.value = 3
 	Global.game_data.save_data()
 func _on_booster_magic_glasses_click()->void:
 	if Global.game_data.animating.value:
@@ -88,7 +88,7 @@ func _on_booster_magic_glasses_click()->void:
 		Global.game_event.active_game_booster.emit(Global.Booster.MagicGlasses)
 	else:
 		await Global.ad_manager.show_user_reward()
-		Global.game_data.booster_magic_glasses.value = 1000
+		Global.game_data.booster_magic_glasses.value = 3
 	Global.game_data.save_data()
 func _on_booster_ruler_click()->void:
 	if Global.game_data.animating.value:
@@ -99,7 +99,7 @@ func _on_booster_ruler_click()->void:
 		Global.game_data.is_ruler.value = true
 	else:
 		await Global.ad_manager.show_user_reward()
-		Global.game_data.booster_ruler.value = 1000
+		Global.game_data.booster_ruler.value = 3
 	Global.game_data.save_data()
 func render_live(lives: int)->void:
 	if !live_container:

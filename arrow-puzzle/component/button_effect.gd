@@ -18,11 +18,11 @@ func _ready() -> void:
 		if color_tween:
 			color_tween.kill()
 		color_tween = create_tween()
-		color_tween.tween_property(parent_node, "self_modulate", Color("#cecece"), EFFECT_TIME)
+		color_tween.tween_property(parent_node, "modulate", Color("#cecece"), EFFECT_TIME)
 		)
 	parent_node.mouse_exited.connect(func():
 		if color_tween:
 			color_tween.kill()
 		color_tween = create_tween()
-		color_tween.tween_property(parent_node, "self_modulate", Color("#ffffff"), EFFECT_TIME)
+		color_tween.tween_property(parent_node, "modulate", Color("#ffffff"), EFFECT_TIME)
 		)

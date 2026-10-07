@@ -65,6 +65,7 @@ func render_level():
 			used_cells[Utils.to_index(c)] = true
 		arrow.on_click.connect(func ():
 			_on_arrow_clicked(arrow_idx))
+	print("game action start")
 	Global.game_event.user_action.emit.call_deferred(GameEvent.UserAction.GameStart, {"game": self})
 func _on_active_booster(booster: Global.Booster)->void:
 	match(booster):

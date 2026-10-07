@@ -235,7 +235,7 @@ text = "18"
 label_settings = SubResource("LabelSettings_81276")
 horizontal_alignment = 1
 
-[node name="BottomPanel" type="HBoxContainer" parent="UI/PanelGame" unique_id=1673585549]
+[node name="BottomPanel" type="Panel" parent="UI/PanelGame" unique_id=2029731539]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -245,11 +245,12 @@ offset_top = -293.0
 offset_bottom = -82.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 20
-alignment = 1
 
 [node name="ButtonHint" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=2079020333]
-layout_mode = 2
+layout_mode = 0
+offset_left = 96.0
+offset_right = 303.0
+offset_bottom = 211.0
 texture_normal = ExtResource("15_i6gbm")
 
 [node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonHint" unique_id=141732299]
@@ -336,7 +337,10 @@ layout_mode = 1
 id = "game.hint"
 
 [node name="ButtonEraser" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=1309223707]
-layout_mode = 2
+layout_mode = 0
+offset_left = 323.0
+offset_right = 530.0
+offset_bottom = 211.0
 texture_normal = ExtResource("15_i6gbm")
 
 [node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonEraser" unique_id=210307831]
@@ -423,7 +427,10 @@ layout_mode = 1
 id = "game.eraser"
 
 [node name="ButtonMagicGlasses" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=1275947394]
-layout_mode = 2
+layout_mode = 0
+offset_left = 550.0
+offset_right = 757.0
+offset_bottom = 211.0
 texture_normal = ExtResource("15_i6gbm")
 
 [node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonMagicGlasses" unique_id=923472563]
@@ -510,7 +517,10 @@ layout_mode = 1
 id = "game.magicglasses"
 
 [node name="ButtonRuler" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=931184883]
-layout_mode = 2
+layout_mode = 0
+offset_left = 777.0
+offset_right = 984.0
+offset_bottom = 211.0
 texture_normal = ExtResource("15_i6gbm")
 
 [node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonRuler" unique_id=993683779]

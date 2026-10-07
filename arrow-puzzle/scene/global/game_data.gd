@@ -9,6 +9,7 @@ var booster_magic_glasses: Observable = Observable.new(0)
 var booster_ruler: Observable = Observable.new(0)
 var player_data: PlayerData = PlayerData.new()
 var tutorial_step: Observable = Observable.new()
+var is_tutorial: Observable = Observable.new(false)
 #game
 var remain_lines: Observable = Observable.new()
 var lives: Observable = Observable.new(MAX_LIVE)

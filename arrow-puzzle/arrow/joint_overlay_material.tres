@@ -8,6 +8,6 @@
 shader = ExtResource("1_shader")
 shader_parameter/alpha_texture = ExtResource("2_alpha")
 shader_parameter/mask_texture = ExtResource("3_mask")
-shader_parameter/rotation_angle = 0.0
-shader_parameter/texture_scale = Vector2(1, 1)
-shader_parameter/texture_offset = Vector2(0, 0)
+shader_parameter/joint_count = 0
+shader_parameter/joint_size = 40.0
+shader_parameter/overlay_strength = 1.0

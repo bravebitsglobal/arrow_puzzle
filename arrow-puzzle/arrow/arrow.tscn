@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://08iwkk13f8v1"]
 
 [ext_resource type="Script" uid="uid://cw7vlvo1hvmjq" path="res://arrow/arrow.gd" id="1_jp72l"]
-[ext_resource type="Texture2D" uid="uid://detmpcvjg87rc" path="res://arrow/than ngang.png" id="2_d2qln"]
-[ext_resource type="Texture2D" uid="uid://b8nxuvoentg6e" path="res://arrow/kid_pink_light.png" id="3_d2qln"]
-[ext_resource type="Texture2D" uid="uid://0nkudhmgvs17" path="res://arrow/dau.png" id="4_ofxgm"]
+[ext_resource type="Texture2D" uid="uid://6sk0rsjot71b" path="res://arrow/img/body.png" id="2_ofxgm"]
+[ext_resource type="Texture2D" uid="uid://b34d4uyml7n12" path="res://arrow/img/vay1_R.png" id="3_l8mgh"]
+[ext_resource type="Texture2D" uid="uid://wn847vs3clvk" path="res://arrow/img/head.png" id="3_ofxgm"]
+[ext_resource type="Texture2D" uid="uid://dvf48lidnugwg" path="res://arrow/img/vay2_R.png" id="4_wy7q8"]
+[ext_resource type="Texture2D" uid="uid://v435rycwa0ty" path="res://arrow/img/duoi.png" id="5_ll4nt"]
+[ext_resource type="Texture2D" uid="uid://cdfkv6qsvl8l0" path="res://arrow/img/vay1_L.png" id="6_bp1ey"]
+[ext_resource type="Texture2D" uid="uid://chh75dxy56bwo" path="res://arrow/img/vay2_L.png" id="7_n8rio"]
+[ext_resource type="Texture2D" uid="uid://57mxh73wy4vp" path="res://arrow/img/mount.png" id="8_1h48w"]
 
 [sub_resource type="Animation" id="Animation_ofxgm"]
 length = 0.001
@@ -44,35 +49,11 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_ll4nt"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Head/Dau:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-0.2617994]
-}
 
 [sub_resource type="Animation" id="Animation_lo0oj"]
 resource_name = "head"
 length = 2.0
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Head/Dau:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [-0.2617994, 0.2617994, -0.2617994]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nl01e"]
 _data = {
@@ -87,7 +68,7 @@ script = ExtResource("1_jp72l")
 
 [node name="Highlight" type="Line2D" parent="." unique_id=928021575]
 self_modulate = Color(1, 1, 1, 0)
-points = PackedVector2Array(-21, 28, 146, -23, 247, 76, 82, 197)
+points = PackedVector2Array(-105, -86, 195, -101, 247, 76, 311, -29)
 width = 70.0
 default_color = Color(1, 0.6, 1, 1)
 texture_mode = 1
@@ -97,11 +78,11 @@ end_cap_mode = 2
 round_precision = 16
 
 [node name="Line2D" type="Line2D" parent="." unique_id=678615301]
+points = PackedVector2Array(-16, 47)
 width = 40.0
-texture = ExtResource("2_d2qln")
+texture = ExtResource("2_ofxgm")
 texture_mode = 1
 joint_mode = 2
-begin_cap_mode = 2
 end_cap_mode = 2
 sharp_limit = 1.0
 round_precision = 16
@@ -116,26 +97,43 @@ begin_cap_mode = 2
 end_cap_mode = 2
 round_precision = 16
 
-[node name="Joints" type="Node2D" parent="." unique_id=1230351854]
-
 [node name="Head" type="Node2D" parent="." unique_id=1303642838]
 scale = Vector2(1.3167543, 1.3167543)
 
-[node name="Dau" type="Sprite2D" parent="Head" unique_id=1780429543]
-visible = false
-rotation = -0.2617994
-scale = Vector2(0.51444364, 0.51444364)
-texture = ExtResource("3_d2qln")
+[node name="VayR1" type="Sprite2D" parent="Head" unique_id=1869416544]
+position = Vector2(20.504963, -9.113318)
+scale = Vector2(0.11919905, 0.11919907)
+texture = ExtResource("3_l8mgh")
+
+[node name="VayR2" type="Sprite2D" parent="Head" unique_id=532828053]
+position = Vector2(19.74552, 5.316102)
+scale = Vector2(0.11919905, 0.11919907)
+texture = ExtResource("4_wy7q8")
 
 [node name="Dau2" type="Sprite2D" parent="Head" unique_id=1668950607]
-rotation = -0.2617994
-scale = Vector2(0.51444364, 0.51444364)
-texture = ExtResource("4_ofxgm")
+position = Vector2(-0.75944316, 0)
+scale = Vector2(0.119199045, 0.11919905)
+texture = ExtResource("3_ofxgm")
+
+[node name="VayL" type="Sprite2D" parent="Head" unique_id=317458444]
+position = Vector2(-19.745522, -8.353874)
+scale = Vector2(0.11919905, 0.11919907)
+texture = ExtResource("6_bp1ey")
+
+[node name="VayL2" type="Sprite2D" parent="Head" unique_id=1399072012]
+position = Vector2(-21.264408, 5.3161016)
+scale = Vector2(0.11919905, 0.11919907)
+texture = ExtResource("7_n8rio")
+
+[node name="Mount" type="Sprite2D" parent="Head" unique_id=731484371]
+position = Vector2(-0.7594414, 14.42942)
+scale = Vector2(0.08329302, 0.08329303)
+texture = ExtResource("8_1h48w")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2055958979]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1159130842]
-polygon = PackedVector2Array(-31, 24, -31, -36, 40, -36, 40, 24)
+polygon = PackedVector2Array(-28, -28, -29, -34, -20, -34, -18, -27)
 
 [node name="HighlightAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1223611150]
 libraries/ = SubResource("AnimationLibrary_ofxgm")
@@ -143,3 +141,9 @@ libraries/ = SubResource("AnimationLibrary_ofxgm")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1529451374]
 libraries/ = SubResource("AnimationLibrary_nl01e")
 autoplay = &"head"
+
+[node name="Tail" type="Node2D" parent="." unique_id=256011674]
+
+[node name="Duoi" type="Sprite2D" parent="Tail" unique_id=1263945153]
+scale = Vector2(0.14814813, 0.14814815)
+texture = ExtResource("5_ll4nt")

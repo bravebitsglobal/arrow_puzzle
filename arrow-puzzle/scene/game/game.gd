@@ -12,6 +12,7 @@ var level
 var arrows: Array[Arrow] = []
 var total_line: int = 0
 var is_using_eraser: bool = false
+var is_focus: bool = false
 class ExitPathResult:
 	var can_exit: bool
 	var exit_path: Array[PackedInt32Array]
@@ -22,7 +23,7 @@ func _ready() -> void:
 	Global.game_event.game_restart.connect(func():
 		restart())
 	Global.game_event.active_game_booster.connect(_on_active_booster)
-	Global.game_data.is_ruler.subscribe(func (value):
+	Global.game_data.is_ruler.subscribe(func (_value):
 		render_ruler())
 func render_ruler()->void:
 	if !Global.game_data.is_ruler.value:
@@ -64,6 +65,7 @@ func render_level():
 			used_cells[Utils.to_index(c)] = true
 		arrow.on_click.connect(func ():
 			_on_arrow_clicked(arrow_idx))
+	Global.game_event.user_action.emit.call_deferred(GameEvent.UserAction.GameStart, {"game": self})
 func _on_active_booster(booster: Global.Booster)->void:
 	match(booster):
 		Global.Booster.Hint:
@@ -73,14 +75,20 @@ func _on_active_booster(booster: Global.Booster)->void:
 		Global.Booster.MagicGlasses:
 			_active_magic_glasses()
 func _active_hint()->void:
+	var idx = get_hint_idx()
+	arrows[idx].active_highlight()
+	move_camera_to_arrow(idx)
+func get_hint_idx()->int:
 	for i in range(level.size()):
 		if arrows[i].is_exit:
 			continue
 		var exit_path = calculate_exit_path(level[i])
 		if exit_path.can_exit:
-			arrows[i].active_highlight()
-			move_camera_to_arrow(i)
-			break
+			return i
+	return 0
+func get_hint_node()->Node2D:
+	var idx = get_hint_idx()
+	return arrows[idx]
 func move_camera_to_arrow(idx)->void:
 	var tw = create_tween()
 	tw.tween_property(camera_2d, "position", Utils.get_center(level[idx]), 0.5)
@@ -119,13 +127,18 @@ func _on_arrow_clicked(idx: int):
 	var rs = calculate_exit_path(level[idx])
 	if rs.can_exit:
 		remove_arrow(idx)
+		if Global.game_data.remain_lines.value == level.size():
+			Global.game_event.user_action.emit(GameEvent.UserAction.FirstArrow, {})
 		Global.game_data.remain_lines.value = Global.game_data.remain_lines.value - 1
+		
 	else:
 		Global.game_data.lives.value = Global.game_data.lives.value - 1
 	arrows[idx].exit(rs)
 	check_end_game()
 	await get_tree().create_timer(1).timeout
 	Global.game_data.animating.value = false
+	if is_focus:
+		clear_focus()
 func move_camera_to_center()->void:
 	var left_top = level[0][0].duplicate()
 	var right_bottom = level[0][0].duplicate()
@@ -207,3 +220,12 @@ func restart()->void:
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	move_camera_to_center()
 	render_level()
+func focus_arrow(idx: int)->void:
+	is_focus = true
+	move_camera_to_arrow(idx)
+	for i in range(arrows.size()):
+		arrows[i].set_enable(i == idx)
+func clear_focus()->void:
+	is_focus = false
+	for i in range(arrows.size()):
+		arrows[i].set_enable(true)

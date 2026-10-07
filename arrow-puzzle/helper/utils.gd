@@ -17,6 +17,14 @@ static func convert_level(level: Array)->Array[PackedInt32Array]:
 	for a in level:
 		rs.append(a.cells)
 	return rs
+static func get_dir(from: Array, to: Array)->Direction:
+	if to[1] - from[1] < 0:
+		return Direction.Up
+	if to[1] - from[1] > 0:
+		return Direction.Down
+	if to[0] - from[0] < 0:
+		return Direction.Left
+	return Direction.Right
 static func get_exit_dir(arrow: Array)->Direction:
 	var a = arrow[arrow.size()-2]
 	var b = arrow[arrow.size()-1]

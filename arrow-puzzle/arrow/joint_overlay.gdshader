@@ -1,55 +1,45 @@
 shader_type canvas_item;
 
-// Texture của hình ảnh alpha (hình ảnh chính)
-uniform sampler2D alpha_texture : filter_linear_mipmap, repeat_enable;
+// Shader gắn trực tiếp lên Line2D thân arrow. Tại mỗi khớp gấp khúc:
+// - mask_texture: xoá phần thân nằm ngoài mask (vùng trong suốt của mask.png).
+// - alpha_texture: vẽ đè viền pixel (alpha.png) lên khớp.
+// Hướng gốc của 2 ảnh: 2 nhánh thân đi LÊN và sang PHẢI, góc ngoài ở dưới-trái.
 
-// Texture của mask (để xóa phần thừa)
-uniform sampler2D mask_texture : filter_linear_mipmap, repeat_enable;
+const int MAX_JOINTS = 64;
 
-// Góc xoay (radian) để phù hợp với các hướng khớp khác nhau
-uniform float rotation_angle : hint_range(0.0, 6.28318530718) = 0.0;
+uniform sampler2D alpha_texture : filter_nearest;
+uniform sampler2D mask_texture : filter_nearest;
+// xy = vị trí khớp (toạ độ local của Line2D), z = góc xoay (radian) so với hướng gốc.
+uniform vec3 joints[MAX_JOINTS];
+uniform int joint_count = 0;
+// Cạnh ô vuông khớp (px) = độ rộng Line2D.
+uniform float joint_size = 40.0;
+uniform float overlay_strength : hint_range(0.0, 1.0) = 1.0;
 
-// Tỷ lệ scale của texture
-uniform vec2 texture_scale = vec2(1.0, 1.0);
+varying vec2 local_pos;
 
-// Offset của texture
-uniform vec2 texture_offset = vec2(0.0, 0.0);
-
-// Hàm xoay UV coordinates
-vec2 rotate_uv(vec2 uv, float angle, vec2 center) {
-    // Dịch chuyển về tâm
-    vec2 translated = uv - center;
-
-    // Xoay
-    float cos_angle = cos(angle);
-    float sin_angle = sin(angle);
-    vec2 rotated = vec2(
-        translated.x * cos_angle - translated.y * sin_angle,
-        translated.x * sin_angle + translated.y * cos_angle
-    );
-
-    // Dịch chuyển về vị trí ban đầu
-    return rotated + center;
+void vertex() {
+	local_pos = VERTEX;
 }
 
 void fragment() {
-    // Tính UV sau khi scale và offset
-    vec2 uv = UV * texture_scale + texture_offset;
+	vec4 color = texture(TEXTURE, UV) * COLOR;
+	for (int i = 0; i < joint_count; i++) {
+		vec2 d = local_pos - joints[i].xy;
+		float half_size = joint_size * 0.5;
+		if (abs(d.x) > half_size || abs(d.y) > half_size) {
+			continue;
+		}
+		// Đưa điểm về hệ toạ độ gốc của ảnh: xoay ngược góc của khớp.
+		float c = cos(joints[i].z);
+		float s = sin(joints[i].z);
+		vec2 base = vec2(d.x * c + d.y * s, -d.x * s + d.y * c);
+		vec2 uv = clamp(base / joint_size + 0.5, 0.0, 1.0);
 
-    // Xoay UV quanh tâm (0.5, 0.5)
-    vec2 rotated_uv = rotate_uv(uv, rotation_angle, vec2(0.5, 0.5));
-
-    // Lấy màu từ alpha texture
-    vec4 alpha_color = texture(alpha_texture, rotated_uv);
-
-    // Lấy mask value (sử dụng kênh alpha hoặc luminance của mask)
-    vec4 mask_color = texture(mask_texture, rotated_uv);
-
-    // Tính mask value: nếu mask có màu (không phải đen) thì giữ lại
-    // Sử dụng luminance hoặc alpha channel của mask
-    float mask_value = max(mask_color.a, (mask_color.r + mask_color.g + mask_color.b) / 3.0);
-
-    // Apply mask: chỉ hiển thị phần có mask
-    COLOR = alpha_color;
-    COLOR.a *= mask_value;
+		color.a *= texture(mask_texture, uv).a;
+		vec4 overlay = texture(alpha_texture, uv);
+		color.rgb = mix(color.rgb, overlay.rgb, overlay.a * overlay_strength);
+		break;
+	}
+	COLOR = color;
 }

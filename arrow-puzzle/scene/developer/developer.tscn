@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://dfllwg7djxrh"]
+
+[ext_resource type="Script" uid="uid://cr1v0xm81etpf" path="res://scene/developer/developer.gd" id="1_oe4mk"]
+
+[sub_resource type="Gradient" id="Gradient_0ve75"]
+colors = PackedColorArray(0.2815111, 0.00042470574, 0.785438, 1, 0.5208089, 0.4904455, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6ai3d"]
+gradient = SubResource("Gradient_0ve75")
+fill_from = Vector2(0.52901024, 1)
+fill_to = Vector2(0.552901, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oe4mk"]
+font_size = 48
+
+[node name="Developer" type="Control" unique_id=2012492695]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oe4mk")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=182613298]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_6ai3d")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=2101475966]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 141.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=2019950521]
+custom_minimum_size = Vector2(1080, 0)
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Control" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=1578641570]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="ButtonClearUserData" type="Button" parent="ScrollContainer/VBoxContainer/Control" unique_id=1634055578]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -37.5
+offset_right = 400.0
+offset_bottom = 37.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Clear user data"
+
+[node name="Control2" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=694473472]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Control2" unique_id=1790728434]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.0
+offset_top = -37.5
+offset_right = 253.0
+offset_bottom = 37.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="InputLevel" type="LineEdit" parent="ScrollContainer/VBoxContainer/Control2/HBoxContainer" unique_id=1782742425]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+placeholder_text = "Level"
+
+[node name="InputCoins" type="LineEdit" parent="ScrollContainer/VBoxContainer/Control2/HBoxContainer" unique_id=1102515245]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+placeholder_text = "Coins"
+
+[node name="ButtonEditPlayerData" type="Button" parent="ScrollContainer/VBoxContainer/Control2/HBoxContainer" unique_id=1194308325]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Edit User Data"
+
+[node name="Tutorial" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=218297781]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Tutorial" unique_id=30342419]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.0
+offset_top = -37.5
+offset_right = 253.0
+offset_bottom = 37.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="InputTutorialStep" type="LineEdit" parent="ScrollContainer/VBoxContainer/Tutorial/HBoxContainer" unique_id=1246920545]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+placeholder_text = "Tutorial"
+
+[node name="ButtonEditTutorialStep" type="Button" parent="ScrollContainer/VBoxContainer/Tutorial/HBoxContainer" unique_id=1590169397]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Edit Tutorial Step"
+
+[node name="Label" type="Label" parent="." unique_id=407176501]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Developer"
+label_settings = SubResource("LabelSettings_oe4mk")
+horizontal_alignment = 1
+
+[node name="ButtonBack" type="Button" parent="." unique_id=484514646]
+layout_mode = 1
+offset_left = 17.0
+offset_top = 16.0
+offset_right = 136.0
+offset_bottom = 91.0
+theme_override_font_sizes/font_size = 48
+text = "Back"

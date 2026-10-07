@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://njjgcsmsijxr" path="res://ui/booster_hint.png" id="16_i6gbm"]
 [ext_resource type="Texture2D" uid="uid://bytm58ytl8kho" path="res://ui/bt_quantity.png" id="18_ux4dc"]
 [ext_resource type="Texture2D" uid="uid://riv02esv8ts8" path="res://ui/booster_eraser.png" id="19_4qy8q"]
+[ext_resource type="PackedScene" uid="uid://jcdecnx5nira" path="res://scene/global/tutorial/tutorial_target.tscn" id="20_xx4si"]
 [ext_resource type="Texture2D" uid="uid://cw1tcfpjq0i6o" path="res://scene/home/img/3 copy 5 - Smart Object Group copy 3.png" id="21_osgb2"]
 [ext_resource type="Texture2D" uid="uid://cara4gcoif03y" path="res://ui/booster_mirror.png" id="21_ywpmx"]
 [ext_resource type="Texture2D" uid="uid://o71as0hiegew" path="res://ui/booster_grid.png" id="22_osgb2"]
@@ -330,6 +331,10 @@ vertical_alignment = 1
 [node name="ButtonEffect" parent="UI/PanelGame/BottomPanel/ButtonHint" unique_id=1851511852 instance=ExtResource("14_mq16h")]
 layout_mode = 0
 
+[node name="TutorialTarget" parent="UI/PanelGame/BottomPanel/ButtonHint" unique_id=282970509 instance=ExtResource("20_xx4si")]
+layout_mode = 1
+id = "game.hint"
+
 [node name="ButtonEraser" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=1309223707]
 layout_mode = 2
 texture_normal = ExtResource("15_i6gbm")
@@ -412,6 +417,10 @@ vertical_alignment = 1
 
 [node name="ButtonEffect" parent="UI/PanelGame/BottomPanel/ButtonEraser" unique_id=1383203481 instance=ExtResource("14_mq16h")]
 layout_mode = 0
+
+[node name="TutorialTarget" parent="UI/PanelGame/BottomPanel/ButtonEraser" unique_id=1236717826 instance=ExtResource("20_xx4si")]
+layout_mode = 1
+id = "game.eraser"
 
 [node name="ButtonMagicGlasses" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=1275947394]
 layout_mode = 2
@@ -496,6 +505,10 @@ vertical_alignment = 1
 [node name="ButtonEffect" parent="UI/PanelGame/BottomPanel/ButtonMagicGlasses" unique_id=1797675724 instance=ExtResource("14_mq16h")]
 layout_mode = 0
 
+[node name="TutorialTarget" parent="UI/PanelGame/BottomPanel/ButtonMagicGlasses" unique_id=1382621803 instance=ExtResource("20_xx4si")]
+layout_mode = 1
+id = "game.magicglasses"
+
 [node name="ButtonRuler" type="TextureButton" parent="UI/PanelGame/BottomPanel" unique_id=931184883]
 layout_mode = 2
 texture_normal = ExtResource("15_i6gbm")
@@ -578,6 +591,10 @@ vertical_alignment = 1
 
 [node name="ButtonEffect" parent="UI/PanelGame/BottomPanel/ButtonRuler" unique_id=2131450271 instance=ExtResource("14_mq16h")]
 layout_mode = 0
+
+[node name="TutorialTarget" parent="UI/PanelGame/BottomPanel/ButtonRuler" unique_id=2028963646 instance=ExtResource("20_xx4si")]
+layout_mode = 1
+id = "game.ruler"
 
 [node name="SelectEraserArrow" type="ColorRect" parent="UI/PanelGame" unique_id=1072112513]
 visible = false

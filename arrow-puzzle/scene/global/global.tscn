@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://pk33wb3a1drh" path="res://scene/global/ad_manager.tscn" id="2_388lc"]
 [ext_resource type="PackedScene" uid="uid://cr7rrwr8t3mi3" path="res://scene/popup/popup_manager/popup_manager.tscn" id="3_2q1o6"]
 [ext_resource type="PackedScene" uid="uid://fe1erw0naqke" path="res://scene/global/api.tscn" id="4_api"]
+[ext_resource type="PackedScene" uid="uid://d1yld2ofggn21" path="res://scene/global/tutorial/tutorial.tscn" id="5_kuifj"]
 
 [node name="Global" type="Control" unique_id=89037677]
 layout_mode = 3
@@ -17,6 +18,11 @@ script = ExtResource("1_7dyo8")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=695521333]
 layer = 10
+
+[node name="Tutorial" parent="CanvasLayer" unique_id=698952927 instance=ExtResource("5_kuifj")]
+visible = false
+z_index = 1000
+z_as_relative = false
 
 [node name="PopupManager" parent="CanvasLayer" unique_id=999376964 instance=ExtResource("3_2q1o6")]
 z_index = 100

@@ -133,6 +133,7 @@ grow_vertical = 2
 texture = ExtResource("6_kvkud")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1515364959]
+visible = false
 layout_mode = 0
 offset_left = 227.5
 offset_top = 589.0

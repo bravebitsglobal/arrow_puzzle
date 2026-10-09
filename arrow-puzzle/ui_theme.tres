@@ -2,12 +2,18 @@
 
 [ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="1_touxu"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ai3d"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_touxu"]
 bg_color = Color(0.012617188, 0.012617188, 0.012617188, 0)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ai3d"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_touxu"]
 
 [resource]
+Button/colors/font_color = Color(0.13725491, 0.22352941, 0.49019608, 1)
+Button/font_sizes/font_size = 64
+Button/fonts/font = ExtResource("1_touxu")
+Button/styles/normal = SubResource("StyleBoxEmpty_6ai3d")
 Label/fonts/font = ExtResource("1_touxu")
 Panel/styles/panel = SubResource("StyleBoxFlat_touxu")
-PanelContainer/styles/panel = SubResource("StyleBoxEmpty_6ai3d")
+PanelContainer/styles/panel = SubResource("StyleBoxEmpty_touxu")

@@ -28,6 +28,7 @@ visible = false
 layout_mode = 1
 
 [node name="ToastContainer" type="Control" parent="." unique_id=1166185136]
+z_index = 1000
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0

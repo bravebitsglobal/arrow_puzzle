@@ -6,13 +6,20 @@
 [ext_resource type="Texture2D" uid="uid://bm4h0hoomixua" path="res://ui/lose/bt_close.png" id="4_cdlvm"]
 [ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="5_betm5"]
 [ext_resource type="Texture2D" uid="uid://cs42ngrt541ft" path="res://ui/lose/Pop-up content.png" id="6_d40de"]
-[ext_resource type="Texture2D" uid="uid://hy2ieye8t62d" path="res://ui/lose/Rectangle 1 copy.png" id="7_fe3yi"]
 [ext_resource type="Texture2D" uid="uid://db80lusryjinx" path="res://ui/lose/heart copy 3 - Smart Object Group.png" id="8_xvyeg"]
 [ext_resource type="Texture2D" uid="uid://idh5ve4hnljb" path="res://ui/lose/bt_green_in.png" id="9_k6srh"]
 [ext_resource type="Texture2D" uid="uid://vyt0d8kv0yd" path="res://ui/heart.png" id="10_xxv5w"]
 [ext_resource type="Texture2D" uid="uid://bpojblira7085" path="res://ui/lose/icon_ads2.png" id="11_53lg5"]
 [ext_resource type="Texture2D" uid="uid://ylo1vnnxpmym" path="res://ui/lose/bt_orange_in.png" id="12_epsrv"]
 [ext_resource type="Texture2D" uid="uid://s7w0y5v2ytt5" path="res://ui/coin.png" id="12_nqruc"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://ui_theme.tres" id="13_epsrv"]
+[ext_resource type="Texture2D" uid="uid://cylf1v0xrqh7g" path="res://scene/popup/popup_out_of_live/img/Rectangle 3 copy 12.png" id="14_d3pur"]
+[ext_resource type="Texture2D" uid="uid://njjgcsmsijxr" path="res://ui/booster_hint.png" id="15_68hko"]
+[ext_resource type="Texture2D" uid="uid://riv02esv8ts8" path="res://ui/booster_eraser.png" id="16_6oxs5"]
+[ext_resource type="Texture2D" uid="uid://o71as0hiegew" path="res://ui/booster_grid.png" id="17_2yt0b"]
+[ext_resource type="Texture2D" uid="uid://06m3ysfw4lpw" path="res://scene/popup/popup_out_of_live/img/Layer 4 copy.png" id="18_2yt0b"]
+[ext_resource type="Texture2D" uid="uid://b3tjhd4p5ng4v" path="res://scene/popup/popup_out_of_live/img/booster_hint.png" id="19_ttlpr"]
+[ext_resource type="Texture2D" uid="uid://baxa27jhtd1vr" path="res://ui/win/bt_green.png" id="20_l4fqa"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pwda7"]
 font = ExtResource("3_jn4tp")
@@ -21,11 +28,6 @@ font_color = Color(0.9529412, 0.88235295, 0.76862746, 1)
 outline_color = Color(0.12210385, 0.00025682568, 0.9213471, 1)
 shadow_size = 10
 shadow_color = Color(0.12156863, 0, 0.92156863, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_ipw5r"]
-font = ExtResource("3_jn4tp")
-font_size = 72
-font_color = Color(0.13725491, 0.22352941, 0.49019608, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]
 font = ExtResource("3_jn4tp")
@@ -54,6 +56,34 @@ font_color = Color(0.972549, 0.92156863, 0.81960785, 1)
 shadow_size = 10
 shadow_color = Color(0.5764706, 0.2901961, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_dyrae"]
+font = ExtResource("3_jn4tp")
+font_size = 56
+font_color = Color(0.9647059, 0.90588236, 0.8, 1)
+shadow_size = 10
+shadow_color = Color(0.34117648, 0.003921569, 0.49803922, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bf12e"]
+font = ExtResource("3_jn4tp")
+font_size = 48
+font_color = Color(0.90588236, 0.9490196, 0.9843137, 1)
+outline_size = 10
+outline_color = Color(0.003921569, 0.4745098, 0.98039216, 1)
+shadow_size = 5
+shadow_color = Color(0.003921569, 0.4745098, 0.98039216, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pl4lu"]
+font = ExtResource("3_jn4tp")
+font_size = 56
+font_color = Color(0.38039216, 0.16470589, 0.05882353, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xygms"]
+font = ExtResource("3_jn4tp")
+font_size = 36
+font_color = Color(0.98039216, 0.9411765, 0.84313726, 1)
+outline_size = 10
+outline_color = Color(0.03137255, 0.34901962, 0, 1)
+
 [node name="PopupOutOfLive" type="Control" unique_id=1951886399]
 layout_mode = 3
 anchors_preset = 15
@@ -71,9 +101,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -491.0
-offset_top = -553.0
+offset_top = -876.0
 offset_right = 491.0
-offset_bottom = 553.0
+offset_bottom = 324.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_2jl5g")
@@ -85,7 +115,7 @@ anchor_right = 1.0
 offset_top = 12.0
 offset_bottom = 144.0
 grow_horizontal = 2
-text = "Out of lives"
+text = "Get more live?"
 label_settings = SubResource("LabelSettings_pwda7")
 horizontal_alignment = 1
 
@@ -104,7 +134,7 @@ texture_normal = ExtResource("4_cdlvm")
 [node name="ButtonEffect" parent="Window/ButtonClose" unique_id=941576423 instance=ExtResource("5_betm5")]
 layout_mode = 0
 
-[node name="Content" type="TextureRect" parent="Window" unique_id=1374292639]
+[node name="Content" type="NinePatchRect" parent="Window" unique_id=1181454793]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -112,86 +142,55 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -467.0
-offset_top = -965.0
+offset_top = -1068.0
 offset_right = 468.0
 offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("6_d40de")
+patch_margin_left = 100
+patch_margin_top = 100
+patch_margin_right = 100
+patch_margin_bottom = 100
 
-[node name="TextureRect" type="TextureRect" parent="Window/Content" unique_id=1719092622]
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/Content" unique_id=1816859015]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -382.5
-offset_top = -378.5
-offset_right = 382.5
-offset_bottom = 198.5
+offset_left = -199.0
+offset_top = -352.0
+offset_right = 199.0
+offset_bottom = 352.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("7_fe3yi")
+theme_override_constants/separation = 50
+alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Window/Content/TextureRect" unique_id=1964698740]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -176.5
-offset_top = -204.5
-offset_right = 176.5
-offset_bottom = 117.5
-grow_horizontal = 2
-grow_vertical = 2
+[node name="TextureRect2" type="TextureRect" parent="Window/Content/VBoxContainer" unique_id=1964698740]
+layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("8_xvyeg")
 
-[node name="Label" type="Label" parent="Window/Content/TextureRect" unique_id=474397779]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -148.0
-offset_bottom = -18.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Get more lives!"
-label_settings = SubResource("LabelSettings_ipw5r")
-horizontal_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Window/Content" unique_id=450651223]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -408.0
-offset_top = -230.0
-offset_right = 408.0
-offset_bottom = -43.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 20
-
-[node name="ButtonGetFree" type="TextureButton" parent="Window/Content/HBoxContainer" unique_id=1164125819]
+[node name="ButtonGetFree" type="TextureButton" parent="Window/Content/VBoxContainer" unique_id=1164125819]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
+size_flags_horizontal = 0
 texture_normal = ExtResource("9_k6srh")
+stretch_mode = 0
 
-[node name="Label" type="Label" parent="Window/Content/HBoxContainer/ButtonGetFree" unique_id=140708135]
+[node name="Label" type="Label" parent="Window/Content/VBoxContainer/ButtonGetFree" unique_id=140708135]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -7.5
+offset_left = -60.5
 offset_top = -63.5
-offset_right = 111.5
+offset_right = 58.5
 offset_bottom = 59.5
 grow_horizontal = 2
 grow_vertical = 2
@@ -199,7 +198,7 @@ text = "Get"
 label_settings = SubResource("LabelSettings_6ai3d")
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="Window/Content/HBoxContainer/ButtonGetFree/Label" unique_id=193346392]
+[node name="Label2" type="Label" parent="Window/Content/VBoxContainer/ButtonGetFree/Label" unique_id=193346392]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -217,18 +216,18 @@ label_settings = SubResource("LabelSettings_5fcqv")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonEffect" parent="Window/Content/HBoxContainer/ButtonGetFree" unique_id=77911909 instance=ExtResource("5_betm5")]
+[node name="ButtonEffect" parent="Window/Content/VBoxContainer/ButtonGetFree" unique_id=77911909 instance=ExtResource("5_betm5")]
 layout_mode = 0
 
-[node name="TextureRect" type="TextureRect" parent="Window/Content/HBoxContainer/ButtonGetFree" unique_id=2076827436]
+[node name="TextureRect" type="TextureRect" parent="Window/Content/VBoxContainer/ButtonGetFree" unique_id=2076827436]
 layout_mode = 0
-offset_left = 68.5
+offset_left = 49.5
 offset_top = 43.0
-offset_right = 174.68182
+offset_right = 155.68182
 offset_bottom = 139.0
 texture = ExtResource("10_xxv5w")
 
-[node name="Label3" type="Label" parent="Window/Content/HBoxContainer/ButtonGetFree/TextureRect" unique_id=1166807941]
+[node name="Label3" type="Label" parent="Window/Content/VBoxContainer/ButtonGetFree/TextureRect" unique_id=1166807941]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -246,19 +245,22 @@ label_settings = SubResource("LabelSettings_0ve75")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Window/Content/HBoxContainer/ButtonGetFree" unique_id=1106536501]
+[node name="TextureRect2" type="TextureRect" parent="Window/Content/VBoxContainer/ButtonGetFree" unique_id=1106536501]
 layout_mode = 0
-offset_left = 2.5
-offset_top = -20.0
-offset_right = 84.5
-offset_bottom = 60.0
+offset_left = 354.5
+offset_top = 49.5
+offset_right = 436.5
+offset_bottom = 129.5
 texture = ExtResource("11_53lg5")
 
-[node name="ButtonBuy" type="TextureButton" parent="Window/Content/HBoxContainer" unique_id=805985560]
+[node name="ButtonBuy" type="TextureButton" parent="Window/Content/VBoxContainer" unique_id=805985560]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
+size_flags_horizontal = 0
 texture_normal = ExtResource("12_epsrv")
+stretch_mode = 0
 
-[node name="Label3" type="Label" parent="Window/Content/HBoxContainer/ButtonBuy" unique_id=1555112368]
+[node name="Label3" type="Label" parent="Window/Content/VBoxContainer/ButtonBuy" unique_id=1555112368]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -275,7 +277,7 @@ text = "Get"
 label_settings = SubResource("LabelSettings_6ai3d")
 horizontal_alignment = 1
 
-[node name="Label4" type="Label" parent="Window/Content/HBoxContainer/ButtonBuy/Label3" unique_id=554061648]
+[node name="Label4" type="Label" parent="Window/Content/VBoxContainer/ButtonBuy/Label3" unique_id=554061648]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -292,7 +294,7 @@ text = "900"
 label_settings = SubResource("LabelSettings_53lg5")
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Window/Content/HBoxContainer/ButtonBuy/Label3/Label4" unique_id=166297936]
+[node name="TextureRect" type="TextureRect" parent="Window/Content/VBoxContainer/ButtonBuy/Label3/Label4" unique_id=166297936]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -305,10 +307,10 @@ grow_vertical = 2
 texture = ExtResource("12_nqruc")
 expand_mode = 1
 
-[node name="ButtonEffect" parent="Window/Content/HBoxContainer/ButtonBuy" unique_id=1149090351 instance=ExtResource("5_betm5")]
+[node name="ButtonEffect" parent="Window/Content/VBoxContainer/ButtonBuy" unique_id=1149090351 instance=ExtResource("5_betm5")]
 layout_mode = 0
 
-[node name="TextureRect" type="TextureRect" parent="Window/Content/HBoxContainer/ButtonBuy" unique_id=1567528464]
+[node name="TextureRect" type="TextureRect" parent="Window/Content/VBoxContainer/ButtonBuy" unique_id=1567528464]
 layout_mode = 0
 offset_left = 60.5
 offset_top = 43.0
@@ -316,7 +318,7 @@ offset_right = 166.68182
 offset_bottom = 139.0
 texture = ExtResource("10_xxv5w")
 
-[node name="Label3" type="Label" parent="Window/Content/HBoxContainer/ButtonBuy/TextureRect" unique_id=779006734]
+[node name="Label3" type="Label" parent="Window/Content/VBoxContainer/ButtonBuy/TextureRect" unique_id=779006734]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -333,3 +335,167 @@ text = "+3"
 label_settings = SubResource("LabelSettings_0ve75")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="LinkButton" type="Button" parent="Window/Content/VBoxContainer" unique_id=1044880951]
+layout_mode = 2
+theme = ExtResource("13_epsrv")
+text = "Restart"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=629728781]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 1322.0
+offset_right = 1027.4644
+offset_bottom = 1836.0
+texture = ExtResource("14_d3pur")
+
+[node name="Label" type="Label" parent="TextureRect" unique_id=1270170097]
+layout_mode = 0
+offset_right = 959.0
+offset_bottom = 97.0
+text = "Promotion"
+label_settings = SubResource("LabelSettings_dyrae")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect" unique_id=2108986877]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 137.0
+offset_right = 627.0
+offset_bottom = 280.0
+theme_override_constants/separation = 50
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/HBoxContainer" unique_id=1126301147]
+layout_mode = 2
+texture = ExtResource("15_68hko")
+
+[node name="Label" type="Label" parent="TextureRect/HBoxContainer/TextureRect" unique_id=681270020]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -23.5
+offset_top = -17.0
+offset_right = 23.5
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "x1"
+label_settings = SubResource("LabelSettings_bf12e")
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect/HBoxContainer" unique_id=639899801]
+layout_mode = 2
+texture = ExtResource("16_6oxs5")
+
+[node name="Label" type="Label" parent="TextureRect/HBoxContainer/TextureRect2" unique_id=1957952864]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -23.5
+offset_top = -17.0
+offset_right = 23.5
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "x1"
+label_settings = SubResource("LabelSettings_bf12e")
+horizontal_alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="TextureRect/HBoxContainer" unique_id=646732694]
+layout_mode = 2
+texture = ExtResource("15_68hko")
+
+[node name="Label" type="Label" parent="TextureRect/HBoxContainer/TextureRect3" unique_id=182533038]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -23.5
+offset_top = -17.0
+offset_right = 23.5
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "x1"
+label_settings = SubResource("LabelSettings_bf12e")
+horizontal_alignment = 1
+
+[node name="TextureRect4" type="TextureRect" parent="TextureRect/HBoxContainer" unique_id=1568182746]
+layout_mode = 2
+texture = ExtResource("17_2yt0b")
+
+[node name="Label" type="Label" parent="TextureRect/HBoxContainer/TextureRect4" unique_id=516705188]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -23.5
+offset_top = -17.0
+offset_right = 23.5
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "x1"
+label_settings = SubResource("LabelSettings_bf12e")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect" unique_id=246207079]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 333.0
+offset_right = 250.2857
+offset_bottom = 453.0
+texture = ExtResource("18_2yt0b")
+
+[node name="Label" type="Label" parent="TextureRect/TextureRect" unique_id=1234107136]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 24.0
+offset_right = 369.0
+offset_bottom = 117.0
+text = "2.400"
+label_settings = SubResource("LabelSettings_pl4lu")
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect" unique_id=830520304]
+layout_mode = 0
+offset_left = 598.0
+offset_top = 111.0
+offset_right = 929.0
+offset_bottom = 358.0
+texture = ExtResource("19_ttlpr")
+
+[node name="ButtonPromotion" type="TextureButton" parent="TextureRect" unique_id=836477374]
+layout_mode = 0
+offset_left = 625.0
+offset_top = 335.0
+offset_right = 920.6046
+offset_bottom = 437.0
+texture_normal = ExtResource("20_l4fqa")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="TextureRect/ButtonPromotion" unique_id=1422504643]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "140.000 vnd"
+label_settings = SubResource("LabelSettings_xygms")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonEffect" parent="TextureRect/ButtonPromotion" unique_id=1374240652 instance=ExtResource("5_betm5")]
+layout_mode = 0

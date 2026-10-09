@@ -72,6 +72,9 @@ label_settings = SubResource("LabelSettings_7ftaw")
 horizontal_alignment = 1
 
 [node name="Calendar" type="Control" parent="." unique_id=381148851]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 562.0
+offset_bottom = 1070.0
+grow_horizontal = 2

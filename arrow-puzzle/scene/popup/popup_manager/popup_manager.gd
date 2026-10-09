@@ -31,7 +31,7 @@ func show_popup(type: PopupType)->void:
 		if popup_scene.has(type):
 			var popup_container = ColorRect.new()
 			popup_container.set_anchors_preset(Control.PRESET_FULL_RECT)
-			popup_container.color = Color(0,0,0,0.3)
+			popup_container.color = Color(0,0,0,0.9)
 			var content: Control = popup_scene[type].instantiate()
 			content.offset_transform_enabled = true
 			popup_container.add_child(content)

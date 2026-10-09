@@ -49,3 +49,28 @@ text = "Test reward"
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Test interstitial"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=648629668]
+visible = false
+layout_mode = 0
+offset_right = 482.0
+offset_bottom = 286.0
+
+[node name="Label" type="Label" parent="PanelContainer" unique_id=70756472]
+layout_mode = 2
+text = "
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh
+tung do thanh"

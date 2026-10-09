@@ -8,11 +8,6 @@ var game_event: GameEvent = GameEvent.new()
 @onready var api: Api = $API
 @export var api_endpoint: String
 @export var game_token: String
-enum Booster{
-	Hint,
-	Eraser,
-	MagicGlasses,
-	Ruler
-}
+
 func _ready() -> void:
 	game_data.load_data()

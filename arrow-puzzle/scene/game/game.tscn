@@ -49,6 +49,10 @@ font_size = 28
 outline_size = 6
 outline_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_pl4lu"]
+font = ExtResource("24_osgb2")
+font_size = 48
+
 [sub_resource type="LabelSettings" id="LabelSettings_ywpmx"]
 font = ExtResource("24_osgb2")
 font_size = 64
@@ -58,7 +62,19 @@ script = ExtResource("1_5kiuu")
 dot_scene = ExtResource("2_xwcet")
 arrow_scene = ExtResource("2_33cqm")
 
+[node name="Background" type="CanvasLayer" parent="." unique_id=945685704]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=1619338948]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.92941177, 0.92156863, 0.99607843, 1)
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=733687426]
+position = Vector2(514, 813)
 zoom = Vector2(1.5, 1.5)
 script = ExtResource("3_cam")
 
@@ -605,6 +621,29 @@ layout_mode = 0
 [node name="TutorialTarget" parent="UI/PanelGame/BottomPanel/ButtonRuler" unique_id=2028963646 instance=ExtResource("20_xx4si")]
 layout_mode = 1
 id = "game.ruler"
+
+[node name="FirstArrow" type="ColorRect" parent="UI/PanelGame/BottomPanel" unique_id=499927369]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -299.0
+offset_bottom = -224.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.70980394)
+
+[node name="Label" type="Label" parent="UI/PanelGame/BottomPanel/FirstArrow" unique_id=1835084867]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Click to this arrow"
+label_settings = SubResource("LabelSettings_pl4lu")
+horizontal_alignment = 1
 
 [node name="SelectEraserArrow" type="ColorRect" parent="UI/PanelGame" unique_id=1072112513]
 visible = false

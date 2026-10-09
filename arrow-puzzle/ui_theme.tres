@@ -5,6 +5,9 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_touxu"]
 bg_color = Color(0.012617188, 0.012617188, 0.012617188, 0)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ai3d"]
+
 [resource]
 Label/fonts/font = ExtResource("1_touxu")
 Panel/styles/panel = SubResource("StyleBoxFlat_touxu")
+PanelContainer/styles/panel = SubResource("StyleBoxEmpty_6ai3d")

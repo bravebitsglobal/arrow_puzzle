@@ -21,4 +21,5 @@ func _on_claim_x2_pressed()->void:
 	Global.game_data.level.value = Global.game_data.level.value + 1
 	Global.game_data.coins.value = 	Global.game_data.coins.value + Global.COINS_PER_LEVEL * 2
 	Global.game_event.request_visible_popup.emit(PopupManager.PopupType.GameWin, false)
+	Global.game_event.game_start.emit()
 	Global.game_data.save_data()

@@ -36,7 +36,7 @@ var _mouse_pressed_pos: Vector2 = Vector2.ZERO
 var _is_mouse_pressed: bool = false
 const CLICK_THRESHOLD: float = 5.0  # Nguong phan biet click va drag (pixels)
 var highlight_tween: Tween
-const HIGHLIGHT_TIME = 3
+const HIGHLIGHT_TIME = 10
 var enable: bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

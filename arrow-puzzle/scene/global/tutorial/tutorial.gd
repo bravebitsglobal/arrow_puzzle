@@ -4,62 +4,100 @@ class_name Tutorial
 var node_parent: Node
 var current_node: Node
 var target_node: Dictionary[String, TutorialTarget] = {}
-const TUTORIAL_STEPS = [{
+@onready var panel_message: PanelContainer = $PanelMessage
+@onready var label_message: Label = $PanelMessage/MarginContainer/VBoxContainer/LabelMessage
+var TUTORIAL_STEPS = [{
+	"trigger": GameEnum.UserAction.LevelStart,
 	"level": 1,
-	"action": "focus_anrrow"
+	"action": "focus_an_arrow",
+	"end_trigger": GameEnum.UserAction.ResolveArrow,
 }, {
+	"trigger":GameEnum.UserAction.LevelStart,
 	"level": 5,
-	"action": "focus_button",
-	"button":"game.hint"
+	"action": "focus_booster_button",
+	"button":"game.hint",
+	"message":"Suggest an arrow",
+	"end_trigger": GameEnum.UserAction.ActiveBooster,
 },{
+	"trigger":GameEnum.UserAction.LevelStart,
 	"level": 6,
 	"action": "show_rating",
 },{
+	"trigger":GameEnum.UserAction.LevelStart,
 	"level": 7,
-	"action": "focus_button",
-	"button":"game.ruler"
+	"action": "focus_booster_button",
+	"button":"game.ruler",
+	"message":"Draw exit path",
+	"end_trigger": GameEnum.UserAction.ActiveBooster,
 },{
+	"trigger":GameEnum.UserAction.LevelStart,
 	"level": 8,
-	"action": "focus_button",
-	"button":"game.eraser"
+	"action": "focus_booster_button",
+	"button":"game.eraser",
+	"message":"Erase an arrow",
+	"end_trigger": GameEnum.UserAction.ActiveBooster,
 },{
+	"trigger":GameEnum.UserAction.LevelStart,
 	"level": 12,
-	"action": "focus_button",
-	"button":"game.magicglasses"
+	"action": "focus_booster_button",
+	"button":"game.magicglasses",
+	"message":"Resolve 5 arrows",
+	"end_trigger": GameEnum.UserAction.ActiveBooster,
 }]
 func highlight_node(node)->void:
 	current_node = node
-	current_node.get_parent().reparent(self, true)
+	var parent = current_node.get_parent()
+	node_parent = parent.get_parent()
+	parent.reparent(self, true)
 	background.visible = true
-	node.z_index = 10000
 func _ready() -> void:
 	Global.game_event.user_action.connect(_on_game_action)
 	Global.game_event.register_tutorial_target.connect(func (id: String, node: Node):
 		target_node[id] = node
 		)
-func tutorial_done()->void:
-	Global.game_data.is_tutorial.value = false
-	current_node.get_parent().reparent(node_parent, true)
+	Global.game_data.active_tutorial.subscribe(func (step):
+		if step && step.has('message'):
+			panel_message.visible = true
+		else:
+			panel_message.visible = false
+		)
+		
+func check_tutorial_done(action, _data)->void:
+	if !Global.game_data.active_tutorial.value:
+		return
+	var step = Global.game_data.active_tutorial.value
+	if not (step.has('end_trigger') and step.end_trigger == action):
+		return
+	if current_node:
+		current_node.get_parent().reparent(node_parent, true)
+		current_node = null
 	background.visible = false
-func _on_game_action(action: GameEvent.UserAction, data: Dictionary)->void:
-	match action:
-		GameEvent.UserAction.GameStart:
-			var step_idx = TUTORIAL_STEPS.find_custom(func (i): return i.level == Global.game_data.level.value)
-			if step_idx == -1:
-				return
-			var game: Game = data['game']
-			run_step(TUTORIAL_STEPS[step_idx], {"game": game})
-		GameEvent.UserAction.FirstArrow:
-			match Global.game_data.tutorial_step.value:
-				0:
-					Global.game_data.tutorial_step.value += 1
-					Global.game_data.save_data()
-					print("step ", Global.game_data.tutorial_step.value)
-func run_step(step, _data)->void:
+	Global.game_data.active_tutorial.value = null
+func _on_game_action(action: GameEnum.UserAction, data: Dictionary)->void:
+	check_tutorial(action, data)
+	check_tutorial_done(action, data)
+func check_tutorial(action, data)->void:
+	var level = Global.game_data.level.value
+	var step = get_step(level, action)
+	if !step:
+		return
+	run_step(step, data)
+func get_step(level: int, action: GameEnum.UserAction):
+	var step_idx = TUTORIAL_STEPS.find_custom(func (i): 
+		return i.level == Global.game_data.level.value && i.trigger == action
+		)
+	if step_idx == -1:
+		return null
+	return TUTORIAL_STEPS[step_idx]
+func run_step(step, data)->void:
+	Global.game_data.active_tutorial.value = step
 	match step.action:
-		"focus_button":
+		"focus_booster_button":
 			if not target_node.has(step.button):
 				return
-			Global.game_data.is_tutorial.value = true
 			highlight_node(target_node[step.button])
-			target_node[step.button].pressed.connect(tutorial_done, CONNECT_ONE_SHOT)
+			if step['message']:
+				label_message.text = step.message
+		"focus_an_arrow":
+			var game:Game = data['game']
+			game.focus_arrow(game.get_hint_idx())

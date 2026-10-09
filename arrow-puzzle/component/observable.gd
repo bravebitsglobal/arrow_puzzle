@@ -5,6 +5,8 @@ var value:
 	get:
 		return value
 	set(new_value):
+		if value == new_value:
+			return
 		value = new_value
 		on_change.emit(value)
 func subscribe(callback: Callable)->void:

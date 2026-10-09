@@ -22,12 +22,8 @@ func _ready() -> void:
 		next_level())
 	Global.game_event.game_restart.connect(func():
 		restart())
-	Global.game_event.active_game_booster.connect(_on_active_booster)
-	Global.game_data.is_ruler.subscribe(func (_value):
-		render_ruler())
+	Global.game_event.user_action.connect(_on_user_action)
 func render_ruler()->void:
-	if !Global.game_data.is_ruler.value:
-		return
 	if !level:
 		return
 	for i in range(level.size()):
@@ -65,16 +61,20 @@ func render_level():
 			used_cells[Utils.to_index(c)] = true
 		arrow.on_click.connect(func ():
 			_on_arrow_clicked(arrow_idx))
-	print("game action start")
-	Global.game_event.user_action.emit.call_deferred(GameEvent.UserAction.GameStart, {"game": self})
-func _on_active_booster(booster: Global.Booster)->void:
-	match(booster):
-		Global.Booster.Hint:
-			_active_hint()
-		Global.Booster.Eraser:
-			_active_eraser()
-		Global.Booster.MagicGlasses:
-			_active_magic_glasses()
+	Global.game_event.user_action.emit.call_deferred(GameEnum.UserAction.LevelStart, {"game": self})
+func _on_user_action(action: GameEnum.UserAction, data: Dictionary)->void:
+	match action:
+		GameEnum.UserAction.ActiveBooster:
+			var booster = data.booster
+			match(booster):
+				GameEnum.Booster.Hint:
+					_active_hint()
+				GameEnum.Booster.Eraser:
+					_active_eraser()
+				GameEnum.Booster.MagicGlasses:
+					_active_magic_glasses()
+				GameEnum.Booster.Ruler:
+					render_ruler()
 func _active_hint()->void:
 	var idx = get_hint_idx()
 	arrows[idx].active_highlight()
@@ -122,14 +122,14 @@ func _on_arrow_clicked(idx: int):
 		arrows[idx].erase()
 		remove_arrow(idx)
 		is_using_eraser = false
-		Global.game_event.game_booster_done.emit(Global.Booster.Eraser)
+		Global.game_event.game_booster_done.emit(GameEnum.Booster.Eraser)
 		Global.game_data.animating.value = false
 		return
 	var rs = calculate_exit_path(level[idx])
 	if rs.can_exit:
 		remove_arrow(idx)
 		if Global.game_data.remain_lines.value == level.size():
-			Global.game_event.user_action.emit(GameEvent.UserAction.FirstArrow, {})
+			Global.game_event.user_action.emit(GameEnum.UserAction.ResolveArrow, {})
 		Global.game_data.remain_lines.value = Global.game_data.remain_lines.value - 1
 		
 	else:
@@ -217,7 +217,6 @@ func next_level()->void:
 	move_camera_to_center()
 	render_level()
 func restart()->void:
-	Global.game_data.is_ruler.value = false
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	move_camera_to_center()
 	render_level()

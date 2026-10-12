@@ -11,6 +11,8 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July", 
 func _ready() -> void:
 	var today := Time.get_date_dict_from_system()
 	generate(today.year, today.month)
+	
+	
 
 
 ## Tạo lịch của tháng (year, month) rồi add_child vào Calendar. Tuần bắt đầu từ thứ Hai.

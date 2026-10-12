@@ -1,7 +1,7 @@
 extends Control
 class_name Main
 @onready var label_level: Label = $PanelBottom/ButtonPlay/LabelLevel
-@onready var button_play: TextureButton = $PanelBottom/ButtonPlay
+@onready var button_play: Button = $PanelBottom/ButtonPlay
 @onready var label_coins: Label = $PanelTop/Coin/LabelCoins
 @onready var button_developer: Button = $PanelTop/ButtonDeveloper
 

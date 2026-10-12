@@ -9,7 +9,7 @@ class_name PanelOutOfLive
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	button_close.pressed.connect(func():
-		Global.game_event.request_visible_popup.emit(PopupManager.PopupType.OutOfLive, false)
+		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.OutOfLive, false)
 		get_tree().change_scene_to_file("res://scene/home/home.tscn")
 		)
 	button_get_free.pressed.connect(func ():
@@ -17,7 +17,7 @@ func _ready() -> void:
 		if !is_reward:
 			return
 		Global.game_data.lives.value = 1
-		Global.game_event.request_visible_popup.emit(PopupManager.PopupType.OutOfLive, false)
+		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.OutOfLive, false)
 		)
 	button_buy.pressed.connect(func ():
 		if Global.game_data.coins.value < 900:
@@ -25,5 +25,5 @@ func _ready() -> void:
 			return
 		Global.game_data.coins.value = Global.game_data.coins.value - 900
 		Global.game_data.lives.value = 3
-		Global.game_event.request_visible_popup.emit(PopupManager.PopupType.OutOfLive, false)
+		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.OutOfLive, false)
 		)

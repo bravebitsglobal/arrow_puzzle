@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://c21gxcqwipbar"]
+
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="1_41grt"]
+[ext_resource type="Script" uid="uid://dwssvwy5b4rp1" path="res://component/coin_balance/coin_balance.gd" id="1_u6cjl"]
+[ext_resource type="Texture2D" uid="uid://ch6bkl47jj4nq" path="res://ui/coin_frame.png" id="2_gem3t"]
+[ext_resource type="Texture2D" uid="uid://s7w0y5v2ytt5" path="res://ui/coin.png" id="3_41grt"]
+[ext_resource type="Texture2D" uid="uid://iw3ffs5i3536" path="res://ui/bt_plus.png" id="4_y6pea"]
+[ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="5_w244c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nf57p"]
+font = ExtResource("5_w244c")
+font_size = 40
+font_color = Color(0.627451, 0.39607844, 0.28235295, 1)
+
+[node name="CoinBalance" type="Button" unique_id=1089399741]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1080.0
+offset_right = -791.0
+offset_bottom = 115.0
+grow_horizontal = 0
+theme = ExtResource("1_41grt")
+script = ExtResource("1_u6cjl")
+
+[node name="Frame" type="TextureRect" parent="." unique_id=219826989]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 14.0
+offset_right = 275.0
+offset_bottom = 99.0
+texture = ExtResource("2_gem3t")
+stretch_mode = 2
+
+[node name="Heart" type="TextureRect" parent="." unique_id=308705590]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 111.2879
+offset_bottom = 108.0
+texture = ExtResource("3_41grt")
+stretch_mode = 4
+
+[node name="ImagePlus" type="TextureRect" parent="." unique_id=246786263]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 68.0
+offset_right = 107.56061
+offset_bottom = 111.0
+texture = ExtResource("4_y6pea")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="LabelCoins" type="Label" parent="." unique_id=1563238432]
+layout_mode = 0
+offset_left = 118.0
+offset_top = 19.0
+offset_right = 259.0
+offset_bottom = 88.0
+text = "18m48s"
+label_settings = SubResource("LabelSettings_nf57p")
+vertical_alignment = 1

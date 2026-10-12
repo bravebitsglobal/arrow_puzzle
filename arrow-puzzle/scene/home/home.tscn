@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cj8s0kgvmf5cj"]
 
 [ext_resource type="Script" uid="uid://chhpppgkvr34s" path="res://scene/home/home.gd" id="1_1qrah"]
-[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://ui_theme.tres" id="3_dubxh"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="3_dubxh"]
 [ext_resource type="PackedScene" uid="uid://cv4lpv0w532k3" path="res://scene/home/main/main.tscn" id="11_roddw"]
 [ext_resource type="PackedScene" uid="uid://ch2fpg8n3u371" path="res://scene/home/challenge/challenge.tscn" id="12_u0e8k"]
 [ext_resource type="Texture2D" uid="uid://bm2fbaysjfvto" path="res://scene/home/img/menu_tab_highlinght copy - Smart Object Group copy 2.png" id="13_lh413"]
@@ -111,6 +111,8 @@ offset_top = -65.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("3_dubxh")
+theme_type_variation = &"NavigationLabel"
 text = "FRIENDS"
 label_settings = SubResource("LabelSettings_a46lk")
 horizontal_alignment = 1
@@ -171,6 +173,8 @@ offset_top = -65.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("3_dubxh")
+theme_type_variation = &"NavigationLabel"
 text = "SHOP"
 label_settings = SubResource("LabelSettings_a46lk")
 horizontal_alignment = 1
@@ -229,11 +233,12 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -65.0
-offset_bottom = -10.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("3_dubxh")
+theme_type_variation = &"NavigationLabel"
 text = "HOME"
-label_settings = SubResource("LabelSettings_a46lk")
 horizontal_alignment = 1
 
 [node name="ItemArchivement" type="TextureButton" parent="PanelBottom/Tab" unique_id=559779078]
@@ -294,6 +299,8 @@ offset_right = 26.5
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("3_dubxh")
+theme_type_variation = &"NavigationLabel"
 text = "COLLECTIONS"
 label_settings = SubResource("LabelSettings_a46lk")
 horizontal_alignment = 1
@@ -354,6 +361,8 @@ offset_top = -65.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("3_dubxh")
+theme_type_variation = &"NavigationLabel"
 text = "QUESTS"
 label_settings = SubResource("LabelSettings_a46lk")
 horizontal_alignment = 1

@@ -1,0 +1,225 @@
+[gd_scene format=3 uid="uid://cg6addmsw0cws"]
+
+[ext_resource type="Script" uid="uid://bd5qne7iyya6b" path="res://scene/popup/popup_challenge_welcome/popup_challeng_welcome.gd" id="1_wro5s"]
+[ext_resource type="Texture2D" uid="uid://c88crrkv61f0j" path="res://ui/lose/Pop-up BG.png" id="2_f0stp"]
+[ext_resource type="Texture2D" uid="uid://cs42ngrt541ft" path="res://ui/lose/Pop-up content.png" id="3_e60hp"]
+[ext_resource type="PackedScene" uid="uid://c21gxcqwipbar" path="res://component/coin_balance/coin_balance.tscn" id="3_hmups"]
+[ext_resource type="Texture2D" uid="uid://c21olbpp6vjaj" path="res://scene/home/img/Rectangle 1 copy 2.png" id="5_5p340"]
+[ext_resource type="Texture2D" uid="uid://8ghjtcdyi2t6" path="res://scene/home/challenge/img/cup/Layer 13.png" id="6_mvu72"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="8_qy7uj"]
+[ext_resource type="Texture2D" uid="uid://dqfp2gugsp4vy" path="res://scene/home/img/icon_star.png" id="8_y6c4n"]
+[ext_resource type="Texture2D" uid="uid://ddbxgl2q1bg7c" path="res://scene/home/img/Ellipse 2 copy.png" id="9_88eyt"]
+[ext_resource type="Texture2D" uid="uid://c4lf3kpyug21c" path="res://scene/home/challenge/img/Ellipse 3.png" id="10_y6c4n"]
+[ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="12_yvqeh"]
+
+[node name="PopupChallengWelcome" type="Control" unique_id=1293665807]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wro5s")
+
+[node name="TextureRect" type="NinePatchRect" parent="." unique_id=766953782]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 164.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_f0stp")
+patch_margin_left = 50
+patch_margin_top = 50
+patch_margin_right = 50
+patch_margin_bottom = 50
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect" unique_id=630885067]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="NinePatchRect" type="NinePatchRect" parent="TextureRect/MarginContainer" unique_id=973403422]
+layout_mode = 2
+texture = ExtResource("3_e60hp")
+patch_margin_left = 50
+patch_margin_top = 50
+patch_margin_right = 50
+
+[node name="Label" type="Label" parent="TextureRect/MarginContainer/NinePatchRect" unique_id=1590374224]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 96.0
+offset_bottom = 194.0
+grow_horizontal = 2
+theme = ExtResource("8_qy7uj")
+theme_type_variation = &"PopupTitle"
+text = "Welcome to daily challenge"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect/MarginContainer/NinePatchRect" unique_id=322017375]
+layout_mode = 0
+offset_left = 233.0
+offset_top = 328.0
+offset_right = 767.0
+offset_bottom = 864.0
+size_flags_horizontal = 4
+texture = ExtResource("5_5p340")
+stretch_mode = 4
+
+[node name="PageContainer" type="Control" parent="TextureRect/MarginContainer/NinePatchRect" unique_id=924481120]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Page1" type="Control" parent="TextureRect/MarginContainer/NinePatchRect/PageContainer" unique_id=958311333]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 260.0
+offset_right = -20.0
+offset_bottom = 1111.0
+grow_horizontal = 2
+theme = ExtResource("8_qy7uj")
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/MarginContainer/NinePatchRect/PageContainer/Page1" unique_id=1951801037]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 114.0
+offset_right = 754.88354
+offset_bottom = 568.0
+size_flags_horizontal = 4
+texture = ExtResource("6_mvu72")
+stretch_mode = 4
+
+[node name="Label2" type="Label" parent="TextureRect/MarginContainer/NinePatchRect/PageContainer/Page1" unique_id=235791265]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 714.0
+offset_bottom = 891.0
+grow_horizontal = 2
+size_flags_vertical = 1
+theme = ExtResource("8_qy7uj")
+theme_type_variation = &"PopupDescription"
+text = "Collect stars each month 
+to get reward"
+horizontal_alignment = 1
+
+[node name="Page2" type="Control" parent="TextureRect/MarginContainer/NinePatchRect/PageContainer" unique_id=688621586]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 260.0
+offset_right = -20.0
+offset_bottom = 1111.0
+grow_horizontal = 2
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/MarginContainer/NinePatchRect/PageContainer/Page2" unique_id=1036924282]
+layout_mode = 0
+offset_left = 328.0
+offset_top = 141.0
+offset_right = 687.0
+offset_bottom = 513.05457
+size_flags_horizontal = 4
+texture = ExtResource("8_y6c4n")
+stretch_mode = 4
+
+[node name="Label2" type="Label" parent="TextureRect/MarginContainer/NinePatchRect/PageContainer/Page2" unique_id=1145879540]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 714.0
+offset_bottom = 891.0
+grow_horizontal = 2
+size_flags_vertical = 1
+theme = ExtResource("8_qy7uj")
+theme_type_variation = &"PopupDescription"
+text = "Complete daily challenge 
+to get gold stars"
+horizontal_alignment = 1
+
+[node name="PaginationContainer" type="Panel" parent="TextureRect/MarginContainer/NinePatchRect" unique_id=172869214]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -59.5
+offset_top = -410.0
+offset_right = 59.5
+offset_bottom = -355.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_qy7uj")
+
+[node name="Pagination1" type="TextureButton" parent="TextureRect/MarginContainer/NinePatchRect/PaginationContainer" unique_id=576626589]
+layout_mode = 0
+offset_right = 53.0
+offset_bottom = 54.0
+theme = ExtResource("8_qy7uj")
+texture_normal = ExtResource("9_88eyt")
+
+[node name="Pagination2" type="TextureButton" parent="TextureRect/MarginContainer/NinePatchRect/PaginationContainer" unique_id=652929812]
+layout_mode = 0
+offset_left = 63.0
+offset_right = 116.0
+offset_bottom = 54.0
+theme = ExtResource("8_qy7uj")
+texture_normal = ExtResource("9_88eyt")
+
+[node name="PaginationCursor" type="Control" parent="TextureRect/MarginContainer/NinePatchRect/PaginationContainer" unique_id=1383945255]
+anchors_preset = 0
+offset_right = 53.0
+offset_bottom = 55.0
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/MarginContainer/NinePatchRect/PaginationContainer/PaginationCursor" unique_id=2143591438]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = 47.0
+offset_bottom = 45.0
+texture = ExtResource("10_y6c4n")
+
+[node name="ButtonContinue" type="Button" parent="TextureRect/MarginContainer/NinePatchRect" unique_id=460579819]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -224.0
+offset_top = -277.0
+offset_right = 224.0
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_qy7uj")
+theme_type_variation = &"PrimaryButton"
+text = "Continue"
+
+[node name="ButtonEffect" parent="TextureRect/MarginContainer/NinePatchRect/ButtonContinue" unique_id=941576423 instance=ExtResource("12_yvqeh")]
+layout_mode = 0
+
+[node name="CoinBalance" parent="." unique_id=1089399741 instance=ExtResource("3_hmups")]
+layout_mode = 1
+offset_left = -336.0
+offset_top = 30.0
+offset_right = -336.0
+offset_bottom = 30.0

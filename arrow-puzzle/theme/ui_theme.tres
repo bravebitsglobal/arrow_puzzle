@@ -1,0 +1,90 @@
+[gd_resource type="Theme" format=3 uid="uid://qg7210sv585g"]
+
+[ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="1_27v6b"]
+[ext_resource type="Texture2D" uid="uid://baxa27jhtd1vr" path="res://ui/win/bt_green.png" id="2_7uusv"]
+[ext_resource type="Texture2D" uid="uid://idh5ve4hnljb" path="res://ui/lose/bt_green_in.png" id="2_8aw70"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nqh08"]
+texture = ExtResource("2_8aw70")
+texture_margin_left = 50.0
+texture_margin_top = 50.0
+texture_margin_right = 50.0
+texture_margin_bottom = 50.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_touxu"]
+bg_color = Color(0.012617188, 0.012617188, 0.012617188, 0)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_touxu"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e63bl"]
+texture = ExtResource("2_7uusv")
+texture_margin_left = 50.0
+texture_margin_top = 50.0
+texture_margin_right = 50.0
+texture_margin_bottom = 50.0
+
+[resource]
+Button/fonts/font = ExtResource("1_27v6b")
+ButtonGreenLabel/base_type = &"Label"
+ButtonGreenLabel/colors/font_outline_color = Color(0.03137255, 0.34509805, 0.003921569, 1)
+ButtonGreenLabel/colors/font_shadow_color = Color(0.03137255, 0.34509805, 0.003921569, 1)
+ButtonGreenLabel/constants/outline_size = 10
+ButtonGreenLabel/constants/shadow_outline_size = 20
+ButtonGreenLabel/font_sizes/font_size = 76
+ButtonGreenLabel/fonts/font = ExtResource("1_27v6b")
+ButtonMainPlay/base_type = &"Button"
+ButtonMainPlay/font_sizes/font_size = 76
+ButtonMainPlay/styles/disabled = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/disabled_mirrored = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/focus = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/hover = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/hover_mirrored = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/hover_pressed = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/normal = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/normal_mirrored = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/pressed = SubResource("StyleBoxTexture_nqh08")
+ButtonMainPlay/styles/pressed_mirrored = SubResource("StyleBoxTexture_nqh08")
+HeaderLarge/colors/font_color = Color(0.972549, 0.9254902, 0.8235294, 1)
+HeaderLarge/colors/font_outline_color = Color(0.05882353, 0.14509805, 0.6431373, 1)
+HeaderLarge/colors/font_shadow_color = Color(0, 0, 0, 1)
+HeaderLarge/constants/outline_size = 15
+HeaderLarge/constants/shadow_outline_size = 15
+HeaderLarge/font_sizes/font_size = 76
+HeaderLarge/fonts/font = ExtResource("1_27v6b")
+Label/fonts/font = ExtResource("1_27v6b")
+NavigationLabel/base_type = &"Label"
+NavigationLabel/colors/font_color = Color(1, 1, 1, 1)
+NavigationLabel/font_sizes/font_size = 48
+NavigationLabel/fonts/font = ExtResource("1_27v6b")
+Panel/styles/panel = SubResource("StyleBoxFlat_touxu")
+PanelContainer/styles/panel = SubResource("StyleBoxEmpty_touxu")
+PopupDescription/base_type = &"Label"
+PopupDescription/colors/font_color = Color(0.13725491, 0.22352941, 0.49019608, 1)
+PopupDescription/font_sizes/font_size = 64
+PopupDescription/fonts/font = ExtResource("1_27v6b")
+PopupTitle/base_type = &"Label"
+PopupTitle/colors/font_color = Color(0.972549, 0.9254902, 0.8235294, 1)
+PopupTitle/colors/font_outline_color = Color(0.21176471, 0.2784314, 0.6901961, 1)
+PopupTitle/colors/font_shadow_color = Color(0.21176471, 0.2784314, 0.6901961, 1)
+PopupTitle/constants/outline_size = 5
+PopupTitle/constants/shadow_outline_size = 20
+PopupTitle/font_sizes/font_size = 72
+PopupTitle/fonts/font = ExtResource("1_27v6b")
+PrimaryButton/base_type = &"Button"
+PrimaryButton/colors/font_color = Color(0.9490196, 0.87058824, 0.7529412, 1)
+PrimaryButton/colors/font_outline_color = Color(0.02745098, 0.25490198, 0, 1)
+PrimaryButton/constants/outline_size = 15
+PrimaryButton/font_sizes/font_size = 64
+PrimaryButton/fonts/font = ExtResource("1_27v6b")
+PrimaryButton/styles/disabled = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/disabled_mirrored = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/focus = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/hover = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/hover_mirrored = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/hover_pressed = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/normal = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/normal_mirrored = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/pressed = SubResource("StyleBoxTexture_e63bl")
+PrimaryButton/styles/pressed_mirrored = SubResource("StyleBoxTexture_e63bl")

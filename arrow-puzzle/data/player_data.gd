@@ -10,6 +10,7 @@ class_name PlayerData
 @export var booster_ruler: int = 0
 @export var tutorial_step: int = 0
 @export var challenges: Dictionary[String, PackedInt32Array] = {}
+@export var is_show_challenge_welcome_page: bool = false
 const SAVE_PATH = "user://player_data.tres"
 
 func save() -> void:

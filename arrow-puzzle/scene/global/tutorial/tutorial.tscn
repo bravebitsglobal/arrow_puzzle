@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d1yld2ofggn21"]
 
 [ext_resource type="Script" uid="uid://bn366ymmqd5xa" path="res://scene/global/tutorial/tutorial.gd" id="1_wiap3"]
-[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://ui_theme.tres" id="2_dcifo"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="2_dcifo"]
 [ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="3_556kg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]

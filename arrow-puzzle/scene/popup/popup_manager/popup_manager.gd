@@ -3,19 +3,15 @@ class_name PopupManager
 @onready var popup_loading: Control = $PopupLoading
 @onready var toast_container: Control = $ToastContainer
 
-enum PopupType {
-	GameWin,
-	GameTryAgain,
-	OutOfLive
-}
-@export var popup_scene: Dictionary[PopupType, PackedScene] = {}
+
+@export var popup_scene: Dictionary[GameEnum.PopupType, PackedScene] = {}
 @export var toast_scene: PackedScene
-var popup_node: Dictionary[PopupType, Control] = {}
+var popup_node: Dictionary[GameEnum.PopupType, Control] = {}
 var last_z_index: int = 100
 const ANIMATION_DURATION: float = 0.2
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Global.game_event.request_visible_popup.connect(func (type: PopupType, visible: bool):
+	Global.game_event.request_visible_popup.connect(func (type: GameEnum.PopupType, visible: bool):
 		if visible: 
 			show_popup(type)
 		else:
@@ -25,7 +21,7 @@ func show_loading()->void:
 	popup_loading.visible = true
 func hide_loading()->void:
 	popup_loading.visible = false
-func show_popup(type: PopupType)->void:
+func show_popup(type: GameEnum.PopupType)->void:
 	last_z_index = last_z_index + 1
 	if !popup_node.has(type):
 		if popup_scene.has(type):
@@ -38,7 +34,7 @@ func show_popup(type: PopupType)->void:
 			add_child(popup_container)
 			popup_node[type] = popup_container
 		else:
-			print("[PopupManager] popup not found ", PopupType.keys()[type])
+			print("[PopupManager] popup not found ", GameEnum.PopupType.keys()[type])
 			return
 	popup_node[type].z_index = last_z_index
 	popup_node[type].visible = true
@@ -52,7 +48,7 @@ func show_popup(type: PopupType)->void:
 	tw.tween_property(content_node, "modulate", Color(1,1,1,1), ANIMATION_DURATION)
 	tw.tween_property(popup_node[type], 'self_modulate', Color(1,1,1,1), ANIMATION_DURATION)
 	mouse_filter = Control.MOUSE_FILTER_PASS
-func hide_popup(type: PopupType)->void:
+func hide_popup(type: GameEnum.PopupType)->void:
 	var tw = create_tween().set_parallel(true)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var content_node:Control = popup_node[type].get_child(0)

@@ -4,7 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://pk33wb3a1drh" path="res://scene/global/ad_manager.tscn" id="2_388lc"]
 [ext_resource type="PackedScene" uid="uid://cr7rrwr8t3mi3" path="res://scene/popup/popup_manager/popup_manager.tscn" id="3_2q1o6"]
 [ext_resource type="PackedScene" uid="uid://fe1erw0naqke" path="res://scene/global/api.tscn" id="4_api"]
+[ext_resource type="PackedScene" uid="uid://xow6tcdxccv1" path="res://scene/popup/popup_win/popup_win.tscn" id="4_bpl3t"]
+[ext_resource type="PackedScene" uid="uid://dervte5l8du6m" path="res://scene/popup/popup_try_again/popup_try_again.tscn" id="5_4um8e"]
 [ext_resource type="PackedScene" uid="uid://d1yld2ofggn21" path="res://scene/global/tutorial/tutorial.tscn" id="5_kuifj"]
+[ext_resource type="PackedScene" uid="uid://cxxiigxbvdtr" path="res://scene/popup/popup_out_of_live/popup_out_of_live.tscn" id="6_uts04"]
+[ext_resource type="PackedScene" uid="uid://cg6addmsw0cws" path="res://scene/popup/popup_challenge_welcome/popup_challeng_welcome.tscn" id="7_wjk7i"]
 
 [node name="Global" type="Control" unique_id=89037677]
 layout_mode = 3
@@ -25,6 +29,12 @@ z_as_relative = false
 
 [node name="PopupManager" parent="CanvasLayer" unique_id=999376964 instance=ExtResource("3_2q1o6")]
 z_index = 100
+popup_scene = Dictionary[int, PackedScene]({
+0: ExtResource("4_bpl3t"),
+1: ExtResource("5_4um8e"),
+2: ExtResource("6_uts04"),
+3: ExtResource("7_wjk7i")
+})
 
 [node name="AdManager" parent="." unique_id=2111333994 instance=ExtResource("2_388lc")]
 layout_mode = 1

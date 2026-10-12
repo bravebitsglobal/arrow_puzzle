@@ -3,16 +3,7 @@
 [ext_resource type="Script" uid="uid://dwv51a210qwvv" path="res://scene/home/challenge/challenge.gd" id="1_qt1ub"]
 [ext_resource type="Texture2D" uid="uid://dw0mjctwkub41" path="res://scene/home/challenge/img/Layer 10.png" id="2_3p112"]
 [ext_resource type="Texture2D" uid="uid://8ghjtcdyi2t6" path="res://scene/home/challenge/img/cup/Layer 13.png" id="3_7ftaw"]
-[ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="4_e63bl"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_7ftaw"]
-font = ExtResource("4_e63bl")
-font_size = 78
-font_color = Color(0.9764706, 0.9372549, 0.8392157, 1)
-outline_size = 30
-outline_color = Color(0.72603273, 0.43861645, 3.85046e-07, 1)
-shadow_size = 10
-shadow_color = Color(0.05882353, 0.14509805, 0.6431373, 1)
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="4_e63bl"]
 
 [node name="Challenge" type="Control" unique_id=1245256718]
 layout_mode = 3
@@ -67,8 +58,9 @@ offset_right = 59.5
 offset_bottom = -346.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"HeaderLarge"
 text = "Daily Challenge"
-label_settings = SubResource("LabelSettings_7ftaw")
 horizontal_alignment = 1
 
 [node name="Calendar" type="Control" parent="." unique_id=381148851]
@@ -78,3 +70,13 @@ anchor_right = 1.0
 offset_top = 562.0
 offset_bottom = 1070.0
 grow_horizontal = 2
+
+[node name="Button" type="Button" parent="." unique_id=1493925326]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 664.0
+offset_right = 589.0
+offset_bottom = 824.0
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"PrimaryButton"
+text = "hello world"

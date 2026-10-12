@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://n1f34bw1jtcs" path="res://dot/dot.tscn" id="2_xwcet"]
 [ext_resource type="Script" uid="uid://dxame55jjjn2k" path="res://helper/camera_controller.gd" id="3_cam"]
 [ext_resource type="Script" uid="uid://c3qjt2urq05jr" path="res://scene/game/game_ui.gd" id="5_mq16h"]
-[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://ui_theme.tres" id="5_p1ry8"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="5_p1ry8"]
 [ext_resource type="Texture2D" uid="uid://ch6bkl47jj4nq" path="res://ui/coin_frame.png" id="7_ll5lq"]
 [ext_resource type="Texture2D" uid="uid://s7w0y5v2ytt5" path="res://ui/coin.png" id="8_17rxn"]
 [ext_resource type="Texture2D" uid="uid://iw3ffs5i3536" path="res://ui/bt_plus.png" id="9_17rxn"]

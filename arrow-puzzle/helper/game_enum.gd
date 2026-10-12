@@ -11,3 +11,9 @@ enum UserAction{
 	LevelStart,
 	ActiveBooster,
 }
+enum PopupType {
+	GameWin,
+	GameTryAgain,
+	OutOfLive,
+	ChallengeWelcome
+}

@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://cu330jhj630oe"]
+
+[ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="1_qxwg4"]
+
+[resource]
+font = ExtResource("1_qxwg4")
+font_size = 64
+font_color = Color(0.13725491, 0.22352941, 0.49019608, 1)

@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bpojblira7085" path="res://ui/lose/icon_ads2.png" id="11_53lg5"]
 [ext_resource type="Texture2D" uid="uid://ylo1vnnxpmym" path="res://ui/lose/bt_orange_in.png" id="12_epsrv"]
 [ext_resource type="Texture2D" uid="uid://s7w0y5v2ytt5" path="res://ui/coin.png" id="12_nqruc"]
-[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://ui_theme.tres" id="13_epsrv"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="13_epsrv"]
 [ext_resource type="Texture2D" uid="uid://cylf1v0xrqh7g" path="res://scene/popup/popup_out_of_live/img/Rectangle 3 copy 12.png" id="14_d3pur"]
 [ext_resource type="Texture2D" uid="uid://njjgcsmsijxr" path="res://ui/booster_hint.png" id="15_68hko"]
 [ext_resource type="Texture2D" uid="uid://riv02esv8ts8" path="res://ui/booster_eraser.png" id="16_6oxs5"]

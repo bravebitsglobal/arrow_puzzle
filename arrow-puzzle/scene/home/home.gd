@@ -24,6 +24,7 @@ func change_active_tab(new_tab: int)->void:
 	if active_tab == new_tab:
 		return
 	var tween = create_tween().set_parallel(true)
+	
 	if active_tab >= 0:
 		var old_node = tab.get_child(active_tab)
 		var old_icon_node = old_node.get_node("Icon")
@@ -40,6 +41,12 @@ func change_active_tab(new_tab: int)->void:
 	tween.tween_property(new_node.get_node("Label"), "self_modulate", Color(1,1,1,1), DURATION)
 	tween.tween_property(new_icon_node, "offset_transform_position", Vector2(0, -30), DURATION)
 	active_tab = new_tab
+	var show_challenge = active_tab == 4
+	if show_challenge:
+		if !Global.game_data.player_data.is_show_challenge_welcome_page:
+			Global.game_event.request_visible_popup.emit(GameEnum.PopupType.ChallengeWelcome, true)
+			Global.game_data.player_data.is_show_challenge_welcome_page = true
+			Global.game_data.save_data()
 	for i in range(tab_content.size()):
 		if tab_content[i]:
 			tab_content[i].visible = active_tab == i

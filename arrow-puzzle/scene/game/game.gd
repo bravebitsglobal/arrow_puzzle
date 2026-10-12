@@ -160,11 +160,11 @@ func move_camera_to_center()->void:
 func check_end_game():
 	if !Global.game_data.lives.value:
 		await get_tree().create_timer(1).timeout
-		Global.game_event.request_visible_popup.emit(PopupManager.PopupType.OutOfLive, true)
+		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.OutOfLive, true)
 		return
 	if !used_cells.size():
 		await get_tree().create_timer(1).timeout
-		Global.game_event.request_visible_popup.emit(PopupManager.PopupType.GameWin, true)
+		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.GameWin, true)
 func remove_arrow(idx: int):
 	for c in level[idx]:
 		used_cells.erase(Utils.to_index(c))

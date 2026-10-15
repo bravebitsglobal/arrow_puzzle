@@ -7,6 +7,9 @@ var level_generator = LevelGenerator.new()
 @onready var dot_container: Node2D = $MapContainer/DotContainer
 @onready var camera_2d: CameraController = $Camera2D
 @export var arrow_scene: PackedScene
+@onready var label_game_mode: Label = $UI/PanelGame/TopPanel/Panel/LabelGameMode
+@onready var button_auto_play: Button = $UI/PanelGame/TopPanel/Panel/ButtonAutoPlay
+
 var remain_magic_glasses: int = 0
 var level
 var arrows: Array[Arrow] = []
@@ -17,12 +20,20 @@ class ExitPathResult:
 	var can_exit: bool
 	var exit_path: Array[PackedInt32Array]
 func _ready() -> void:
+	if Global.development:
+		button_auto_play.visible = true
 	next_level()
 	Global.game_event.game_start.connect(func():
 		next_level())
 	Global.game_event.game_restart.connect(func():
 		restart())
 	Global.game_event.user_action.connect(_on_user_action)
+	button_auto_play.pressed.connect(auto_play)
+func auto_play()->void:
+	for i in range(level.size()):
+		var idx = get_hint_idx()
+		_on_arrow_clicked(idx)
+		await get_tree().create_timer(0.01).timeout
 func render_ruler()->void:
 	if !level:
 		return
@@ -164,7 +175,16 @@ func check_end_game():
 		return
 	if !used_cells.size():
 		await get_tree().create_timer(1).timeout
-		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.GameWin, true)
+		
+		if Global.game_data.current_challenge.value.size():
+			Global.game_data.player_data.set_challenge_resolved(
+				Global.game_data.current_challenge.value[0],
+				Global.game_data.current_challenge.value[1],
+				Global.game_data.current_challenge.value[2])
+			Global.game_data.home_tab.value = 4
+			get_tree().change_scene_to_file("res://scene/home/home.tscn")
+		else:
+			Global.game_event.request_visible_popup.emit(GameEnum.PopupType.GameWin, true)
 func remove_arrow(idx: int):
 	for c in level[idx]:
 		used_cells.erase(Utils.to_index(c))
@@ -212,7 +232,16 @@ func calculate_exit_path(data)->ExitPathResult:
 	result.exit_path = exit_path
 	return result
 func next_level()->void:
-	level = await Global.api.get_level(Global.game_data.level.value)
+	if Global.game_data.current_challenge.value.size():
+		label_game_mode.text = "Challenge %04d-%02d-%02d" % Global.game_data.current_challenge.value
+		level = await Global.api.get_challenge_by_date(
+			Global.game_data.current_challenge.value[0],
+			Global.game_data.current_challenge.value[1],
+			Global.game_data.current_challenge.value[2])
+	else:
+		level = await Global.api.get_level(Global.game_data.level.value)
+		label_game_mode.text = "Level %d" % Global.game_data.level.value
+		
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	move_camera_to_center()
 	render_level()

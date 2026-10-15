@@ -4,12 +4,21 @@
 [ext_resource type="Texture2D" uid="uid://baxa27jhtd1vr" path="res://ui/win/bt_green.png" id="2_7uusv"]
 [ext_resource type="Texture2D" uid="uid://idh5ve4hnljb" path="res://ui/lose/bt_green_in.png" id="2_8aw70"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8aw70"]
+texture = ExtResource("2_8aw70")
+texture_margin_left = 50.0
+texture_margin_top = 50.0
+texture_margin_right = 50.0
+texture_margin_bottom = 50.0
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nqh08"]
 texture = ExtResource("2_8aw70")
 texture_margin_left = 50.0
 texture_margin_top = 50.0
 texture_margin_right = 50.0
 texture_margin_bottom = 50.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8aw70"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_touxu"]
 bg_color = Color(0.012617188, 0.012617188, 0.012617188, 0)
@@ -18,13 +27,29 @@ bg_color = Color(0.012617188, 0.012617188, 0.012617188, 0)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e63bl"]
 texture = ExtResource("2_7uusv")
-texture_margin_left = 50.0
-texture_margin_top = 50.0
-texture_margin_right = 50.0
-texture_margin_bottom = 50.0
+texture_margin_left = 40.0
+texture_margin_top = 40.0
+texture_margin_right = 40.0
+texture_margin_bottom = 40.0
 
 [resource]
-Button/fonts/font = ExtResource("1_27v6b")
+BorderedButton/base_type = &"Button"
+BorderedButton/colors/font_color = Color(0.9607843, 0.8980392, 0.7882353, 1)
+BorderedButton/colors/font_outline_color = Color(0.02745098, 0.25490198, 0, 1)
+BorderedButton/constants/outline_size = 15
+BorderedButton/font_sizes/font_size = 76
+BorderedButton/fonts/font = ExtResource("1_27v6b")
+BorderedButton/styles/disabled = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/disabled_mirrored = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/focus = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/hover = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/hover_mirrored = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/hover_pressed = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/normal = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/normal_mirrored = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/pressed = SubResource("StyleBoxTexture_8aw70")
+BorderedButton/styles/pressed_mirrored = SubResource("StyleBoxTexture_8aw70")
 ButtonGreenLabel/base_type = &"Label"
 ButtonGreenLabel/colors/font_outline_color = Color(0.03137255, 0.34509805, 0.003921569, 1)
 ButtonGreenLabel/colors/font_shadow_color = Color(0.03137255, 0.34509805, 0.003921569, 1)
@@ -32,7 +57,7 @@ ButtonGreenLabel/constants/outline_size = 10
 ButtonGreenLabel/constants/shadow_outline_size = 20
 ButtonGreenLabel/font_sizes/font_size = 76
 ButtonGreenLabel/fonts/font = ExtResource("1_27v6b")
-ButtonMainPlay/base_type = &"Button"
+ButtonMainPlay/base_type = &"FlatButton"
 ButtonMainPlay/font_sizes/font_size = 76
 ButtonMainPlay/styles/disabled = SubResource("StyleBoxTexture_nqh08")
 ButtonMainPlay/styles/disabled_mirrored = SubResource("StyleBoxTexture_nqh08")
@@ -45,6 +70,18 @@ ButtonMainPlay/styles/normal = SubResource("StyleBoxTexture_nqh08")
 ButtonMainPlay/styles/normal_mirrored = SubResource("StyleBoxTexture_nqh08")
 ButtonMainPlay/styles/pressed = SubResource("StyleBoxTexture_nqh08")
 ButtonMainPlay/styles/pressed_mirrored = SubResource("StyleBoxTexture_nqh08")
+FlatButton/fonts/font = ExtResource("1_27v6b")
+FlatButton/styles/disabled = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/disabled_mirrored = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/focus = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/hover = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/hover_mirrored = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/hover_pressed = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/normal = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/normal_mirrored = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/pressed = SubResource("StyleBoxEmpty_8aw70")
+FlatButton/styles/pressed_mirrored = SubResource("StyleBoxEmpty_8aw70")
 HeaderLarge/colors/font_color = Color(0.972549, 0.9254902, 0.8235294, 1)
 HeaderLarge/colors/font_outline_color = Color(0.05882353, 0.14509805, 0.6431373, 1)
 HeaderLarge/colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -53,6 +90,8 @@ HeaderLarge/constants/shadow_outline_size = 15
 HeaderLarge/font_sizes/font_size = 76
 HeaderLarge/fonts/font = ExtResource("1_27v6b")
 Label/fonts/font = ExtResource("1_27v6b")
+LabelDark/base_type = &"Label"
+LabelDark/colors/font_color = Color(0, 0, 0, 1)
 NavigationLabel/base_type = &"Label"
 NavigationLabel/colors/font_color = Color(1, 1, 1, 1)
 NavigationLabel/font_sizes/font_size = 48
@@ -71,7 +110,7 @@ PopupTitle/constants/outline_size = 5
 PopupTitle/constants/shadow_outline_size = 20
 PopupTitle/font_sizes/font_size = 72
 PopupTitle/fonts/font = ExtResource("1_27v6b")
-PrimaryButton/base_type = &"Button"
+PrimaryButton/base_type = &"FlatButton"
 PrimaryButton/colors/font_color = Color(0.9490196, 0.87058824, 0.7529412, 1)
 PrimaryButton/colors/font_outline_color = Color(0.02745098, 0.25490198, 0, 1)
 PrimaryButton/constants/outline_size = 15

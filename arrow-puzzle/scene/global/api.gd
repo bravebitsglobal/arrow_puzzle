@@ -200,6 +200,40 @@ func claim_mail(mail_id: String) -> Dictionary:
 ## points_as_int = true: JSON parse số thành float, nên ép các phần tử trong mảng "points" về int.
 func get_level(level_id: int, points_as_int: bool = true) :
 	var res := await request(HTTPClient.METHOD_GET, "/levels/%d" % level_id)
+	return _extract_level_points(res, points_as_int)
+
+
+# ----------------------------------------------------------------
+# Challenge
+# ----------------------------------------------------------------
+
+## Lấy level daily challenge theo ngày (GET /api/challenges/daily?date=YYYY-MM-DD).
+## date rỗng = server tự lấy ngày hiện tại. Server chọn level theo (ngày trong năm - 1) % số level challenge.
+## Response giống level: {levelId, data: {width, height, difficulty, points}}. Trả về points hoặc null.
+func get_daily_challenge(date: String = "", points_as_int: bool = true):
+	var query := {}
+	if date != "":
+		if not RegEx.create_from_string("^\\d{4}-\\d{2}-\\d{2}$").search(date):
+			push_error("get_daily_challenge: date phải dạng YYYY-MM-DD, nhận: %s" % date)
+			return null
+		query["date"] = date
+	var res := await request(HTTPClient.METHOD_GET, "/challenges/daily", null, query)
+	return _extract_level_points(res, points_as_int)
+
+
+## Tiện cho calendar: lấy challenge theo năm/tháng/ngày.
+func get_challenge_by_date(year: int, month: int, day: int, points_as_int: bool = true):
+	return await get_daily_challenge("%04d-%02d-%02d" % [year, month, day], points_as_int)
+
+
+## Lấy level challenge theo levelId (GET /api/challenges/levels/{levelId}).
+func get_challenge_level(level_id: int, points_as_int: bool = true):
+	var res := await request(HTTPClient.METHOD_GET, "/challenges/levels/%d" % level_id)
+	return _extract_level_points(res, points_as_int)
+
+
+## Bóc res.data["data"] (parse nếu là chuỗi JSON), ép points về int, gán lại res.data và trả về points.
+func _extract_level_points(res: Dictionary, points_as_int: bool) -> Variant:
 	if res.ok and res.data is Dictionary and res.data.has("data"):
 		var level_data: Variant = res.data["data"]
 		if level_data is String:

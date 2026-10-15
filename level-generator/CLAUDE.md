@@ -20,6 +20,12 @@ This is a Rust CLI that generates arrow-puzzle levels for the Godot game in `../
   - `--dry-run` lists the levels without sending anything.
   - HTTP goes through the system `curl`, because TLS crates (ring) need gcc, which this machine lacks.
   - The game reads levels with `GET /api/levels/{id}` and uses `data.points` (see `../arrow-puzzle/scene/global/api.gd`).
+- **Challenge:** `--challenge <START_ID> -c <COUNT> --api-key <KEY> [--game-id G]` generates COUNT levels and uploads them as challenge levels START_ID…
+  - Each level uses a random large board (`--min-size`..`--max-size`, default 40..50) and a random built-in shape.
+  - Files go to `output/challenge/<G>/level_<N>.json`. Default difficulty is hard; `-a` and `--seed` work too.
+  - It uses `POST /api/upload/challenges`, the same body as levels. The game reads `GET /api/challenges/daily` or `/api/challenges/levels/{id}`.
+  - The upload key decides the game on the server. The upload API has no gameId parameter (only the admin JWT API does), so `--game-id` only names the folder.
+  - `--dry-run` generates without uploading.
 
 ## Python tooling
 

@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ij548ok7kshs"]
+
+[ext_resource type="Shader" uid="uid://c88cy3nggnpd6" path="res://arrow/arrow_color.gdshader" id="1_shader"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_shader")
+shader_parameter/target_color = Color(1, 0.33, 0.73, 1)
+shader_parameter/strength = 1.0
+shader_parameter/source_hue = 0.9
+shader_parameter/reference_luma = 0.72
+shader_parameter/hue_inner = 0.045
+shader_parameter/hue_outer = 0.065
+shader_parameter/min_saturation = 0.12

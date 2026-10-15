@@ -9,14 +9,16 @@ var tab_content: Array
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	tab_content = [null, null, main, null, challenge]
-	change_active_tab(DEFAULT_ACTIVE_TAB)
+	Global.game_data.home_tab.subscribe(func (tab):
+		change_active_tab(tab)
+		)
 	bind_tab_buttons()
 
 func bind_tab_buttons():
 	for i in range(tab.get_children().size()):
 		var node: TextureButton = tab.get_child(i)
 		node.pressed.connect(func ():
-			change_active_tab(i)
+			Global.game_data.home_tab.value = i
 			)
 func change_active_tab(new_tab: int)->void:
 	const DURATION = 0.2

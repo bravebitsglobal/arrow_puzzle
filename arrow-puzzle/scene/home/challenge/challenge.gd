@@ -1,74 +1,73 @@
 extends Control
+class_name Challenge
 @onready var calendar: Control = $Calendar
-
-signal day_selected(date: String)
 
 const WEEKDAYS = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 @export var cell_size: Vector2 = Vector2(120, 120)
+@onready var date_container: GridContainer = $Calendar/DateContainer
+@onready var button_play: Button = $ButtonPlay
 
 
+var month: int 
+var year: int
+var date: int
+var resolved_date: PackedInt32Array
+var enable_date: PackedInt32Array
+var date_nodes: Dictionary[int, Day] = {}
+var last_select_date: int = 0
 func _ready() -> void:
-	var today := Time.get_date_dict_from_system()
-	generate(today.year, today.month)
-	
-	
-
-
-## Tạo lịch của tháng (year, month) rồi add_child vào Calendar. Tuần bắt đầu từ thứ Hai.
-func generate(year: int, month: int) -> void:
-	for child in calendar.get_children():
-		child.queue_free()
-
-	var box := VBoxContainer.new()
-	calendar.add_child(box)
-
-	var title := Label.new()
-	title.text = "%s %d" % [MONTHS[month - 1], year]
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	box.add_child(title)
-
-	var grid := GridContainer.new()
-	grid.columns = 7
-	box.add_child(grid)
-
-	for w in WEEKDAYS:
-		var label := Label.new()
-		label.text = w
-		label.custom_minimum_size = Vector2(cell_size.x, 0)
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		grid.add_child(label)
-
-	# Ô trống trước ngày 1 (weekday của Godot: 0 = Chủ nhật → đổi sang 0 = thứ Hai).
-	var first_weekday: int = (_weekday(year, month, 1) + 6) % 7
-	for i in first_weekday:
-		var empty := Control.new()
-		empty.custom_minimum_size = cell_size
-		grid.add_child(empty)
-
-	var today := Time.get_date_dict_from_system()
-	var today_key: int = today.year * 10000 + today.month * 100 + today.day
-	for day in range(1, _days_in_month(year, month) + 1):
-		var date_key := year * 10000 + month * 100 + day
-		var button := Button.new()
-		button.text = str(day)
-		button.custom_minimum_size = cell_size
-		# Ngày tương lai chưa chơi được.
-		button.disabled = date_key > today_key
-		if date_key == today_key:
-			button.modulate = Color(1, 0.85, 0.3)
-		var date := "%04d-%02d-%02d" % [year, month, day]
-		button.pressed.connect(func(): day_selected.emit(date))
-		grid.add_child(button)
-
-
-func _weekday(year: int, month: int, day: int) -> int:
-	var unix := Time.get_unix_time_from_datetime_dict({"year": year, "month": month, "day": day})
-	return Time.get_datetime_dict_from_unix_time(unix).weekday
-
-
-func _days_in_month(year: int, month: int) -> int:
-	if month == 2:
-		var leap := (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
-		return 29 if leap else 28
-	return 30 if month in [4, 6, 9, 11] else 31
+	var date_dict = Time.get_date_dict_from_system()
+	month = date_dict['month']
+	year = date_dict['year']
+	resolved_date = Global.game_data.player_data.get_challenge_dates(year, month)
+	render_calendar()
+	for i in date_container.get_children():
+		i.clicked.connect(_on_date_clicked)
+	button_play.pressed.connect(_on_play_click)
+func _on_play_click()->void:
+	if !(year && month && date):
+		Global.popup_manager.show_toast("Please select a date")
+		return
+	Global.game_data.current_challenge.value = [year, month, date]
+	get_tree().change_scene_to_file("res://scene/game/game.tscn")
+func _on_date_clicked(_date: int)->void:
+	date = _date
+	if enable_date.has(date):
+		date_nodes[date].set_state('selected')
+	if last_select_date:
+		date_nodes[last_select_date].set_state('enable')
+	last_select_date = date
+func get_days_in_month(_year: int, _month: int) -> int:
+	var days_in_months = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	if _month == 2 and ((_year % 4 == 0 and _year % 100 != 0) or (_year % 400 == 0)):
+		return 29
+	return days_in_months[_month]
+func render_calendar()->void:
+	var days = get_days_in_month(year, month)
+	var unix_time = Time.get_unix_time_from_datetime_dict({
+		"year": year,
+		"month": month,
+		"day": 1,
+		"hour": 0, "minute": 0, "second": 0
+	})
+	var now_dict = Time.get_datetime_dict_from_system()
+	var date_dict = Time.get_date_dict_from_unix_time(unix_time)
+	var weekday = date_dict['weekday']
+	for i in date_container.get_children():
+		i.modulate = Color(0,0,0,0)
+	enable_date = []
+	date_nodes.clear()
+	for i in range(days):
+		var child: Day = date_container.get_child(weekday + i)
+		date_nodes[i + 1] = child
+		child.modulate = Color(1,1,1,1)
+		child.set_date(i + 1)
+		if i < now_dict['day']:
+			enable_date.append(i + 1)
+			child.set_state('enable')
+		else:
+			child.set_state('disable')
+	for i in resolved_date:
+		var date_item = date_container.get_child(weekday + i - 1)
+		date_item.set_state('resolved')

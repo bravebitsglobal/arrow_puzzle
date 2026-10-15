@@ -1,11 +1,28 @@
 extends Node2D
 class_name Arrow
-var COLORS = ["#FF2A4B","#E60039","#FF3366","#FF4081","#FF007F","#FF5252","#D81B60","#FF6D00","#FF8800","#FF5722","#FF9100","#F57C00","#FF7043","#E65100","#FFC400","#FFB300","#FFD600","#FFCA28","#FFA000","#FBC02D","#76FF03","#00E676","#00C853","#4CAF50","#AEEA00","#1DE9B6","#2E7D32","#00B0FF","#00E5FF","#2979FF","#2962FF","#1E88E5","#00BFA5","#0D47A1","#AA00FF","#651FFF","#3D5AFE","#D500F9","#8E24AA","#4A148C","#795548","#A1887F","#5D4037","#D84315","#78909C","#455A64","#263238","#1A1A2E","#212121","#0F0F1A"]
+# 7 màu tươi, khác hẳn nhau để dễ phân biệt.
+var COLORS = [
+	"#FF3B3B", # đỏ
+	"#FF9F1A", # cam
+	"#FFE01A", # vàng
+	"#22D65A", # xanh lá
+	"#1EB4FF", # xanh da trời
+	"#7B4DFF", # tím
+	"#FF4FD8", # hồng
+]
+@onready var eyes_close: Sprite2D = $Head/Down/EyesClose
+@onready var eyes_close_right: Sprite2D = $Head/Right/EyesCloseRight
+@onready var eyes_close_left: Sprite2D = $Head/Left/EyesCloseLeft
+@onready var stun: Sprite2D = $Head/Stun
+
 @export var PATTERNS: Array[Texture2D] = []
-@onready var head: Node2D = $Head
 const ROTATES = [0, 180, -90, 90]
 const CELL_SIZE = 50
 var data: Array[PackedInt32Array]
+@onready var head: Node2D = $Head
+@onready var foot_1: Node2D = $Foot1
+@onready var foot_2: Node2D = $Foot2
+
 @onready var line_2d: Line2D = $Line2D
 @onready var collision_polygon_2d: CollisionPolygon2D = $Area2D/CollisionPolygon2D
 @onready var highlight: Line2D = $Highlight
@@ -38,13 +55,17 @@ const CLICK_THRESHOLD: float = 5.0  # Nguong phan biet click va drag (pixels)
 var highlight_tween: Tween
 const HIGHLIGHT_TIME = 10
 var enable: bool = true
+@export var min_blink_interval: float = 2.0  # Tối thiểu 2 giây chớp 1 lần
+@export var max_blink_interval: float = 6.0  # Tối đa 6 giây chớp 1 lần
+# Thời gian nhắm mắt (chớp cực nhanh)
+@export var blink_duration: float = 0.12     # Khoảng 0.12 giây
+@onready var blink_timer: Timer = $BlinkTimer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Mỗi arrow 1 material riêng vì danh sách khớp khác nhau.
-	joint_material = load("res://arrow/joint_overlay_material.tres").duplicate()
-	joint_material.set_shader_parameter("joint_size", line_2d.width)
-	line_2d.material = joint_material
+	blink_timer.timeout.connect(_on_blink_timer_timeout)
+	set_random_color()
 	render()
+	schedule_next_blink()
 func update_line_collision() -> void:
 	if line_2d.points.size() < 2:
 		return
@@ -104,6 +125,9 @@ func exit(result: Game.ExitPathResult):
 	tween.tween_property(self, 'tail_progress', move_distance, dur)
 	tween.parallel().tween_property(self, 'head_progress', move_distance + arrow_size, dur)
 	if !result.can_exit:
+		stun.visible = true
+		get_tree().create_timer(3).timeout.connect(func ():
+			stun.visible = false)
 		tween.tween_property(self, 'tail_progress', 0, dur)
 		tween.parallel().tween_property(self, 'head_progress', arrow_size, dur)
 	tween.finished.connect(func():
@@ -126,7 +150,9 @@ func render():
 	tail.position = Utils.to_pos(data[0])
 	var tail_dir = Utils.get_dir(data[1], data[0])
 	tail.rotation_degrees = ROTATES[tail_dir]
+	var head_dir = Utils.get_exit_dir(data)
 	#head.rotation_degrees = ROTATES[Utils.get_exit_dir(data)]
+	head.get_child(head_dir).visible = true
 	go_in()
 func update_line():
 	# Vị trí đuôi/đầu tính theo chỉ số (thực) trên exit_path.
@@ -135,8 +161,8 @@ func update_line():
 	line_2d.points = _build_points(tail_index, head_index)
 	highlight.points = line_2d.points
 	head.position = _path_pos(head_index)
-	_update_joint_overlays()
 	_update_tail()
+	update_foot()
 func _update_tail()->void:
 	if line_2d.points.size()<2:
 		return
@@ -146,7 +172,6 @@ func _path_pos(index: float) -> Vector2:
 	var i: int = clampi(floori(index), 0, exit_path.size() - 1)
 	var next: int = mini(i + 1, exit_path.size() - 1)
 	return Utils.to_pos(exit_path[i]).lerp(Utils.to_pos(exit_path[next]), index - i)
-
 # Dựng toàn bộ điểm của thân: đuôi nội suy, các ô lưới nằm giữa, đầu nội suy.
 # Đuôi/đầu luôn được giữ (kể cả sát khớp) để thân trượt mượt; khớp do shader mask xử lý.
 # Chỉ bỏ điểm gần như trùng với điểm kề (đoạn dài 0 làm Line2D tính sai hướng).
@@ -157,7 +182,6 @@ func _build_points(tail_index: float, head_index: float) -> PackedVector2Array:
 		_append_distinct(pts, Utils.to_pos(exit_path[i]))
 	_append_distinct(pts, _path_pos(head_index))
 	return pts
-
 func _append_distinct(pts: PackedVector2Array, p: Vector2) -> void:
 	if pts[pts.size() - 1].distance_to(p) > 0.5:
 		pts.append(p)
@@ -176,27 +200,53 @@ func set_ruler(exit_rs: Game.ExitPathResult)->void:
 	ruler.visible = true
 	for i in range(data.size(), exit_rs.exit_path.size()):
 		ruler.add_point(Utils.to_pos(exit_rs.exit_path[i]))
-
-# Gửi các khớp gấp khúc của line_2d vào shader (mask + viền pixel tại khớp).
-func _update_joint_overlays() -> void:
-	var points := line_2d.points
-	var joints := PackedVector3Array()
-	for i in range(1, points.size() - 1):
-		var to_prev := (points[i - 1] - points[i]).normalized()
-		var to_next := (points[i + 1] - points[i]).normalized()
-		if absf(to_prev.cross(to_next)) < 0.01:
-			continue
-		# Ảnh gốc có 2 nhánh lên + phải (đường phân giác (1,-1)); xoay cho khớp với 2 nhánh thật.
-		var angle := (to_prev + to_next).angle() - JOINT_BASE_BISECTOR.angle()
-		joints.append(Vector3(points[i].x, points[i].y, angle))
-		if joints.size() == MAX_JOINTS:
-			break
-	joint_material.set_shader_parameter("joints", joints)
-	joint_material.set_shader_parameter("joint_count", joints.size())
-
+## Đổi màu cả arrow (thân, đầu, đuôi). Nhận Color hoặc chuỗi hex như trong COLORS.
+func set_color(color: Variant) -> void:
+	var c: Color = Color(color) if color is String else color
+	(material as ShaderMaterial).set_shader_parameter("target_color", c)
+func set_random_color() -> void:
+	set_color(COLORS.pick_random())
 func set_enable(is_enable)->void:
 	enable = is_enable
 	if enable:
 		modulate = Color(1,1,1,1)
 	else:
 		modulate = Color(0,0,0,0.2)
+func schedule_next_blink() -> void:
+	# Chọn ngẫu nhiên thời gian cho lần chớp mắt tiếp theo
+	var random_time = randf_range(min_blink_interval, max_blink_interval)
+	blink_timer.start(random_time)
+func _on_blink_timer_timeout() -> void:
+	# Thực hiện chớp mắt
+	blink_eye()
+func blink_eye() -> void:
+	# Đổi sang mắt nhắm
+	eyes_close.visible = true
+	eyes_close_left.visible = true
+	eyes_close_right.visible = true
+	
+	# Đợi một khoảng thời gian cực ngắn (0.12s)
+	await get_tree().create_timer(blink_duration).timeout
+	
+	# Đổi lại mắt mở
+	eyes_close.visible = false
+	eyes_close_left.visible = false
+	eyes_close_right.visible = false
+	
+	# Lên lịch cho lần chớp mắt tiếp theo
+	schedule_next_blink()
+func get_dir(index: float)->int:
+	var i = exit_path[floor(index)]
+	var next = exit_path[floor(index)+1]
+	var dir = Utils.get_dir(i, next)
+	return dir
+func update_foot()->void:
+	var head_index: float = head_progress / CELL_SIZE
+	var total = line_2d.points.size()
+	foot_1.position = _path_pos(head_index - 2)
+	foot_1.rotation_degrees = ROTATES[get_dir(head_index - 2)]
+	if total >= 2:
+		foot_2.position = _path_pos(head_index - 3)
+		foot_2.rotation_degrees = ROTATES[get_dir(head_index - 3)]
+	else:
+		foot_2.visible = false

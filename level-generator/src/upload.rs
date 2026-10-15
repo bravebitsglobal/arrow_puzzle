@@ -1,4 +1,4 @@
-//! Upload level files to GameHub (POST /api/upload/levels, header x-upload-key).
+//! Upload levels to GameHub (POST /api/upload/levels or /api/upload/challenges, header x-upload-key).
 //! HTTP goes through the system `curl` so no TLS crate (and C toolchain) is needed.
 
 use serde_json::{Value, json};
@@ -44,8 +44,9 @@ fn level_id(path: &Path) -> Option<u32> {
     digits.parse().ok().filter(|&n| (1..=1_000_000).contains(&n))
 }
 
-pub fn upload(api_url: &str, key: &str, levels: &[(u32, Value)]) -> Result<(), String> {
-    let url = format!("{}/api/upload/levels", api_url.trim_end_matches('/'));
+/// `kind` is the endpoint: "levels" (main levels) or "challenges" (challenge levels).
+pub fn upload(api_url: &str, key: &str, kind: &str, levels: &[(u32, Value)]) -> Result<(), String> {
+    let url = format!("{}/api/upload/{kind}", api_url.trim_end_matches('/'));
     let items: Vec<(u32, String)> =
         levels.iter().map(|(id, data)| (*id, json!({"levelId": id, "data": data}).to_string())).collect();
     let mut start = 0;

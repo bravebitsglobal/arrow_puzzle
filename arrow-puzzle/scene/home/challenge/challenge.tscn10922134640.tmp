@@ -1,0 +1,354 @@
+[gd_scene format=3 uid="uid://ch2fpg8n3u371"]
+
+[ext_resource type="Script" uid="uid://dwv51a210qwvv" path="res://scene/home/challenge/challenge.gd" id="1_qt1ub"]
+[ext_resource type="Texture2D" uid="uid://dw0mjctwkub41" path="res://scene/home/challenge/img/Layer 10.png" id="2_3p112"]
+[ext_resource type="Texture2D" uid="uid://8ghjtcdyi2t6" path="res://scene/home/challenge/img/cup/Layer 13.png" id="3_7ftaw"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="4_e63bl"]
+[ext_resource type="PackedScene" uid="uid://bhg2b6mre4ji8" path="res://scene/home/challenge/day.tscn" id="5_xikhs"]
+[ext_resource type="Texture2D" uid="uid://mgup2wm4vdvs" path="res://scene/home/img/Currency_star.png" id="6_581aq"]
+[ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="7_ti6ys"]
+
+[node name="Challenge" type="Control" unique_id=1245256718]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qt1ub")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1940842902]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=7370139]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 538.0
+grow_horizontal = 2
+texture = ExtResource("2_3p112")
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect" unique_id=683390855]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -149.5
+offset_top = -334.0
+offset_right = 149.5
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_7ftaw")
+
+[node name="Label" type="Label" parent="TextureRect" unique_id=90118378]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -59.5
+offset_top = -369.0
+offset_right = 59.5
+offset_bottom = -346.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"HeaderLarge"
+text = "Daily Challenge"
+horizontal_alignment = 1
+
+[node name="Calendar" type="Control" parent="." unique_id=381148851]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -502.18848
+offset_top = 583.0
+offset_right = 502.18848
+offset_bottom = 1232.0
+grow_horizontal = 2
+
+[node name="DateContainer" type="GridContainer" parent="Calendar" unique_id=1812215832]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 172.0
+offset_bottom = 172.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 7
+
+[node name="Day" parent="Calendar/DateContainer" unique_id=573855203 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day2" parent="Calendar/DateContainer" unique_id=396927294 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day3" parent="Calendar/DateContainer" unique_id=2008710884 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day4" parent="Calendar/DateContainer" unique_id=2008178227 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day5" parent="Calendar/DateContainer" unique_id=778554234 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day6" parent="Calendar/DateContainer" unique_id=1374121507 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day7" parent="Calendar/DateContainer" unique_id=1379079999 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day8" parent="Calendar/DateContainer" unique_id=660606585 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day9" parent="Calendar/DateContainer" unique_id=784108353 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day10" parent="Calendar/DateContainer" unique_id=1901791163 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day11" parent="Calendar/DateContainer" unique_id=378288994 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day12" parent="Calendar/DateContainer" unique_id=1468651872 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day13" parent="Calendar/DateContainer" unique_id=1509014143 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day14" parent="Calendar/DateContainer" unique_id=1831653311 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day15" parent="Calendar/DateContainer" unique_id=1001494126 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day16" parent="Calendar/DateContainer" unique_id=43297074 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day17" parent="Calendar/DateContainer" unique_id=2134557049 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day18" parent="Calendar/DateContainer" unique_id=324862269 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day19" parent="Calendar/DateContainer" unique_id=1415118865 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day20" parent="Calendar/DateContainer" unique_id=1753942140 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day21" parent="Calendar/DateContainer" unique_id=1091438449 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day22" parent="Calendar/DateContainer" unique_id=797984428 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day23" parent="Calendar/DateContainer" unique_id=1208169906 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day24" parent="Calendar/DateContainer" unique_id=1066996001 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day25" parent="Calendar/DateContainer" unique_id=676138719 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day26" parent="Calendar/DateContainer" unique_id=918499417 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day27" parent="Calendar/DateContainer" unique_id=66257489 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day28" parent="Calendar/DateContainer" unique_id=298501665 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day29" parent="Calendar/DateContainer" unique_id=784338056 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day30" parent="Calendar/DateContainer" unique_id=462304992 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day31" parent="Calendar/DateContainer" unique_id=1262543793 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day32" parent="Calendar/DateContainer" unique_id=1912817111 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day33" parent="Calendar/DateContainer" unique_id=310164420 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day34" parent="Calendar/DateContainer" unique_id=234180724 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day35" parent="Calendar/DateContainer" unique_id=46007920 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day36" parent="Calendar/DateContainer" unique_id=1634042747 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day37" parent="Calendar/DateContainer" unique_id=451127934 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day38" parent="Calendar/DateContainer" unique_id=140524090 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day39" parent="Calendar/DateContainer" unique_id=460407976 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day40" parent="Calendar/DateContainer" unique_id=2007653306 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day41" parent="Calendar/DateContainer" unique_id=599652754 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="Day42" parent="Calendar/DateContainer" unique_id=1329998575 instance=ExtResource("5_xikhs")]
+layout_mode = 2
+
+[node name="LabelDate" type="Label" parent="Calendar" unique_id=1651809771]
+layout_mode = 0
+offset_left = 24.188477
+offset_top = -9.0
+offset_right = 335.18848
+offset_bottom = 41.0
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"HeaderMedium"
+theme_override_colors/font_color = Color(0.39080548, 0.39080545, 0.39080545, 1)
+theme_override_font_sizes/font_size = 36
+text = "Thang 10 nam 2026"
+
+[node name="Star" type="TextureRect" parent="Calendar" unique_id=1142670469]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -161.18848
+offset_right = -108.37695
+offset_bottom = 52.811523
+grow_horizontal = 0
+texture = ExtResource("6_581aq")
+expand_mode = 1
+
+[node name="LabelStar" type="Label" parent="Calendar/Star" unique_id=19187886]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 57.0
+offset_top = -16.5
+offset_right = 112.0
+offset_bottom = 17.5
+grow_vertical = 2
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"HeaderMedium"
+theme_override_colors/font_color = Color(0.39080548, 0.39080545, 0.39080545, 1)
+theme_override_font_sizes/font_size = 36
+text = "1/31"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Calendar" unique_id=1800701006]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 106.0
+offset_bottom = 156.0
+grow_horizontal = 2
+
+[node name="Label7" type="Label" parent="Calendar/HBoxContainer" unique_id=378344040]
+self_modulate = Color(1, 1, 1, 0.36078432)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 36
+text = "SUN"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Calendar/HBoxContainer" unique_id=1381340897]
+self_modulate = Color(1, 1, 1, 0.36078432)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 36
+text = "MON"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Calendar/HBoxContainer" unique_id=1053348618]
+self_modulate = Color(1, 1, 1, 0.36078432)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 36
+text = "TUE"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Calendar/HBoxContainer" unique_id=961075567]
+self_modulate = Color(1, 1, 1, 0.36078432)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 36
+text = "WEB"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Calendar/HBoxContainer" unique_id=1142391937]
+self_modulate = Color(1, 1, 1, 0.36078432)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 36
+text = "THU"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="Calendar/HBoxContainer" unique_id=1399389206]
+self_modulate = Color(1, 1, 1, 0.36078432)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 36
+text = "FRI"
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="Calendar/HBoxContainer" unique_id=737405839]
+self_modulate = Color(1, 1, 1, 0.36078432)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 36
+text = "SAT"
+horizontal_alignment = 1
+
+[node name="ButtonPlay" type="Button" parent="." unique_id=1289181942]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -216.21558
+offset_top = 1431.0
+offset_right = 216.21558
+offset_bottom = 1608.0
+grow_horizontal = 2
+theme = ExtResource("4_e63bl")
+theme_type_variation = &"BorderedButton"
+text = "Play"
+
+[node name="ButtonEffect" parent="ButtonPlay" unique_id=941576423 instance=ExtResource("7_ti6ys")]
+layout_mode = 0
+offset_left = -336.0
+offset_top = -1426.0
+offset_right = -336.0
+offset_bottom = -1426.0

@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://08iwkk13f8v1"]
 
 [ext_resource type="Script" uid="uid://cw7vlvo1hvmjq" path="res://arrow/arrow.gd" id="1_jp72l"]
-[ext_resource type="Texture2D" uid="uid://6sk0rsjot71b" path="res://arrow/img/body.png" id="2_ofxgm"]
-[ext_resource type="Texture2D" uid="uid://b34d4uyml7n12" path="res://arrow/img/vay1_R.png" id="3_l8mgh"]
-[ext_resource type="Texture2D" uid="uid://wn847vs3clvk" path="res://arrow/img/head.png" id="3_ofxgm"]
-[ext_resource type="Texture2D" uid="uid://dvf48lidnugwg" path="res://arrow/img/vay2_R.png" id="4_wy7q8"]
-[ext_resource type="Texture2D" uid="uid://v435rycwa0ty" path="res://arrow/img/duoi.png" id="5_ll4nt"]
-[ext_resource type="Texture2D" uid="uid://cdfkv6qsvl8l0" path="res://arrow/img/vay1_L.png" id="6_bp1ey"]
-[ext_resource type="Texture2D" uid="uid://chh75dxy56bwo" path="res://arrow/img/vay2_L.png" id="7_n8rio"]
-[ext_resource type="Texture2D" uid="uid://57mxh73wy4vp" path="res://arrow/img/mount.png" id="8_1h48w"]
+[ext_resource type="Texture2D" uid="uid://crea03d20b5ky" path="res://arrow/texture/3.png" id="2_lo0oj"]
+[ext_resource type="Texture2D" uid="uid://gi1ohmw7bhjc" path="res://arrow/texture/foot.png" id="3_bp1ey"]
+[ext_resource type="Texture2D" uid="uid://cm81d6edqptfq" path="res://arrow/texture/2.png" id="3_nl01e"]
+[ext_resource type="Texture2D" uid="uid://dr7ulog8y64jo" path="res://arrow/texture/be02db5c-d492-4597-84e5-54ffdd43798c.png" id="4_e3mw3"]
+[ext_resource type="Texture2D" uid="uid://cpe7r2c5d8ntv" path="res://arrow/texture/than ngang.png" id="5_l8mgh"]
+[ext_resource type="Material" uid="uid://ij548ok7kshs" path="res://arrow/arrow_color_material.tres" id="6_color"]
+[ext_resource type="Texture2D" uid="uid://0mkpd02mqgoc" path="res://arrow/texture/mắt nhắm chính diện.png" id="6_nl01e"]
+[ext_resource type="Texture2D" uid="uid://bh7qrw3vs16q4" path="res://arrow/texture/mắt nhắm nghiêng.png" id="8_e3mw3"]
+[ext_resource type="Texture2D" uid="uid://vasmcd6vvfp8" path="res://arrow/texture/stun.png" id="9_l8mgh"]
+[ext_resource type="Texture2D" uid="uid://dm3uf11w5mltm" path="res://arrow/texture/tail.png" id="10_wy7q8"]
 
 [sub_resource type="Animation" id="Animation_ofxgm"]
 length = 0.001
@@ -49,11 +51,35 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_ll4nt"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.08726646]
+}
 
 [sub_resource type="Animation" id="Animation_lo0oj"]
 resource_name = "head"
 length = 2.0
 loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9666667, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.08726646, 0.08726646, -0.08726646]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nl01e"]
 _data = {
@@ -61,10 +87,195 @@ _data = {
 &"head": SubResource("Animation_lo0oj")
 }
 
+[sub_resource type="Animation" id="Animation_l8mgh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Stun:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_wy7q8"]
+resource_name = "stun"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Stun:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2831855]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bp1ey"]
+_data = {
+&"RESET": SubResource("Animation_l8mgh"),
+&"stun": SubResource("Animation_wy7q8")
+}
+
+[sub_resource type="Animation" id="Animation_n8rio"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Foot2/Foot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.2217305]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Foot1/Foot2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.9198622]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Foot1/Foot:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.9198622]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Foot2/Foot2:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.2217305]
+}
+
+[sub_resource type="Animation" id="Animation_bp1ey"]
+resource_name = "run"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Foot2/Foot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.033333335, 0.51666665, 0.96666664),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.2217305, 1.9198622, 1.2217305]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Foot1/Foot2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(-0.033333335, 0.51666665, 0.96666664),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.9198622, 1.2217305, 1.9198622]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Foot1/Foot:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(-0.033333335, 0.51666665, 0.96666664),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.9198622, 1.2217305, 1.9198622]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Foot2/Foot2:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(-0.033333335, 0.51666665, 0.96666664),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.2217305, 1.9198622, 1.2217305]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n8rio"]
+_data = {
+&"RESET": SubResource("Animation_n8rio"),
+&"run": SubResource("Animation_bp1ey")
+}
+
 [node name="Arrow" type="Node2D" unique_id=1825271717]
 self_modulate = Color(0, 0, 0, 1)
 texture_repeat = 2
+material = ExtResource("6_color")
 script = ExtResource("1_jp72l")
+
+[node name="Foot1" type="Node2D" parent="." unique_id=688233907]
+use_parent_material = true
+position = Vector2(-1, -38)
+
+[node name="Foot" type="Sprite2D" parent="Foot1" unique_id=1855723898]
+use_parent_material = true
+position = Vector2(-23.691406, -0.69531196)
+rotation = 1.9198622
+scale = Vector2(0.33203125, 0.33203125)
+texture = ExtResource("3_bp1ey")
+
+[node name="Foot2" type="Sprite2D" parent="Foot1" unique_id=129032959]
+use_parent_material = true
+position = Vector2(24.30859, -0.69531196)
+rotation = 1.9198622
+scale = Vector2(0.33203125, 0.33203125)
+texture = ExtResource("3_bp1ey")
+flip_v = true
+
+[node name="Foot2" type="Node2D" parent="." unique_id=493493157]
+use_parent_material = true
+position = Vector2(-1, -92)
+
+[node name="Foot" type="Sprite2D" parent="Foot2" unique_id=739399734]
+use_parent_material = true
+position = Vector2(-23.691406, -0.69531196)
+rotation = 1.2217305
+scale = Vector2(0.33203125, 0.33203125)
+texture = ExtResource("3_bp1ey")
+
+[node name="Foot2" type="Sprite2D" parent="Foot2" unique_id=109557958]
+use_parent_material = true
+position = Vector2(24.30859, -0.69531196)
+rotation = 1.2217305
+scale = Vector2(0.33203125, 0.33203125)
+texture = ExtResource("3_bp1ey")
+flip_v = true
 
 [node name="Highlight" type="Line2D" parent="." unique_id=928021575]
 self_modulate = Color(1, 1, 1, 0)
@@ -78,12 +289,13 @@ end_cap_mode = 2
 round_precision = 16
 
 [node name="Line2D" type="Line2D" parent="." unique_id=678615301]
-points = PackedVector2Array(-16, 47)
+use_parent_material = true
+points = PackedVector2Array(1, -149, 0, 0)
 width = 40.0
-texture = ExtResource("2_ofxgm")
+texture = ExtResource("2_lo0oj")
 texture_mode = 1
 joint_mode = 2
-end_cap_mode = 2
+begin_cap_mode = 2
 sharp_limit = 1.0
 round_precision = 16
 antialiased = true
@@ -98,42 +310,71 @@ end_cap_mode = 2
 round_precision = 16
 
 [node name="Head" type="Node2D" parent="." unique_id=1303642838]
+use_parent_material = true
+rotation = -0.08726646
 scale = Vector2(1.3167543, 1.3167543)
 
-[node name="VayR1" type="Sprite2D" parent="Head" unique_id=1869416544]
-position = Vector2(20.504963, -9.113318)
-scale = Vector2(0.11919905, 0.11919907)
-texture = ExtResource("3_l8mgh")
+[node name="Up" type="Sprite2D" parent="Head" unique_id=587567375]
+visible = false
+use_parent_material = true
+position = Vector2(-2.3841856e-07, -4.556659)
+scale = Vector2(0.23302928, 0.23302928)
+texture = ExtResource("4_e3mw3")
 
-[node name="VayR2" type="Sprite2D" parent="Head" unique_id=532828053]
-position = Vector2(19.74552, 5.316102)
-scale = Vector2(0.11919905, 0.11919907)
-texture = ExtResource("4_wy7q8")
+[node name="Down" type="Sprite2D" parent="Head" unique_id=1441934711]
+visible = false
+use_parent_material = true
+position = Vector2(0, -6.0755444)
+scale = Vector2(0.21770546, 0.21770546)
+texture = ExtResource("5_l8mgh")
 
-[node name="Dau2" type="Sprite2D" parent="Head" unique_id=1668950607]
-position = Vector2(-0.75944316, 0)
-scale = Vector2(0.119199045, 0.11919905)
-texture = ExtResource("3_ofxgm")
+[node name="EyesClose" type="Sprite2D" parent="Head/Down" unique_id=1804412722]
+visible = false
+use_parent_material = true
+position = Vector2(0, -3.4883971)
+scale = Vector2(1.0271014, 1.0271014)
+texture = ExtResource("6_nl01e")
 
-[node name="VayL" type="Sprite2D" parent="Head" unique_id=317458444]
-position = Vector2(-19.745522, -8.353874)
-scale = Vector2(0.11919905, 0.11919907)
-texture = ExtResource("6_bp1ey")
+[node name="Left" type="Sprite2D" parent="Head" unique_id=1103866768]
+visible = false
+use_parent_material = true
+position = Vector2(0, -6)
+scale = Vector2(0.20469363, 0.20469363)
+texture = ExtResource("3_nl01e")
 
-[node name="VayL2" type="Sprite2D" parent="Head" unique_id=1399072012]
-position = Vector2(-21.264408, 5.3161016)
-scale = Vector2(0.11919905, 0.11919907)
-texture = ExtResource("7_n8rio")
+[node name="EyesCloseLeft" type="Sprite2D" parent="Head/Left" unique_id=2032213147]
+visible = false
+use_parent_material = true
+position = Vector2(3.710147, -4.0792084)
+scale = Vector2(1.0619173, 1.0474247)
+texture = ExtResource("8_e3mw3")
 
-[node name="Mount" type="Sprite2D" parent="Head" unique_id=731484371]
-position = Vector2(-0.7594414, 14.42942)
-scale = Vector2(0.08329302, 0.08329303)
-texture = ExtResource("8_1h48w")
+[node name="Right" type="Sprite2D" parent="Head" unique_id=1754206012]
+visible = false
+use_parent_material = true
+position = Vector2(0, -6)
+scale = Vector2(0.20469363, 0.20469363)
+texture = ExtResource("3_nl01e")
+flip_h = true
+
+[node name="EyesCloseRight" type="Sprite2D" parent="Head/Right" unique_id=930941414]
+visible = false
+use_parent_material = true
+position = Vector2(-3.7101455, -4.0792084)
+scale = Vector2(1.0619173, 1.0474247)
+texture = ExtResource("8_e3mw3")
+flip_h = true
+
+[node name="Stun" type="Sprite2D" parent="Head" unique_id=668070288]
+visible = false
+position = Vector2(0, -18.98608)
+scale = Vector2(0.14239556, 0.14239556)
+texture = ExtResource("9_l8mgh")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2055958979]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1159130842]
-polygon = PackedVector2Array(-28, -28, -29, -34, -20, -34, -18, -27)
+polygon = PackedVector2Array(-36, -34, -37, -40, -28, -40, -26, -33)
 
 [node name="HighlightAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1223611150]
 libraries/ = SubResource("AnimationLibrary_ofxgm")
@@ -142,8 +383,23 @@ libraries/ = SubResource("AnimationLibrary_ofxgm")
 libraries/ = SubResource("AnimationLibrary_nl01e")
 autoplay = &"head"
 
-[node name="Tail" type="Node2D" parent="." unique_id=256011674]
+[node name="Tail" type="Node2D" parent="." unique_id=128196954]
+use_parent_material = true
 
-[node name="Duoi" type="Sprite2D" parent="Tail" unique_id=1263945153]
-scale = Vector2(0.14814813, 0.14814815)
-texture = ExtResource("5_ll4nt")
+[node name="Tail2" type="Sprite2D" parent="Tail" unique_id=964069444]
+visible = false
+use_parent_material = true
+position = Vector2(0, -4)
+scale = Vector2(0.4707031, 0.4707031)
+texture = ExtResource("10_wy7q8")
+flip_v = true
+
+[node name="BlinkTimer" type="Timer" parent="." unique_id=2060424466]
+
+[node name="StunAnimationPlayer" type="AnimationPlayer" parent="." unique_id=135633503]
+libraries/ = SubResource("AnimationLibrary_bp1ey")
+autoplay = &"stun"
+
+[node name="AnimationPlayerFoot" type="AnimationPlayer" parent="." unique_id=2069236808]
+libraries/ = SubResource("AnimationLibrary_n8rio")
+autoplay = &"run"

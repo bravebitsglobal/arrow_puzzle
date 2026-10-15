@@ -13,9 +13,8 @@ config_version=5
 config/name="Arrow Puzzle"
 run/main_scene="uid://b7p0tflhctaw"
 config/features=PackedStringArray("4.7", "Forward Plus")
-boot_splash/show_image=false
 boot_splash/use_filter=false
-boot_splash/image="uid://be5uijgjmb6va"
+boot_splash/image="uid://c0dfppjy28hfu"
 config/icon="res://icon.svg"
 
 [autoload]

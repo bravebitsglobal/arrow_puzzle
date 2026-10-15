@@ -252,14 +252,13 @@ label_settings = ExtResource("15_7utin")
 horizontal_alignment = 2
 
 [node name="ButtonAutoPlay" type="Button" parent="UI/PanelGame/TopPanel/Panel" unique_id=929847234]
-visible = false
 layout_mode = 0
-offset_left = 280.0
-offset_top = -19.0
-offset_right = 733.0
-offset_bottom = 184.0
+offset_left = 259.0
+offset_top = 34.0
+offset_right = 424.0
+offset_bottom = 75.0
 theme = ExtResource("5_p1ry8")
-theme_type_variation = &"BorderedButton"
+theme_type_variation = &"FlatButton"
 text = "Auto Play"
 
 [node name="TextureRect" type="TextureRect" parent="UI/PanelGame/TopPanel/Panel" unique_id=72214491]

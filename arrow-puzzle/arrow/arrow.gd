@@ -1,14 +1,14 @@
 extends Node2D
 class_name Arrow
-# 7 màu tươi, khác hẳn nhau để dễ phân biệt.
+# 7 màu đậm, bão hòa cao để nổi trên nền sáng #edebfe (tương phản >= ~3:1).
 var COLORS = [
-	"#FF3B3B", # đỏ
-	"#FF9F1A", # cam
-	"#FFE01A", # vàng
-	"#22D65A", # xanh lá
-	"#1EB4FF", # xanh da trời
-	"#7B4DFF", # tím
-	"#FF4FD8", # hồng
+	"#E8202A", # đỏ
+	"#F05A00", # cam
+	"#0E9A3E", # xanh lá
+	"#008C99", # xanh ngọc
+	"#1F5FFF", # xanh dương
+	"#8E2BD9", # tím
+	"#E8197F", # hồng
 ]
 @onready var eyes_close: Sprite2D = $Head/Down/EyesClose
 @onready var eyes_close_right: Sprite2D = $Head/Right/EyesCloseRight

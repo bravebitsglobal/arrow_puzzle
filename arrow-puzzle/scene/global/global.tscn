@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d1yld2ofggn21" path="res://scene/global/tutorial/tutorial.tscn" id="5_kuifj"]
 [ext_resource type="PackedScene" uid="uid://cxxiigxbvdtr" path="res://scene/popup/popup_out_of_live/popup_out_of_live.tscn" id="6_uts04"]
 [ext_resource type="PackedScene" uid="uid://cg6addmsw0cws" path="res://scene/popup/popup_challenge_welcome/popup_challeng_welcome.tscn" id="7_wjk7i"]
+[ext_resource type="PackedScene" uid="uid://cataudctqhi15" path="res://scene/global/sound_manager.tscn" id="10_4um8e"]
 
 [node name="Global" type="Control" unique_id=89037677]
 layout_mode = 3
@@ -41,4 +42,7 @@ popup_scene = Dictionary[int, PackedScene]({
 layout_mode = 1
 
 [node name="API" parent="." unique_id=1940940579 instance=ExtResource("4_api")]
+layout_mode = 1
+
+[node name="SoundManager" parent="." unique_id=2125161898 instance=ExtResource("10_4um8e")]
 layout_mode = 1

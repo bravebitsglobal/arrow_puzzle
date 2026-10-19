@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://ciye4mdxnnygy"]
+
+[ext_resource type="Script" uid="uid://d1ocva54jkrmh" path="res://scene/popup/popup_setting/popup_setting.gd" id="1_3bqk0"]
+[ext_resource type="Texture2D" uid="uid://bqfrei5wvk67y" path="res://ui/panel.png" id="2_lx1yv"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="3_v7ius"]
+
+[node name="PopupSetting" type="Control" unique_id=183138839]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3bqk0")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=468940140]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -466.0
+offset_top = -494.5
+offset_right = 466.0
+offset_bottom = 494.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_lx1yv")
+patch_margin_left = 295
+patch_margin_top = 431
+patch_margin_right = 281
+patch_margin_bottom = 319
+
+[node name="Label" type="Label" parent="NinePatchRect" unique_id=793542409]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 85.5
+offset_bottom = 188.5
+grow_horizontal = 2
+theme = ExtResource("3_v7ius")
+theme_type_variation = &"HeaderLarge"
+text = "Setting"
+horizontal_alignment = 1
+
+[node name="CheckMusic" type="CheckButton" parent="NinePatchRect" unique_id=517383792]
+layout_mode = 0
+offset_left = 241.0
+offset_top = 313.5
+offset_right = 707.0
+offset_bottom = 465.5
+theme = ExtResource("3_v7ius")
+text = "Music"
+
+[node name="CheckSFX" type="CheckButton" parent="NinePatchRect" unique_id=604694529]
+layout_mode = 0
+offset_left = 241.0
+offset_top = 477.5
+offset_right = 707.0
+offset_bottom = 629.5
+theme = ExtResource("3_v7ius")
+text = "SFX"
+
+[node name="ButtonConfirm" type="Button" parent="NinePatchRect" unique_id=2144696635]
+layout_mode = 0
+offset_left = 283.0
+offset_top = 687.5
+offset_right = 642.0
+offset_bottom = 894.5
+theme = ExtResource("3_v7ius")
+theme_type_variation = &"ButtonPrimary"
+text = "Confirm"

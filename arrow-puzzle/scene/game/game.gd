@@ -7,7 +7,6 @@ var level_generator = LevelGenerator.new()
 @onready var dot_container: Node2D = $MapContainer/DotContainer
 @onready var camera_2d: CameraController = $Camera2D
 @export var arrow_scene: PackedScene
-@onready var label_game_mode: Label = $UI/PanelGame/TopPanel/Panel/LabelGameMode
 @onready var button_auto_play: Button = $UI/PanelGame/TopPanel/Panel/ButtonAutoPlay
 
 var remain_magic_glasses: int = 0
@@ -181,7 +180,7 @@ func check_end_game():
 				Global.game_data.current_challenge.value[0],
 				Global.game_data.current_challenge.value[1],
 				Global.game_data.current_challenge.value[2])
-			Global.game_data.home_tab.value = 4
+			Global.game_data.home_tab.value = 3
 			get_tree().change_scene_to_file("res://scene/home/home.tscn")
 		else:
 			Global.game_event.request_visible_popup.emit(GameEnum.PopupType.GameWin, true)
@@ -233,14 +232,12 @@ func calculate_exit_path(data)->ExitPathResult:
 	return result
 func next_level()->void:
 	if Global.game_data.current_challenge.value.size():
-		label_game_mode.text = "Challenge %04d-%02d-%02d" % Global.game_data.current_challenge.value
 		level = await Global.api.get_challenge_by_date(
 			Global.game_data.current_challenge.value[0],
 			Global.game_data.current_challenge.value[1],
 			Global.game_data.current_challenge.value[2])
 	else:
 		level = await Global.api.get_level(Global.game_data.level.value)
-		label_game_mode.text = "Level %d" % Global.game_data.level.value
 		
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	move_camera_to_center()

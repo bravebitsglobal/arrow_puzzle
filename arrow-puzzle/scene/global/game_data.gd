@@ -16,7 +16,7 @@ var lives: Observable = Observable.new(MAX_LIVE)
 var animating: Observable = Observable.new(false)
 var is_ruler: Observable = Observable.new(false)
 var current_challenge: Observable = Observable.new([])
-var home_tab: Observable = Observable.new(2)
+var home_tab: Observable = Observable.new(0)
 func load_data()->void:
 	player_data = player_data.load()
 	level.value = player_data.level if player_data.level else 1

@@ -6,25 +6,23 @@
 [ext_resource type="Script" uid="uid://dxame55jjjn2k" path="res://helper/camera_controller.gd" id="3_cam"]
 [ext_resource type="Script" uid="uid://c3qjt2urq05jr" path="res://scene/game/game_ui.gd" id="5_mq16h"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="5_p1ry8"]
-[ext_resource type="Texture2D" uid="uid://ch6bkl47jj4nq" path="res://ui/coin_frame.png" id="7_ll5lq"]
-[ext_resource type="Texture2D" uid="uid://s7w0y5v2ytt5" path="res://ui/coin.png" id="8_17rxn"]
-[ext_resource type="Texture2D" uid="uid://iw3ffs5i3536" path="res://ui/bt_plus.png" id="9_17rxn"]
-[ext_resource type="Texture2D" uid="uid://dimpt62rlgxkg" path="res://ui/Frame_level_normal.png" id="10_yq8tf"]
-[ext_resource type="Texture2D" uid="uid://baliumf5sidoy" path="res://ui/heart_miss.png" id="11_sng2h"]
-[ext_resource type="Texture2D" uid="uid://vyt0d8kv0yd" path="res://ui/heart.png" id="12_5g16k"]
-[ext_resource type="Texture2D" uid="uid://dvwvtiqaqm43i" path="res://ui/setting.png" id="13_5g16k"]
-[ext_resource type="Texture2D" uid="uid://cobf6l40cl504" path="res://ui/arrow_quantity.png" id="14_81276"]
+[ext_resource type="Texture2D" uid="uid://5lv8ybytm22u" path="res://ui/coin_container.png" id="7_5wlrd"]
+[ext_resource type="Texture2D" uid="uid://c1rqqfildtio5" path="res://ui/coin.png" id="8_17rxn"]
+[ext_resource type="Texture2D" uid="uid://b4cu42s00hayy" path="res://ui/level_container.png" id="9_fkm2x"]
+[ext_resource type="Texture2D" uid="uid://cc5vy0x7o5v" path="res://ui/heart_fill.png" id="10_4qy8q"]
+[ext_resource type="Texture2D" uid="uid://c8ddefbty2a13" path="res://ui/icon_setting.png" id="10_mq16h"]
+[ext_resource type="Texture2D" uid="uid://cjbk6cptkbgvr" path="res://ui/icon_plus.png" id="11_okn60"]
+[ext_resource type="Texture2D" uid="uid://dg0ghgvdyehma" path="res://ui/heart_empty.png" id="11_ywpmx"]
+[ext_resource type="Texture2D" uid="uid://w0ek8vlfsf8m" path="res://ui/booster_glasses.png" id="13_o100e"]
 [ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="14_mq16h"]
-[ext_resource type="Texture2D" uid="uid://b7iadh2ckqmnm" path="res://ui/bt_booster2.png" id="15_0lu6w"]
+[ext_resource type="Texture2D" uid="uid://b6delwccy13kr" path="res://ui/notification.png" id="14_oixtr"]
+[ext_resource type="Texture2D" uid="uid://bde5tiv4j0r37" path="res://ui/booster_ruler.png" id="14_okn60"]
 [ext_resource type="LabelSettings" uid="uid://cu330jhj630oe" path="res://theme/lbl_popup_description.tres" id="15_7utin"]
-[ext_resource type="Texture2D" uid="uid://d2pvhsc03q1ie" path="res://ui/bt_booster1.png" id="15_i6gbm"]
-[ext_resource type="Texture2D" uid="uid://njjgcsmsijxr" path="res://ui/booster_hint.png" id="16_i6gbm"]
-[ext_resource type="Texture2D" uid="uid://bytm58ytl8kho" path="res://ui/bt_quantity.png" id="18_ux4dc"]
-[ext_resource type="Texture2D" uid="uid://riv02esv8ts8" path="res://ui/booster_eraser.png" id="19_4qy8q"]
+[ext_resource type="Texture2D" uid="uid://yw5kc1a62df1" path="res://ui/booster_hint.png" id="16_i6gbm"]
+[ext_resource type="Texture2D" uid="uid://ctqy8g6ugad7w" path="res://ui/light.png" id="16_osgb2"]
+[ext_resource type="Texture2D" uid="uid://ciw5645iw6c48" path="res://ui/remain.png" id="16_ywpmx"]
+[ext_resource type="Texture2D" uid="uid://bf8p1vafi5pew" path="res://ui/booster_eraser.png" id="19_4qy8q"]
 [ext_resource type="PackedScene" uid="uid://jcdecnx5nira" path="res://scene/global/tutorial/tutorial_target.tscn" id="20_xx4si"]
-[ext_resource type="Texture2D" uid="uid://cw1tcfpjq0i6o" path="res://scene/home/img/3 copy 5 - Smart Object Group copy 3.png" id="21_osgb2"]
-[ext_resource type="Texture2D" uid="uid://cara4gcoif03y" path="res://ui/booster_mirror.png" id="21_ywpmx"]
-[ext_resource type="Texture2D" uid="uid://o71as0hiegew" path="res://ui/booster_grid.png" id="22_osgb2"]
 [ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="24_osgb2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]
@@ -33,17 +31,13 @@ font_color = Color(0.38039216, 0.16470589, 0.05882353, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_0ve75"]
 font_size = 32
-outline_size = 5
-outline_color = Color(0.38039216, 0.16470589, 0.05882353, 1)
+outline_size = 10
+outline_color = Color(0.15686275, 0.12156863, 0.4509804, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_dyrae"]
 font_size = 48
-outline_size = 4
-outline_color = Color(0.38039216, 0.16470589, 0.05882353, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_81276"]
-font_size = 32
-font_color = Color(0.42352942, 0.4, 0.59607846, 1)
+outline_size = 10
+outline_color = Color(0.15686275, 0.12156863, 0.4509804, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_bf12e"]
 font_size = 28
@@ -98,140 +92,207 @@ grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("5_p1ry8")
 
-[node name="TopPanel" type="VBoxContainer" parent="UI/PanelGame" unique_id=1029020527]
+[node name="TopPanel" type="Control" parent="UI/PanelGame" unique_id=731928647]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 31.0
-offset_bottom = 175.0
+offset_bottom = 304.0
 grow_horizontal = 2
+mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelGame/TopPanel" unique_id=889814970]
-layout_mode = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="Coin" type="Control" parent="UI/PanelGame/TopPanel/HBoxContainer" unique_id=1198315297]
-custom_minimum_size = Vector2(275.37, 139.32)
-layout_mode = 2
+[node name="Coin" type="Control" parent="UI/PanelGame/TopPanel" unique_id=1198315297]
+anchors_preset = 0
+offset_left = 25.0
+offset_right = 314.0
+offset_bottom = 123.0
 size_flags_vertical = 4
 
-[node name="ImageFrame" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/Coin" unique_id=1244805258]
+[node name="ImageFrame" type="TextureRect" parent="UI/PanelGame/TopPanel/Coin" unique_id=1244805258]
 layout_mode = 0
-offset_left = 22.0
-offset_top = 29.0
-offset_right = 258.0
-offset_bottom = 114.0
-texture = ExtResource("7_ll5lq")
+offset_left = 10.0
+offset_top = 37.0
+offset_right = 283.0
+offset_bottom = 139.0
+texture = ExtResource("7_5wlrd")
 stretch_mode = 4
 
-[node name="ImageCoin" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/Coin" unique_id=397459352]
+[node name="ImageCoin" type="TextureRect" parent="UI/PanelGame/TopPanel/Coin" unique_id=397459352]
 layout_mode = 0
 offset_top = 24.0
 offset_right = 95.0
 offset_bottom = 128.0
 texture = ExtResource("8_17rxn")
+expand_mode = 1
 stretch_mode = 4
 
-[node name="ImagePlus" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/Coin" unique_id=1308389156]
+[node name="ImagePlus" type="TextureRect" parent="UI/PanelGame/TopPanel/Coin" unique_id=1308389156]
 layout_mode = 0
-offset_left = 53.0
-offset_top = 93.0
-offset_right = 109.0
-offset_bottom = 151.0
-texture = ExtResource("9_17rxn")
+offset_left = 60.0
+offset_top = 83.0
+offset_right = 97.0
+offset_bottom = 121.32143
+texture = ExtResource("11_okn60")
+expand_mode = 1
 stretch_mode = 4
 
-[node name="LabelCoin" type="Label" parent="UI/PanelGame/TopPanel/HBoxContainer/Coin" unique_id=1032450818]
+[node name="LabelCoin" type="Label" parent="UI/PanelGame/TopPanel/Coin" unique_id=1032450818]
 layout_mode = 0
 offset_left = 84.0
 offset_top = 37.0
-offset_right = 235.0
+offset_right = 291.0
 offset_bottom = 103.0
 text = "1245"
 label_settings = SubResource("LabelSettings_6ai3d")
 horizontal_alignment = 1
 
-[node name="Level" type="Control" parent="UI/PanelGame/TopPanel/HBoxContainer" unique_id=939197945]
+[node name="Level" type="Control" parent="UI/PanelGame/TopPanel" unique_id=939197945]
 custom_minimum_size = Vector2(278.21, 85.85)
-layout_mode = 2
+anchors_preset = 0
+offset_left = 333.0
+offset_top = 26.0
+offset_right = 629.0
+offset_bottom = 111.850006
 size_flags_vertical = 4
 
-[node name="ImageFrame" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/Level" unique_id=198017039]
+[node name="ImageFrame" type="TextureRect" parent="UI/PanelGame/TopPanel/Level" unique_id=198017039]
 layout_mode = 0
-offset_right = 253.0
-offset_bottom = 91.021385
-texture = ExtResource("10_yq8tf")
+offset_right = 291.8545
+offset_bottom = 105.0
+texture = ExtResource("9_fkm2x")
+expand_mode = 1
 stretch_mode = 4
 
-[node name="TextLevel" type="Label" parent="UI/PanelGame/TopPanel/HBoxContainer/Level" unique_id=641604393]
-layout_mode = 0
-offset_left = 21.0
-offset_top = 19.0
-offset_right = 97.0
-offset_bottom = 63.0
+[node name="TextLevel" type="Label" parent="UI/PanelGame/TopPanel/Level" unique_id=641604393]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 41.0
+offset_top = 5.0
+offset_right = 117.0
+offset_bottom = 5.0
+grow_vertical = 2
 text = "Level"
 label_settings = SubResource("LabelSettings_0ve75")
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="LabelLevel" type="Label" parent="UI/PanelGame/TopPanel/HBoxContainer/Level" unique_id=1254112284]
-layout_mode = 0
-offset_left = 93.0
-offset_top = 10.0
-offset_right = 239.0
-offset_bottom = 76.0
+[node name="LabelLevel" type="Label" parent="UI/PanelGame/TopPanel/Level" unique_id=1254112284]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 131.0
+offset_top = 5.0
+offset_right = 269.0
+offset_bottom = 5.0
+grow_vertical = 2
 text = "999"
 label_settings = SubResource("LabelSettings_dyrae")
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="LiveContainer" type="HBoxContainer" parent="UI/PanelGame/TopPanel/HBoxContainer" unique_id=61217003]
-custom_minimum_size = Vector2(173.21, 41.29)
-layout_mode = 2
+[node name="LiveContainer" type="TextureRect" parent="UI/PanelGame/TopPanel" unique_id=418004983]
+layout_mode = 1
+offset_left = 629.0
+offset_top = 31.0
+offset_right = 915.0
+offset_bottom = 114.0
+texture = ExtResource("7_5wlrd")
+
+[node name="LiveContainer" type="HBoxContainer" parent="UI/PanelGame/TopPanel/LiveContainer" unique_id=61217003]
+custom_minimum_size = Vector2(173.21, 80)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 22.0
+offset_top = -27.5
+offset_right = -24.0
+offset_bottom = 62.5
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 4
+theme_override_constants/separation = 15
 
-[node name="ImageLive1" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer" unique_id=626005864]
+[node name="ImageLive1" type="TextureRect" parent="UI/PanelGame/TopPanel/LiveContainer/LiveContainer" unique_id=626005864]
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
-texture = ExtResource("11_sng2h")
-stretch_mode = 2
+texture = ExtResource("11_ywpmx")
+expand_mode = 1
+stretch_mode = 4
 
-[node name="ImageFull" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer/ImageLive1" unique_id=1130725981]
-layout_mode = 0
-texture = ExtResource("12_5g16k")
-stretch_mode = 2
+[node name="ImageFull" type="TextureRect" parent="UI/PanelGame/TopPanel/LiveContainer/LiveContainer/ImageLive1" unique_id=1130725981]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_4qy8q")
+expand_mode = 1
+stretch_mode = 4
 
-[node name="ImageLive2" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer" unique_id=626279718]
+[node name="ImageLive2" type="TextureRect" parent="UI/PanelGame/TopPanel/LiveContainer/LiveContainer" unique_id=1363173256]
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
-texture = ExtResource("11_sng2h")
-stretch_mode = 2
+texture = ExtResource("11_ywpmx")
+expand_mode = 1
+stretch_mode = 4
 
-[node name="ImageFull" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer/ImageLive2" unique_id=914600928]
-layout_mode = 0
-texture = ExtResource("12_5g16k")
-stretch_mode = 2
+[node name="ImageFull" type="TextureRect" parent="UI/PanelGame/TopPanel/LiveContainer/LiveContainer/ImageLive2" unique_id=1064444956]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_4qy8q")
+expand_mode = 1
+stretch_mode = 4
 
-[node name="ImageLive3" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer" unique_id=1341567901]
+[node name="ImageLive3" type="TextureRect" parent="UI/PanelGame/TopPanel/LiveContainer/LiveContainer" unique_id=379863298]
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
-texture = ExtResource("11_sng2h")
-stretch_mode = 2
+texture = ExtResource("11_ywpmx")
+expand_mode = 1
+stretch_mode = 4
 
-[node name="ImageFull" type="TextureRect" parent="UI/PanelGame/TopPanel/HBoxContainer/LiveContainer/ImageLive3" unique_id=1025728354]
-layout_mode = 0
-texture = ExtResource("12_5g16k")
-stretch_mode = 2
+[node name="ImageFull" type="TextureRect" parent="UI/PanelGame/TopPanel/LiveContainer/LiveContainer/ImageLive3" unique_id=910526728]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_4qy8q")
+expand_mode = 1
+stretch_mode = 4
 
-[node name="ButtonSetting" type="TextureButton" parent="UI/PanelGame/TopPanel/HBoxContainer" unique_id=1515433849]
+[node name="ButtonSetting" type="TextureButton" parent="UI/PanelGame/TopPanel" unique_id=1515433849]
 custom_minimum_size = Vector2(131.885, 135.735)
-layout_mode = 2
+layout_mode = 0
+offset_left = 934.0
+offset_top = 1.0
+offset_right = 1065.885
+offset_bottom = 136.735
 size_flags_vertical = 4
-texture_normal = ExtResource("13_5g16k")
+texture_normal = ExtResource("10_mq16h")
 ignore_texture_size = true
+stretch_mode = 0
 
-[node name="ButtonEffect" parent="UI/PanelGame/TopPanel/HBoxContainer/ButtonSetting" unique_id=941576423 instance=ExtResource("14_mq16h")]
+[node name="ButtonEffect" parent="UI/PanelGame/TopPanel/ButtonSetting" unique_id=941576423 instance=ExtResource("14_mq16h")]
+layout_mode = 0
+
+[node name="ButtonEffect2" parent="UI/PanelGame/TopPanel/ButtonSetting" unique_id=1297023996 instance=ExtResource("14_mq16h")]
 layout_mode = 0
 
 [node name="Panel" type="Panel" parent="UI/PanelGame/TopPanel" unique_id=624172472]
 custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
+layout_mode = 0
+offset_top = 378.0
+offset_right = 1080.0
+offset_bottom = 478.0
 
 [node name="LabelGameMode" type="Label" parent="UI/PanelGame/TopPanel/Panel" unique_id=1141844147]
 layout_mode = 1
@@ -240,10 +301,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -539.0
-offset_top = -24.0
-offset_right = -52.0
-offset_bottom = 63.0
+offset_left = -512.0
+offset_top = -270.0
+offset_right = -25.0
+offset_bottom = -183.0
 grow_horizontal = 0
 grow_vertical = 2
 theme = ExtResource("5_p1ry8")
@@ -253,31 +314,36 @@ horizontal_alignment = 2
 
 [node name="ButtonAutoPlay" type="Button" parent="UI/PanelGame/TopPanel/Panel" unique_id=929847234]
 layout_mode = 0
-offset_left = 259.0
-offset_top = 34.0
-offset_right = 424.0
-offset_bottom = 75.0
+offset_left = 339.0
+offset_top = -195.0
+offset_right = 515.0
+offset_bottom = -131.0
 theme = ExtResource("5_p1ry8")
 theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 28
 text = "Auto Play"
+icon = ExtResource("16_osgb2")
+expand_icon = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/PanelGame/TopPanel/Panel" unique_id=72214491]
 layout_mode = 0
-offset_left = 57.0
-offset_top = 27.0
-offset_right = 231.0
-offset_bottom = 92.0
-texture = ExtResource("14_81276")
-stretch_mode = 2
+offset_left = 38.0
+offset_top = -232.0
+offset_right = 278.0
+offset_bottom = -118.0
+texture = ExtResource("16_ywpmx")
+expand_mode = 1
 
 [node name="LabelLine" type="Label" parent="UI/PanelGame/TopPanel/Panel/TextureRect" unique_id=1370495897]
 layout_mode = 0
-offset_left = 99.0
-offset_top = 14.0
-offset_right = 156.0
-offset_bottom = 58.0
+offset_left = 66.0
+offset_top = 60.0
+offset_right = 176.0
+offset_bottom = 102.0
+theme = ExtResource("5_p1ry8")
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 30
 text = "18"
-label_settings = SubResource("LabelSettings_81276")
 horizontal_alignment = 1
 
 [node name="BottomPanel" type="Panel" parent="UI/PanelGame" unique_id=2029731539]
@@ -296,39 +362,16 @@ layout_mode = 0
 offset_left = 96.0
 offset_right = 303.0
 offset_bottom = 211.0
-texture_normal = ExtResource("15_i6gbm")
-
-[node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonHint" unique_id=141732299]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -47.5
-offset_top = -62.0
-offset_right = 47.5
-offset_bottom = 62.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("15_0lu6w")
-stretch_mode = 2
 
 [node name="TextureIcon" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonHint" unique_id=44708875]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -47.5
-offset_top = -62.0
-offset_right = 47.5
-offset_bottom = 62.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("16_i6gbm")
-stretch_mode = 2
+expand_mode = 1
 
 [node name="TexturePlus" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonHint" unique_id=537779728]
 layout_mode = 1
@@ -337,13 +380,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 28.5
+offset_left = 26.5
 offset_top = 44.5
-offset_right = 99.5
+offset_right = 97.5
 offset_bottom = 122.28342
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_17rxn")
+texture = ExtResource("11_okn60")
 expand_mode = 1
 stretch_mode = 4
 
@@ -354,13 +397,14 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -78.0
-offset_top = -71.0
-offset_bottom = 10.0
+offset_left = -80.0
+offset_top = -62.0
+offset_right = -2.0
+offset_bottom = 19.0
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("18_ux4dc")
-stretch_mode = 2
+texture = ExtResource("14_oixtr")
+expand_mode = 1
 
 [node name="Label" type="Label" parent="UI/PanelGame/BottomPanel/ButtonHint/Quantity" unique_id=1173113947]
 layout_mode = 1
@@ -386,39 +430,16 @@ layout_mode = 0
 offset_left = 323.0
 offset_right = 530.0
 offset_bottom = 211.0
-texture_normal = ExtResource("15_i6gbm")
-
-[node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonEraser" unique_id=210307831]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -47.5
-offset_top = -62.0
-offset_right = 47.5
-offset_bottom = 62.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("15_0lu6w")
-stretch_mode = 2
 
 [node name="TextureIcon" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonEraser" unique_id=1452157694]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -55.5
-offset_top = -62.0
-offset_right = 55.5
-offset_bottom = 62.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("19_4qy8q")
-stretch_mode = 2
+expand_mode = 1
 
 [node name="TexturePlus" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonEraser" unique_id=458296414]
 layout_mode = 1
@@ -427,13 +448,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 20.5
-offset_top = 35.5
-offset_right = 96.0
-offset_bottom = 113.69643
+offset_left = 26.5
+offset_top = 44.5
+offset_right = 102.0
+offset_bottom = 122.69643
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("21_osgb2")
+texture = ExtResource("11_okn60")
+expand_mode = 1
 stretch_mode = 4
 
 [node name="Quantity" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonEraser" unique_id=1347268075]
@@ -443,14 +465,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = 47.5
-offset_right = 88.0
-offset_bottom = 105.5
+offset_left = 21.5
+offset_top = 43.5
+offset_right = 105.0
+offset_bottom = 129.98215
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("18_ux4dc")
-stretch_mode = 2
+texture = ExtResource("14_oixtr")
+expand_mode = 1
 
 [node name="Label" type="Label" parent="UI/PanelGame/BottomPanel/ButtonEraser/Quantity" unique_id=2135547462]
 layout_mode = 1
@@ -476,39 +498,16 @@ layout_mode = 0
 offset_left = 550.0
 offset_right = 757.0
 offset_bottom = 211.0
-texture_normal = ExtResource("15_i6gbm")
-
-[node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonMagicGlasses" unique_id=923472563]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -47.5
-offset_top = -62.0
-offset_right = 47.5
-offset_bottom = 62.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("15_0lu6w")
-stretch_mode = 2
 
 [node name="TextureIcon" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonMagicGlasses" unique_id=1595968986]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -65.0
-offset_right = 48.0
-offset_bottom = 65.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("21_ywpmx")
-stretch_mode = 2
+texture = ExtResource("13_o100e")
+expand_mode = 1
 
 [node name="TexturePlus" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonMagicGlasses" unique_id=131164681]
 layout_mode = 1
@@ -517,13 +516,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 19.5
-offset_top = 36.5
-offset_right = 99.5
-offset_bottom = 119.35715
+offset_left = 26.5
+offset_top = 44.5
+offset_right = 106.5
+offset_bottom = 127.35715
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_17rxn")
+texture = ExtResource("11_okn60")
+expand_mode = 1
 stretch_mode = 4
 
 [node name="Quantity" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonMagicGlasses" unique_id=600374850]
@@ -533,14 +533,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = 47.5
-offset_right = 88.0
-offset_bottom = 105.5
+offset_left = 23.5
+offset_top = 44.5
+offset_right = 111.5
+offset_bottom = 132.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("18_ux4dc")
-stretch_mode = 2
+texture = ExtResource("14_oixtr")
+expand_mode = 1
 
 [node name="Label" type="Label" parent="UI/PanelGame/BottomPanel/ButtonMagicGlasses/Quantity" unique_id=597003242]
 layout_mode = 1
@@ -566,39 +566,16 @@ layout_mode = 0
 offset_left = 777.0
 offset_right = 984.0
 offset_bottom = 211.0
-texture_normal = ExtResource("15_i6gbm")
-
-[node name="TextureBackground" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonRuler" unique_id=993683779]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -47.5
-offset_top = -62.0
-offset_right = 47.5
-offset_bottom = 62.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("15_0lu6w")
-stretch_mode = 2
 
 [node name="TextureIcon" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonRuler" unique_id=1768086886]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -56.0
-offset_top = -62.0
-offset_right = 56.0
-offset_bottom = 62.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("22_osgb2")
-stretch_mode = 2
+texture = ExtResource("14_okn60")
+expand_mode = 1
 
 [node name="TexturePlus" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonRuler" unique_id=1390018914]
 layout_mode = 1
@@ -607,13 +584,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 25.5
-offset_top = 38.5
-offset_right = 96.0
-offset_bottom = 111.51785
+offset_left = 26.5
+offset_top = 44.5
+offset_right = 97.0
+offset_bottom = 117.51785
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("21_osgb2")
+texture = ExtResource("11_okn60")
+expand_mode = 1
 stretch_mode = 4
 
 [node name="Quantity" type="TextureRect" parent="UI/PanelGame/BottomPanel/ButtonRuler" unique_id=1474962058]
@@ -623,14 +601,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = 47.5
-offset_right = 88.0
-offset_bottom = 105.5
+offset_left = 24.5
+offset_top = 44.5
+offset_right = 100.0
+offset_bottom = 122.69643
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("18_ux4dc")
-stretch_mode = 2
+texture = ExtResource("14_oixtr")
+expand_mode = 1
 
 [node name="Label" type="Label" parent="UI/PanelGame/BottomPanel/ButtonRuler/Quantity" unique_id=458776212]
 layout_mode = 1

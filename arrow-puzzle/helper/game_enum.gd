@@ -17,3 +17,6 @@ enum PopupType {
 	OutOfLive,
 	ChallengeWelcome
 }
+enum Sound{
+	Click
+}

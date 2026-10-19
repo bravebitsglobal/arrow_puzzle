@@ -13,6 +13,7 @@ func _ready() -> void:
 		scale_tween = create_tween()
 		scale_tween.tween_property(parent_node, "scale", Vector2(1.1, 1.1), EFFECT_TIME/2)
 		scale_tween.tween_property(parent_node, "scale", Vector2.ONE, EFFECT_TIME/2)
+		Global.sound_manager.play_sound(GameEnum.Sound.Click)
 		)
 	parent_node.mouse_entered.connect(func():
 		if color_tween:

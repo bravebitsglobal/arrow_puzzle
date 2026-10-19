@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cataudctqhi15"]
+
+[ext_resource type="Script" uid="uid://jjf42xtu66rd" path="res://scene/global/sound_manager.gd" id="1_bqpvb"]
+[ext_resource type="AudioStream" uid="uid://t4t84w4cuu3" path="res://sfx/click.ogg" id="2_lfsif"]
+[ext_resource type="AudioStream" uid="uid://busd83royb3du" path="res://sfx/bg.mp3" id="2_vnh7d"]
+
+[node name="SoundManager" type="Control" unique_id=2125161898]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bqpvb")
+sounds = Dictionary[int, AudioStream]({
+0: ExtResource("2_lfsif")
+})
+
+[node name="BackgroundPlayer" type="AudioStreamPlayer" parent="." unique_id=193739973]
+stream = ExtResource("2_vnh7d")
+volume_db = -9.305
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="." unique_id=946743035]
+stream = ExtResource("2_vnh7d")
+bus = &"SFX"

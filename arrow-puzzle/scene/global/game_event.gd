@@ -12,3 +12,4 @@ signal user_action(action: GameEnum.UserAction, data: Dictionary)
 signal game_focus_to_arrow(arrow_idx: int)
 signal register_tutorial_target(id: String, node: Node)
 signal unregister_tutorial_target(id: String)
+signal on_setting_updated

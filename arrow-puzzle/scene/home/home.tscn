@@ -2,20 +2,14 @@
 
 [ext_resource type="Script" uid="uid://chhpppgkvr34s" path="res://scene/home/home.gd" id="1_1qrah"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="3_dubxh"]
+[ext_resource type="Texture2D" uid="uid://lma4jedet1kp" path="res://ui/tabbar.png" id="5_spbck"]
+[ext_resource type="Texture2D" uid="uid://ct87ps7c232ri" path="res://ui/icon_home.png" id="6_dubxh"]
+[ext_resource type="Texture2D" uid="uid://d2nd6g74qs5bn" path="res://ui/tab_active.png" id="6_eyjn4"]
+[ext_resource type="Texture2D" uid="uid://2oxmjlb8lk0d" path="res://ui/icon_shop.png" id="7_eyjn4"]
+[ext_resource type="Texture2D" uid="uid://yhjsaxa6ttjh" path="res://ui/icon_reward.png" id="8_roddw"]
+[ext_resource type="Texture2D" uid="uid://bly3jxk81u3u" path="res://ui/icon_daily.png" id="9_3nenu"]
 [ext_resource type="PackedScene" uid="uid://cv4lpv0w532k3" path="res://scene/home/main/main.tscn" id="11_roddw"]
 [ext_resource type="PackedScene" uid="uid://ch2fpg8n3u371" path="res://scene/home/challenge/challenge.tscn" id="12_u0e8k"]
-[ext_resource type="Texture2D" uid="uid://bm2fbaysjfvto" path="res://scene/home/img/menu_tab_highlinght copy - Smart Object Group copy 2.png" id="13_lh413"]
-[ext_resource type="Texture2D" uid="uid://cehilmxvleva" path="res://scene/home/img/friend.png" id="14_eqwqn"]
-[ext_resource type="Texture2D" uid="uid://b1nvpjthw6yai" path="res://scene/home/img/Home.png" id="14_jixnq"]
-[ext_resource type="Texture2D" uid="uid://dflhv4m65sa43" path="res://scene/home/img/menu_tab_highlinght - Smart Object Group.png" id="15_a46lk"]
-[ext_resource type="Texture2D" uid="uid://0a6tpvxpk575" path="res://scene/home/img/Shop.png" id="15_xb81g"]
-[ext_resource type="Texture2D" uid="uid://b8wi5i8dv0k7a" path="res://scene/home/img/Collection.png" id="17_a46lk"]
-[ext_resource type="Texture2D" uid="uid://bpci8g557ld5b" path="res://scene/home/img/Layer 7.png" id="18_8m3i4"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_a46lk"]
-font_size = 40
-outline_size = 5
-outline_color = Color(0, 0.27058825, 0.7137255, 1)
 
 [node name="Home" type="Control" unique_id=210482169]
 layout_mode = 3
@@ -39,152 +33,61 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -235.0
+offset_top = -298.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_dubxh")
 
-[node name="Tab" type="HBoxContainer" parent="PanelBottom" unique_id=277262247]
+[node name="MarginContainer" type="MarginContainer" parent="PanelBottom" unique_id=2105053068]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -232.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="NinePatchRect" parent="PanelBottom/MarginContainer" unique_id=247708480]
+layout_mode = 2
+texture = ExtResource("5_spbck")
+patch_margin_left = 100
+patch_margin_top = 100
+patch_margin_right = 100
+patch_margin_bottom = 100
+
+[node name="Control" type="Control" parent="PanelBottom/MarginContainer" unique_id=604408513]
+layout_mode = 2
+
+[node name="TextureHighlight" type="TextureRect" parent="PanelBottom/MarginContainer/Control" unique_id=182336107]
+visible = false
+layout_mode = 0
+offset_left = 21.0
+offset_top = 15.0
+offset_right = 276.0
+offset_bottom = 253.0
+size_flags_horizontal = 0
+texture = ExtResource("6_eyjn4")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelBottom/MarginContainer" unique_id=1065242248]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Tab" type="HBoxContainer" parent="PanelBottom/MarginContainer/MarginContainer" unique_id=277262247]
+layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="ItemFriend" type="TextureButton" parent="PanelBottom/Tab" unique_id=1922975512]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Background" type="TextureRect" parent="PanelBottom/Tab/ItemFriend" unique_id=186283917]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-texture = ExtResource("13_lh413")
-
-[node name="Highlight" type="TextureRect" parent="PanelBottom/Tab/ItemFriend" unique_id=271815790]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-texture = ExtResource("15_a46lk")
-expand_mode = 1
-
-[node name="Icon" type="TextureRect" parent="PanelBottom/Tab/ItemFriend" unique_id=392569732]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -52.59375
-offset_top = -66.45264
-offset_right = 52.59375
-offset_bottom = 66.452576
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-offset_transform_enabled = true
-texture = ExtResource("14_eqwqn")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="Label" type="Label" parent="PanelBottom/Tab/ItemFriend" unique_id=1631605024]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -65.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 0
-theme = ExtResource("3_dubxh")
-theme_type_variation = &"NavigationLabel"
-text = "FRIENDS"
-label_settings = SubResource("LabelSettings_a46lk")
-horizontal_alignment = 1
-
-[node name="ItemMarket" type="TextureButton" parent="PanelBottom/Tab" unique_id=933336399]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Background" type="TextureRect" parent="PanelBottom/Tab/ItemMarket" unique_id=1911403016]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-texture = ExtResource("13_lh413")
-
-[node name="Highlight" type="TextureRect" parent="PanelBottom/Tab/ItemMarket" unique_id=1889897267]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-texture = ExtResource("15_a46lk")
-expand_mode = 1
-
-[node name="Icon" type="TextureRect" parent="PanelBottom/Tab/ItemMarket" unique_id=1050263031]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -52.59375
-offset_top = -66.45261
-offset_right = 52.59375
-offset_bottom = 66.45261
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-offset_transform_enabled = true
-texture = ExtResource("15_xb81g")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="Label" type="Label" parent="PanelBottom/Tab/ItemMarket" unique_id=1602198591]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -65.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 0
-theme = ExtResource("3_dubxh")
-theme_type_variation = &"NavigationLabel"
-text = "SHOP"
-label_settings = SubResource("LabelSettings_a46lk")
-horizontal_alignment = 1
-
-[node name="ItemHome" type="TextureButton" parent="PanelBottom/Tab" unique_id=208916693]
+[node name="ItemHome" type="TextureButton" parent="PanelBottom/MarginContainer/MarginContainer/Tab" unique_id=208916693]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Background" type="TextureRect" parent="PanelBottom/Tab/ItemHome" unique_id=1038907952]
+[node name="Background" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemHome" unique_id=1038907952]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -192,9 +95,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-texture = ExtResource("13_lh413")
 
-[node name="Highlight" type="TextureRect" parent="PanelBottom/Tab/ItemHome" unique_id=1600460297]
+[node name="Highlight" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemHome" unique_id=1600460297]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -203,49 +105,47 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-texture = ExtResource("15_a46lk")
 expand_mode = 1
 
-[node name="Icon" type="TextureRect" parent="PanelBottom/Tab/ItemHome" unique_id=280524631]
+[node name="Icon" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemHome" unique_id=280524631]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -51.125
-offset_top = -61.092773
-offset_right = 51.125
-offset_bottom = 61.092773
+offset_left = -75.0
+offset_top = -102.0
+offset_right = 75.0
+offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 offset_transform_enabled = true
-texture = ExtResource("14_jixnq")
+texture = ExtResource("6_dubxh")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="PanelBottom/Tab/ItemHome" unique_id=1890981610]
-self_modulate = Color(1, 1, 1, 0)
+[node name="Label" type="Label" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemHome" unique_id=1890981610]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -65.0
-offset_bottom = 1.0
+offset_top = -73.0
+offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_dubxh")
-theme_type_variation = &"NavigationLabel"
+theme_type_variation = &"HomeTabLabel"
 text = "HOME"
 horizontal_alignment = 1
 
-[node name="ItemArchivement" type="TextureButton" parent="PanelBottom/Tab" unique_id=559779078]
+[node name="ItemMarket" type="TextureButton" parent="PanelBottom/MarginContainer/MarginContainer/Tab" unique_id=933336399]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Background" type="TextureRect" parent="PanelBottom/Tab/ItemArchivement" unique_id=905919799]
+[node name="Background" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemMarket" unique_id=1911403016]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -253,9 +153,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-texture = ExtResource("13_lh413")
 
-[node name="Highlight" type="TextureRect" parent="PanelBottom/Tab/ItemArchivement" unique_id=1785855193]
+[node name="Highlight" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemMarket" unique_id=1889897267]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -264,52 +163,47 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-texture = ExtResource("15_a46lk")
 expand_mode = 1
 
-[node name="Icon" type="TextureRect" parent="PanelBottom/Tab/ItemArchivement" unique_id=1601256719]
+[node name="Icon" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemMarket" unique_id=1050263031]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -58.525513
-offset_top = -63.14435
-offset_right = 58.525513
-offset_bottom = 63.14435
+offset_left = -75.0
+offset_top = -102.0
+offset_right = 75.0
+offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 offset_transform_enabled = true
-texture = ExtResource("17_a46lk")
+texture = ExtResource("7_eyjn4")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="PanelBottom/Tab/ItemArchivement" unique_id=1791910161]
-self_modulate = Color(1, 1, 1, 0)
+[node name="Label" type="Label" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemMarket" unique_id=1602198591]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -26.5
-offset_top = -65.0
-offset_right = 26.5
-offset_bottom = -10.0
+offset_top = -73.0
+offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_dubxh")
-theme_type_variation = &"NavigationLabel"
-text = "COLLECTIONS"
-label_settings = SubResource("LabelSettings_a46lk")
+theme_type_variation = &"HomeTabLabel"
+text = "SHOP"
 horizontal_alignment = 1
 
-[node name="ItemQuest" type="TextureButton" parent="PanelBottom/Tab" unique_id=1845621604]
+[node name="ItemArchivement" type="TextureButton" parent="PanelBottom/MarginContainer/MarginContainer/Tab" unique_id=559779078]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Item5" type="TextureRect" parent="PanelBottom/Tab/ItemQuest" unique_id=159556174]
+[node name="Background" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemArchivement" unique_id=905919799]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -317,9 +211,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-texture = ExtResource("13_lh413")
 
-[node name="Highlight" type="TextureRect" parent="PanelBottom/Tab/ItemQuest" unique_id=1092050139]
+[node name="Highlight" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemArchivement" unique_id=1785855193]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -328,41 +221,96 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-texture = ExtResource("15_a46lk")
 expand_mode = 1
 
-[node name="Icon" type="TextureRect" parent="PanelBottom/Tab/ItemQuest" unique_id=691933278]
+[node name="Icon" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemArchivement" unique_id=1601256719]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -46.5
-offset_top = -64.02174
-offset_right = 46.5
-offset_bottom = 64.02174
+offset_left = -75.0
+offset_top = -102.0
+offset_right = 75.0
+offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 offset_transform_enabled = true
-texture = ExtResource("18_8m3i4")
+texture = ExtResource("8_roddw")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="PanelBottom/Tab/ItemQuest" unique_id=518643119]
-self_modulate = Color(1, 1, 1, 0)
+[node name="Label" type="Label" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemArchivement" unique_id=1791910161]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -65.0
-offset_bottom = -10.0
+offset_top = -73.0
+offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_dubxh")
-theme_type_variation = &"NavigationLabel"
+theme_type_variation = &"HomeTabLabel"
+text = "REWARDS"
+horizontal_alignment = 1
+
+[node name="ItemQuest" type="TextureButton" parent="PanelBottom/MarginContainer/MarginContainer/Tab" unique_id=1845621604]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Item5" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemQuest" unique_id=159556174]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="Highlight" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemQuest" unique_id=1092050139]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+expand_mode = 1
+
+[node name="Icon" type="TextureRect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemQuest" unique_id=691933278]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -102.0
+offset_right = 75.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+offset_transform_enabled = true
+texture = ExtResource("9_3nenu")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemQuest" unique_id=518643119]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -73.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_dubxh")
+theme_type_variation = &"HomeTabLabel"
 text = "QUESTS"
-label_settings = SubResource("LabelSettings_a46lk")
 horizontal_alignment = 1

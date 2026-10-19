@@ -33,6 +33,8 @@ func _on_play_click()->void:
 	get_tree().change_scene_to_file("res://scene/game/game.tscn")
 func _on_date_clicked(_date: int)->void:
 	date = _date
+	if resolved_date.has(date):
+		return
 	if enable_date.has(date):
 		date_nodes[date].set_state('selected')
 	if last_select_date:

@@ -245,7 +245,7 @@ func update_foot()->void:
 	var total = line_2d.points.size()
 	foot_1.position = _path_pos(head_index - 2)
 	foot_1.rotation_degrees = ROTATES[get_dir(head_index - 2)]
-	if total >= 2:
+	if total >= 3:
 		foot_2.position = _path_pos(head_index - 3)
 		foot_2.rotation_degrees = ROTATES[get_dir(head_index - 3)]
 	else:

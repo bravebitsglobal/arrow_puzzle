@@ -1,22 +1,24 @@
 extends CanvasLayer
 class_name GameUI
 @onready var label_line: Label = $PanelGame/TopPanel/Panel/TextureRect/LabelLine
-@onready var button_claim: TextureButton = $PanelWin/HBoxContainer/ButtonClaim
-@onready var button_claimx_2: TextureButton = $PanelWin/HBoxContainer/ButtonClaimx2
-@onready var label_level: Label = $PanelGame/TopPanel/HBoxContainer/Level/LabelLevel
-@onready var label_coin: Label = $PanelGame/TopPanel/HBoxContainer/Coin/LabelCoin
-@onready var live_container: HBoxContainer = $PanelGame/TopPanel/HBoxContainer/LiveContainer
+@onready var label_level: Label = $PanelGame/TopPanel/Level/LabelLevel
+@onready var label_coin: Label = $PanelGame/TopPanel/Coin/LabelCoin
 @onready var button_hint: TextureButton = $PanelGame/BottomPanel/ButtonHint
 @onready var button_eraser: TextureButton = $PanelGame/BottomPanel/ButtonEraser
 @onready var button_magic_glasses: TextureButton = $PanelGame/BottomPanel/ButtonMagicGlasses
 @onready var button_ruler: TextureButton = $PanelGame/BottomPanel/ButtonRuler
-@onready var select_eraser_arrow: ColorRect = $PanelGame/SelectEraserArrow
+@onready var label_game_mode: Label = $PanelGame/TopPanel/Panel/LabelGameMode
 @onready var first_arrow: ColorRect = $PanelGame/BottomPanel/FirstArrow
+@onready var select_eraser_arrow: ColorRect = $PanelGame/SelectEraserArrow
+@onready var live_container: HBoxContainer = $PanelGame/TopPanel/LiveContainer/LiveContainer
 
 func _ready() -> void:
 	Global.game_data.active_tutorial.subscribe(_on_active_tutorial_changed)
 	Global.game_data.remain_lines.subscribe(func (lines):
-		label_line.text = str(lines))
+		if !lines:
+			label_line.text = ''
+		else:
+			label_line.text = str(lines))
 	Global.game_data.level.subscribe(func(lvl):
 		label_level.text = str(lvl))
 	Global.game_data.coins.subscribe(func(coins):
@@ -61,6 +63,13 @@ func _ready() -> void:
 		else:
 			button_ruler.get_node("TexturePlus").visible = true
 			button_ruler.get_node("Quantity").visible = false)
+	Global.game_event.game_start.connect(func():
+		if Global.game_data.current_challenge.value.size():
+			label_game_mode.text = "Challenge %04d-%02d-%02d" % Global.game_data.current_challenge.value
+		else:
+			var level = await Global.api.get_level(Global.game_data.level.value)
+			label_game_mode.text = "Level %d" % Global.game_data.level.value
+		)
 func _on_active_tutorial_changed(step)->void:
 	if !step:
 		first_arrow.visible = false

@@ -11,6 +11,8 @@ class_name PlayerData
 @export var tutorial_step: int = 0
 @export var challenges: Dictionary[String, PackedInt32Array] = {}
 @export var is_show_challenge_welcome_page: bool = false
+@export var setting_enable_music: bool = true
+@export var setting_enable_sfx: bool = true
 const SAVE_PATH = "user://player_data.tres"
 func set_challenge_resolved(year: int, month: int, date: int)->void:
 	var key = '%04d-%02d' % [year, month]

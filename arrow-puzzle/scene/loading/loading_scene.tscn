@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://b7p0tflhctaw"]
 
 [ext_resource type="Script" uid="uid://d2oltlrl4mj51" path="res://scene/loading/loading_scene.gd" id="1_26iq7"]
-[ext_resource type="Texture2D" uid="uid://be5uijgjmb6va" path="res://ui/loading/BG.png" id="2_5t4i6"]
-[ext_resource type="Texture2D" uid="uid://cxfny6mqq771w" path="res://ui/loading/Layer 1.png" id="3_mc2er"]
-[ext_resource type="Texture2D" uid="uid://dqaoocxp6kpw4" path="res://ui/loading/Layer 2.png" id="4_ice4a"]
+[ext_resource type="Texture2D" uid="uid://dxpxt1vl5wxmd" path="res://ui/loading.png" id="2_c6n2l"]
+[ext_resource type="Texture2D" uid="uid://dqgbodnbsw1rh" path="res://ui/Illustration77.png" id="4_7d0ro"]
+[ext_resource type="Texture2D" uid="uid://c17dguhslpo5r" path="res://ui/Illustration88.png" id="5_8uhwx"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="5_uq73k"]
-[ext_resource type="Texture2D" uid="uid://d7k1lt6gthf5" path="res://ui/loading/Rectangle 1 copy.png" id="6_bs3b7"]
-[ext_resource type="Texture2D" uid="uid://ciptuoh3nwkjc" path="res://ui/loading/Rectangle 1 copy 3.png" id="7_dsfb7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]
 font_size = 36
@@ -23,37 +21,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_5t4i6")
+texture = ExtResource("2_c6n2l")
 expand_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1842613915]
-anchors_preset = 15
+[node name="Panel" type="Panel" parent="." unique_id=696387314]
+custom_minimum_size = Vector2(0, 100)
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -458.0
+offset_bottom = -358.0
 grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="TextureRect3" type="TextureRect" parent="VBoxContainer" unique_id=243994381]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("3_mc2er")
-stretch_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="VBoxContainer" unique_id=830057535]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("4_ice4a")
-stretch_mode = 2
-
-[node name="Panel" type="Panel" parent="VBoxContainer" unique_id=696387314]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
+grow_vertical = 0
 theme = ExtResource("5_uq73k")
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="VBoxContainer/Panel" unique_id=723555861]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Panel" unique_id=723555861]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -66,10 +49,10 @@ offset_right = 335.0
 offset_bottom = 51.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_under = ExtResource("6_bs3b7")
-texture_progress = ExtResource("7_dsfb7")
+texture_under = ExtResource("4_7d0ro")
+texture_progress = ExtResource("5_8uhwx")
 
-[node name="Label" type="Label" parent="VBoxContainer/Panel/TextureProgressBar" unique_id=2062648935]
+[node name="Label" type="Label" parent="Panel/TextureProgressBar" unique_id=2062648935]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

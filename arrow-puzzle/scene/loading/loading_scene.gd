@@ -1,8 +1,8 @@
 extends CanvasLayer
 class_name LoadingScene
-@onready var texture_progress_bar: TextureProgressBar = $VBoxContainer/Panel/TextureProgressBar
+@onready var texture_progress_bar: TextureProgressBar = $Panel/TextureProgressBar
 const LOADING_TIME: float = 0.5
-@onready var label: Label = $VBoxContainer/Panel/TextureProgressBar/Label
+@onready var label: Label = $Panel/TextureProgressBar/Label
 
 func _ready() -> void:
 	var tween = create_tween()

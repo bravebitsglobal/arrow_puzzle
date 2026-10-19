@@ -1,11 +1,9 @@
 [gd_scene format=3 uid="uid://ch2fpg8n3u371"]
 
 [ext_resource type="Script" uid="uid://dwv51a210qwvv" path="res://scene/home/challenge/challenge.gd" id="1_qt1ub"]
-[ext_resource type="Texture2D" uid="uid://dw0mjctwkub41" path="res://scene/home/challenge/img/Layer 10.png" id="2_3p112"]
-[ext_resource type="Texture2D" uid="uid://8ghjtcdyi2t6" path="res://scene/home/challenge/img/cup/Layer 13.png" id="3_7ftaw"]
+[ext_resource type="Texture2D" uid="uid://c37cxhsasdnm3" path="res://ui/daily challenge.png" id="2_xikhs"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="4_e63bl"]
 [ext_resource type="PackedScene" uid="uid://bhg2b6mre4ji8" path="res://scene/home/challenge/day.tscn" id="5_xikhs"]
-[ext_resource type="Texture2D" uid="uid://mgup2wm4vdvs" path="res://scene/home/img/Currency_star.png" id="6_581aq"]
 [ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="7_ti6ys"]
 
 [node name="Challenge" type="Control" unique_id=1245256718]
@@ -29,9 +27,13 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 538.0
+offset_top = -92.0
+offset_right = 17.0
+offset_bottom = 456.5
 grow_horizontal = 2
-texture = ExtResource("2_3p112")
+texture = ExtResource("2_xikhs")
+expand_mode = 5
+stretch_mode = 4
 
 [node name="TextureRect" type="TextureRect" parent="TextureRect" unique_id=683390855]
 layout_mode = 1
@@ -46,7 +48,6 @@ offset_right = 149.5
 offset_bottom = -42.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("3_7ftaw")
 
 [node name="Label" type="Label" parent="TextureRect" unique_id=90118378]
 layout_mode = 1
@@ -55,10 +56,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -59.5
-offset_top = -369.0
-offset_right = 59.5
-offset_bottom = -346.0
+offset_left = -265.5
+offset_top = -448.5
+offset_right = 265.5
+offset_bottom = -345.5
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("4_e63bl")
@@ -72,9 +73,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -502.18848
-offset_top = 583.0
+offset_top = 475.0
 offset_right = 502.18848
-offset_bottom = 1232.0
+offset_bottom = 1411.0
 grow_horizontal = 2
 
 [node name="DateContainer" type="GridContainer" parent="Calendar" unique_id=1812215832]
@@ -83,7 +84,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 172.0
-offset_bottom = 172.0
+offset_bottom = 322.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 7
@@ -235,7 +236,6 @@ offset_left = -161.18848
 offset_right = -108.37695
 offset_bottom = 52.811523
 grow_horizontal = 0
-texture = ExtResource("6_581aq")
 expand_mode = 1
 
 [node name="LabelStar" type="Label" parent="Calendar/Star" unique_id=19187886]
@@ -338,12 +338,12 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -216.21558
-offset_top = 1431.0
+offset_top = 1397.0
 offset_right = 216.21558
-offset_bottom = 1608.0
+offset_bottom = 1604.0
 grow_horizontal = 2
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"BorderedButton"
+theme_type_variation = &"ButtonPrimary"
 text = "Play"
 
 [node name="ButtonEffect" parent="ButtonPlay" unique_id=941576423 instance=ExtResource("7_ti6ys")]

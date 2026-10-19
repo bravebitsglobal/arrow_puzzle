@@ -1,9 +1,9 @@
 extends Control
 class_name PopupChallengeWelcome
-@onready var pagination_container: Panel = $TextureRect/MarginContainer/NinePatchRect/PaginationContainer
-@onready var pagination_cursor: Control = $TextureRect/MarginContainer/NinePatchRect/PaginationContainer/PaginationCursor
-@onready var page_container: Control = $TextureRect/MarginContainer/NinePatchRect/PageContainer
-@onready var button_continue: Button = $TextureRect/MarginContainer/NinePatchRect/ButtonContinue
+@onready var pagination_container: Panel = $NinePatchRect/PaginationContainer
+@onready var pagination_cursor: Control = $NinePatchRect/PaginationContainer/PaginationCursor
+@onready var page_container: Control = $NinePatchRect/PageContainer
+@onready var button_continue: Button = $NinePatchRect/ButtonContinue
 
 var pagination_tween: Tween
 var hide_tween: Tween
@@ -21,10 +21,16 @@ func _ready() -> void:
 			page = btn_idx)
 	button_continue.pressed.connect(_on_btn_continue_click)
 func _on_btn_continue_click():
-	if !page:
-		page = 1
-	else:
-		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.ChallengeWelcome, false)
+	Global.game_data.player_data.is_show_challenge_welcome_page = true
+	Global.game_data.save_data()
+	Global.game_event.request_visible_popup.emit(GameEnum.PopupType.ChallengeWelcome, false)
+	return
+	#if !page:
+		#page = 1
+	#else:
+		#Global.game_data.player_data.is_show_challenge_welcome_page = true
+		#Global.game_data.save_data()
+		#Global.game_event.request_visible_popup.emit(GameEnum.PopupType.ChallengeWelcome, false)
 func change_pagination(idx: int)->void:
 	var child = pagination_container.get_child(idx)
 	if pagination_tween:

@@ -1,12 +1,12 @@
 extends RefCounted
 class_name GameEnum
-enum Booster{
+enum Booster {
 	Hint,
 	Eraser,
 	MagicGlasses,
 	Ruler
 }
-enum UserAction{
+enum UserAction {
 	ResolveArrow,
 	LevelStart,
 	ActiveBooster,
@@ -15,8 +15,9 @@ enum PopupType {
 	GameWin,
 	GameTryAgain,
 	OutOfLive,
-	ChallengeWelcome
+	ChallengeWelcome,
+	Setting
 }
-enum Sound{
+enum Sound {
 	Click
 }

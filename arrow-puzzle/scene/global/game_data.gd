@@ -26,6 +26,7 @@ func load_data()->void:
 	booster_magic_glasses.value = player_data.booster_magic_glasses
 	booster_ruler.value = player_data.booster_ruler
 	tutorial_step.value = player_data.tutorial_step if player_data.tutorial_step else 0
+	Global.game_event.on_setting_updated.emit()
 func save_data()->void:
 	player_data.level = level.value
 	player_data.coins = coins.value

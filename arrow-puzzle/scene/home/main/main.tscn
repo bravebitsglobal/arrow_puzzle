@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://cv4lpv0w532k3"]
 
 [ext_resource type="Script" uid="uid://6s4btn7itq3c" path="res://scene/home/main/main.gd" id="1_nqh08"]
-[ext_resource type="Texture2D" uid="uid://c1f3qn68gmq6s" path="res://ui/home_background.png" id="2_xyp36"]
+[ext_resource type="Texture2D" uid="uid://bvc6eg6mdh66f" path="res://ui/home_background.jpg" id="2_am5cq"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="3_4xg5n"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://bsfl20doj0npn" path="res://anim/new_spine_skeleton_data_resource.tres" id="3_p0pbj"]
 [ext_resource type="Texture2D" uid="uid://5lv8ybytm22u" path="res://ui/coin_container.png" id="3_und5j"]
 [ext_resource type="Texture2D" uid="uid://cjbk6cptkbgvr" path="res://ui/icon_plus.png" id="5_qsji1"]
 [ext_resource type="Texture2D" uid="uid://c1rqqfildtio5" path="res://ui/coin.png" id="7_42kb2"]
@@ -38,54 +39,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_xyp36")
+texture = ExtResource("2_am5cq")
 metadata/_edit_lock_ = true
+
+[node name="Animation" type="SpineSprite" parent="." unique_id=1378721723]
+skeleton_data_res = ExtResource("3_p0pbj")
+preview_skin = "Default"
+preview_animation = "idle"
+preview_frame = false
+preview_time = 0.0
+position = Vector2(515, 1223)
 
 [node name="PanelTop" type="Panel" parent="." unique_id=181405793]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
-
-[node name="Avatar" type="Panel" parent="PanelTop" unique_id=567646802]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_left = 40.0
-offset_top = 40.0
-offset_right = 240.0
-offset_bottom = 240.0
-size_flags_vertical = 4
-theme = ExtResource("3_4xg5n")
-
-[node name="Image" type="TextureRect" parent="PanelTop/Avatar" unique_id=570978882]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -82.0
-offset_top = -82.0
-offset_right = 82.0
-offset_bottom = 82.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-
-[node name="Frame" type="TextureRect" parent="PanelTop/Avatar" unique_id=2120191910]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.5
-offset_top = -101.5
-offset_right = 100.5
-offset_bottom = 101.5
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Coin" type="Panel" parent="PanelTop" unique_id=535993124]
 custom_minimum_size = Vector2(300, 120)
@@ -143,25 +112,18 @@ offset_top = 252.0
 offset_right = 1054.0
 offset_bottom = 449.0
 
-[node name="Setting" type="Panel" parent="PanelTop" unique_id=241581822]
-custom_minimum_size = Vector2(160, 160)
+[node name="ButtonSetting" type="TextureButton" parent="PanelTop" unique_id=823963294]
 layout_mode = 0
-offset_left = 871.0
-offset_top = 40.0
-offset_right = 1031.0
-offset_bottom = 200.0
-size_flags_vertical = 4
-theme = ExtResource("3_4xg5n")
-
-[node name="TextureButton" type="TextureButton" parent="PanelTop/Setting" unique_id=823963294]
-layout_mode = 0
-offset_left = 69.0
-offset_top = 28.0
-offset_right = 172.0
-offset_bottom = 131.0
+offset_left = 940.0
+offset_top = 68.0
+offset_right = 1043.0
+offset_bottom = 171.0
 texture_normal = ExtResource("7_imhgi")
 ignore_texture_size = true
 stretch_mode = 4
+
+[node name="ButtonEffect" parent="PanelTop/ButtonSetting" unique_id=941576423 instance=ExtResource("20_plyuu")]
+layout_mode = 0
 
 [node name="ButtonDeveloper" type="Button" parent="PanelTop" unique_id=581519320]
 layout_mode = 0
@@ -212,7 +174,7 @@ label_settings = SubResource("LabelSettings_p0pbj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonEffect" parent="PanelBottom/ButtonPlay" unique_id=941576423 instance=ExtResource("20_plyuu")]
+[node name="ButtonEffect" parent="PanelBottom/ButtonPlay" unique_id=43412985 instance=ExtResource("20_plyuu")]
 layout_mode = 1
 
 [node name="Level" type="NinePatchRect" parent="PanelBottom" unique_id=672038522]

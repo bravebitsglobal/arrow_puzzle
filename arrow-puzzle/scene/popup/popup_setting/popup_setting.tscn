@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://d1ocva54jkrmh" path="res://scene/popup/popup_setting/popup_setting.gd" id="1_3bqk0"]
 [ext_resource type="Texture2D" uid="uid://bqfrei5wvk67y" path="res://ui/panel.png" id="2_lx1yv"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="3_v7ius"]
+[ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="4_dmhih"]
+[ext_resource type="Texture2D" uid="uid://cpwo8if4yi0a1" path="res://ui/icon_close.png" id="4_tv865"]
+[ext_resource type="Script" uid="uid://duwvc3ij8u64e" path="res://component/button_effect.gd" id="5_384wy"]
 
 [node name="PopupSetting" type="Control" unique_id=183138839]
 layout_mode = 3
@@ -27,17 +30,13 @@ offset_bottom = 494.5
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_lx1yv")
-patch_margin_left = 295
-patch_margin_top = 431
-patch_margin_right = 281
-patch_margin_bottom = 319
 
 [node name="Label" type="Label" parent="NinePatchRect" unique_id=793542409]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 85.5
-offset_bottom = 188.5
+offset_top = 76.5
+offset_bottom = 179.5
 grow_horizontal = 2
 theme = ExtResource("3_v7ius")
 theme_type_variation = &"HeaderLarge"
@@ -49,7 +48,7 @@ layout_mode = 0
 offset_left = 241.0
 offset_top = 313.5
 offset_right = 707.0
-offset_bottom = 465.5
+offset_bottom = 449.5
 theme = ExtResource("3_v7ius")
 text = "Music"
 
@@ -71,3 +70,23 @@ offset_bottom = 894.5
 theme = ExtResource("3_v7ius")
 theme_type_variation = &"ButtonPrimary"
 text = "Confirm"
+
+[node name="ButtonEffect" parent="NinePatchRect/ButtonConfirm" unique_id=941576423 instance=ExtResource("4_dmhih")]
+layout_mode = 0
+
+[node name="ButtonClose" type="TextureButton" parent="NinePatchRect" unique_id=886151194]
+layout_mode = 0
+offset_left = 738.0
+offset_top = 30.5
+offset_right = 926.0
+offset_bottom = 218.5
+texture_normal = ExtResource("4_tv865")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ButtonEffect" type="Control" parent="NinePatchRect/ButtonClose" unique_id=530794608]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_384wy")
+metadata/_custom_type_script = "uid://duwvc3ij8u64e"

@@ -9,9 +9,9 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e63bl"]
 texture = ExtResource("2_7uusv")
-texture_margin_left = 60.0
+texture_margin_left = 75.0
 texture_margin_top = 60.0
-texture_margin_right = 60.0
+texture_margin_right = 66.0
 texture_margin_bottom = 60.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8aw70"]
@@ -88,6 +88,9 @@ ButtonTag/styles/normal_mirrored = SubResource("StyleBoxTexture_7uusv")
 ButtonTag/styles/pressed = SubResource("StyleBoxTexture_7uusv")
 ButtonTag/styles/pressed_mirrored = SubResource("StyleBoxTexture_7uusv")
 CheckButton/colors/font_color = Color(0.24313726, 0.18431373, 0.6117647, 1)
+CheckButton/colors/font_hover_color = Color(0.24313726, 0.18431373, 0.6117647, 1)
+CheckButton/colors/font_hover_pressed_color = Color(0.24313726, 0.18431373, 0.6117647, 1)
+CheckButton/colors/font_pressed_color = Color(0.24313726, 0.18431373, 0.6117647, 1)
 CheckButton/font_sizes/font_size = 56
 CheckButton/fonts/font = ExtResource("1_27v6b")
 CheckButton/icons/checked = ExtResource("5_es402")

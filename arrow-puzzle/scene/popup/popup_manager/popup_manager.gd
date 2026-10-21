@@ -2,8 +2,6 @@ extends Control
 class_name PopupManager
 @onready var popup_loading: Control = $PopupLoading
 @onready var toast_container: Control = $ToastContainer
-
-
 @export var popup_scene: Dictionary[GameEnum.PopupType, PackedScene] = {}
 @export var toast_scene: PackedScene
 var popup_node: Dictionary[GameEnum.PopupType, Control] = {}

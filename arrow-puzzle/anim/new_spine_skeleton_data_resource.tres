@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" format=3 uid="uid://bsfl20doj0npn"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://bierbaucskbhc" path="res://anim/layered_2_5_second_seamless_idle_loop_of.atlas" id="1_n2wy2"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://2c2h334xd1yf" path="res://anim/layered_2_5_second_seamless_idle_loop_of.spine-json" id="2_ikmnm"]
+
+[resource]
+atlas_res = ExtResource("1_n2wy2")
+skeleton_file_res = ExtResource("2_ikmnm")

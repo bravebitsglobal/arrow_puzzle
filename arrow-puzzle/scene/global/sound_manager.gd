@@ -9,8 +9,8 @@ func _ready() -> void:
 func update_setting():
 	var music_bus_index = AudioServer.get_bus_index("Music")
 	var sfx_bus_index = AudioServer.get_bus_index("SFX")
-	AudioServer.set_bus_mute(music_bus_index, Global.game_data.player_data.setting_enable_music)
-	AudioServer.set_bus_mute(sfx_bus_index, Global.game_data.player_data.setting_enable_sfx)
+	AudioServer.set_bus_mute(music_bus_index, not Global.game_data.player_data.setting_enable_music)
+	AudioServer.set_bus_mute(sfx_bus_index, not Global.game_data.player_data.setting_enable_sfx)
 	
 func play_sound(sound: GameEnum.Sound):
 	sound_player.stream = sounds[sound]

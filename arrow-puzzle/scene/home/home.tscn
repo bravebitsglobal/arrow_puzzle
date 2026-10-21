@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ct87ps7c232ri" path="res://ui/icon_home.png" id="6_dubxh"]
 [ext_resource type="Texture2D" uid="uid://d2nd6g74qs5bn" path="res://ui/tab_active.png" id="6_eyjn4"]
 [ext_resource type="Texture2D" uid="uid://2oxmjlb8lk0d" path="res://ui/icon_shop.png" id="7_eyjn4"]
+[ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="8_3nenu"]
 [ext_resource type="Texture2D" uid="uid://yhjsaxa6ttjh" path="res://ui/icon_reward.png" id="8_roddw"]
 [ext_resource type="Texture2D" uid="uid://bly3jxk81u3u" path="res://ui/icon_daily.png" id="9_3nenu"]
 [ext_resource type="PackedScene" uid="uid://cv4lpv0w532k3" path="res://scene/home/main/main.tscn" id="11_roddw"]
@@ -141,6 +142,9 @@ theme_type_variation = &"HomeTabLabel"
 text = "HOME"
 horizontal_alignment = 1
 
+[node name="ButtonEffect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemHome" unique_id=941576423 instance=ExtResource("8_3nenu")]
+layout_mode = 0
+
 [node name="ItemMarket" type="TextureButton" parent="PanelBottom/MarginContainer/MarginContainer/Tab" unique_id=933336399]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -198,6 +202,9 @@ theme = ExtResource("3_dubxh")
 theme_type_variation = &"HomeTabLabel"
 text = "SHOP"
 horizontal_alignment = 1
+
+[node name="ButtonEffect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemMarket" unique_id=1397673757 instance=ExtResource("8_3nenu")]
+layout_mode = 0
 
 [node name="ItemArchivement" type="TextureButton" parent="PanelBottom/MarginContainer/MarginContainer/Tab" unique_id=559779078]
 layout_mode = 2
@@ -257,6 +264,9 @@ theme_type_variation = &"HomeTabLabel"
 text = "REWARDS"
 horizontal_alignment = 1
 
+[node name="ButtonEffect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemArchivement" unique_id=782029875 instance=ExtResource("8_3nenu")]
+layout_mode = 0
+
 [node name="ItemQuest" type="TextureButton" parent="PanelBottom/MarginContainer/MarginContainer/Tab" unique_id=1845621604]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -314,3 +324,6 @@ theme = ExtResource("3_dubxh")
 theme_type_variation = &"HomeTabLabel"
 text = "QUESTS"
 horizontal_alignment = 1
+
+[node name="ButtonEffect" parent="PanelBottom/MarginContainer/MarginContainer/Tab/ItemQuest" unique_id=597056019 instance=ExtResource("8_3nenu")]
+layout_mode = 0

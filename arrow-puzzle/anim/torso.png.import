@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxpxt1vl5wxmd"
-path="res://.godot/imported/loading.png-9dd549de3b0daad5158b3d846c333708.ctex"
+uid="uid://b3tk7xux848r3"
+path="res://.godot/imported/torso.png-0bf9a8c43521cc115e0103823c975362.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/loading.png"
-dest_files=["res://.godot/imported/loading.png-9dd549de3b0daad5158b3d846c333708.ctex"]
+source_file="res://anim/torso.png"
+dest_files=["res://.godot/imported/torso.png-0bf9a8c43521cc115e0103823c975362.ctex"]
 
 [params]
 

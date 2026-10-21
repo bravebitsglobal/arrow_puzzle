@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dql05rmy8s3qg"]
+
+[ext_resource type="Script" uid="uid://dfqutx6iebko" path="res://scene/popup/popup_daily_reward/daily_day.gd" id="1_1cgl5"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="1_rsuc8"]
+[ext_resource type="Texture2D" uid="uid://b32hy6sag3diu" path="res://ui/daily_claim.png" id="3_1rvti"]
+[ext_resource type="Texture2D" uid="uid://b1rk8b5etvec2" path="res://ui/daily_unclaim.png" id="4_8q8xi"]
+[ext_resource type="Texture2D" uid="uid://cusf1vsbnqk0s" path="res://ui/daily_select.png" id="5_1k053"]
+
+[node name="DailyDay" type="Button" unique_id=2065954311]
+custom_minimum_size = Vector2(200, 200)
+offset_right = 200.0
+offset_bottom = 200.0
+theme = ExtResource("1_rsuc8")
+theme_type_variation = &"FlatButton"
+script = ExtResource("1_1cgl5")
+
+[node name="Claimed" type="TextureRect" parent="." unique_id=588016488]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_1rvti")
+expand_mode = 1
+
+[node name="Unclaim" type="TextureRect" parent="." unique_id=1251993298]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_8q8xi")
+expand_mode = 1
+
+[node name="Selected" type="TextureRect" parent="." unique_id=1222093459]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_1k053")
+expand_mode = 1

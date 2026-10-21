@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b7p0tflhctaw"]
 
 [ext_resource type="Script" uid="uid://d2oltlrl4mj51" path="res://scene/loading/loading_scene.gd" id="1_26iq7"]
-[ext_resource type="Texture2D" uid="uid://dxpxt1vl5wxmd" path="res://ui/loading.png" id="2_c6n2l"]
+[ext_resource type="Texture2D" uid="uid://dmnlk336wuw2l" path="res://ui/loading.jpg" id="2_7d0ro"]
 [ext_resource type="Texture2D" uid="uid://dqgbodnbsw1rh" path="res://ui/Illustration77.png" id="4_7d0ro"]
 [ext_resource type="Texture2D" uid="uid://c17dguhslpo5r" path="res://ui/Illustration88.png" id="5_8uhwx"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="5_uq73k"]
@@ -21,7 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_c6n2l")
+texture = ExtResource("2_7d0ro")
 expand_mode = 1
 
 [node name="Panel" type="Panel" parent="." unique_id=696387314]

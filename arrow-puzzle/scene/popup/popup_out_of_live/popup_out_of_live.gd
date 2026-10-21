@@ -1,9 +1,9 @@
 extends Control
 class_name PanelOutOfLive
-@onready var label_title: Label = $Window/LabelTitle
 @onready var button_close: TextureButton = $Window/ButtonClose
-@onready var button_get_free: TextureButton = $Window/Content/VBoxContainer/ButtonGetFree
-@onready var button_buy: TextureButton = $Window/Content/VBoxContainer/ButtonBuy
+@onready var button_get_free: Button = $Window/ButtonGetFree
+@onready var button_buy: Button = $Window/ButtonBuy
+
 
 
 # Called when the node enters the scene tree for the first time.

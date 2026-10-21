@@ -4,8 +4,14 @@ class_name Main
 @onready var label_coins: Label = $PanelTop/Coin/LabelCoins
 @onready var button_developer: Button = $PanelTop/ButtonDeveloper
 @onready var label_level: Label = $PanelBottom/Level/LabelLevel
+@onready var button_setting: TextureButton = $PanelTop/ButtonSetting
+@onready var animation: SpineSprite = $Animation
 
 func _ready() -> void:
+	animation.get_animation_state().set_animation("idle", true, 0)
+	button_setting.pressed.connect(func ():
+		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.Setting, true)
+		)
 	button_developer.pressed.connect(func():
 		get_tree().change_scene_to_file("res://scene/developer/developer.tscn")
 		)

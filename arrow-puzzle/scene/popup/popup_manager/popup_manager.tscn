@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dctrcpen1n26e" path="res://scene/popup/popup_manager/popup_manager.gd" id="1_tyu2s"]
 [ext_resource type="PackedScene" uid="uid://xow6tcdxccv1" path="res://scene/popup/popup_win/popup_win.tscn" id="2_x606e"]
-[ext_resource type="PackedScene" uid="uid://dervte5l8du6m" path="res://scene/popup/popup_try_again/popup_try_again.tscn" id="3_gg3ps"]
-[ext_resource type="PackedScene" uid="uid://cxxiigxbvdtr" path="res://scene/popup/popup_out_of_live/popup_out_of_live.tscn" id="4_qo0lx"]
-[ext_resource type="PackedScene" uid="uid://ciye4mdxnnygy" path="res://scene/popup/popup_setting/popup_setting.tscn" id="4_x606e"]
+[ext_resource type="PackedScene" uid="uid://cxxiigxbvdtr" path="res://scene/popup/popup_out_of_live/popup_out_of_live.tscn" id="3_gg3ps"]
+[ext_resource type="PackedScene" uid="uid://cg6addmsw0cws" path="res://scene/popup/popup_challenge_welcome/popup_challeng_welcome.tscn" id="4_ptp21"]
+[ext_resource type="PackedScene" uid="uid://ciye4mdxnnygy" path="res://scene/popup/popup_setting/popup_setting.tscn" id="5_keppy"]
 [ext_resource type="PackedScene" uid="uid://jkx4lnsotbcp" path="res://scene/popup/toast/toast.tscn" id="5_x606e"]
-[ext_resource type="PackedScene" uid="uid://cet37f0ddk5m2" path="res://scene/popup/popup_daily_reward/popup_daily_reward.tscn" id="6_ptp21"]
+[ext_resource type="PackedScene" uid="uid://cet37f0ddk5m2" path="res://scene/popup/popup_daily_reward/popup_daily_reward.tscn" id="6_ldm45"]
+[ext_resource type="PackedScene" uid="uid://cypffk5vv04gk" path="res://scene/popup/popup_select_avatar/popup_select_avatar.tscn" id="7_keppy"]
 
 [node name="PopupManager" type="Control" unique_id=999376964]
 layout_mode = 3
@@ -20,9 +21,10 @@ script = ExtResource("1_tyu2s")
 popup_scene = Dictionary[int, PackedScene]({
 0: ExtResource("2_x606e"),
 1: ExtResource("3_gg3ps"),
-2: ExtResource("4_qo0lx"),
-4: ExtResource("4_x606e"),
-5: ExtResource("6_ptp21")
+2: ExtResource("4_ptp21"),
+3: ExtResource("5_keppy"),
+4: ExtResource("6_ldm45"),
+5: ExtResource("7_keppy")
 })
 toast_scene = ExtResource("5_x606e")
 

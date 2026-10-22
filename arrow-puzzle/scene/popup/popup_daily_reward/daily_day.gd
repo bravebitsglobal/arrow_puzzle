@@ -6,7 +6,7 @@ class_name DailyDay
 @onready var locked: TextureRect = $Locked
 @export var day: int 
 @onready var label: Label = $Label
-@onready var effect_select: Control = $EffectSelect
+@onready var select_effect: Control = $SelectEffect
 
 func _ready() -> void:
 	label.text = "Day %d" % day
@@ -23,4 +23,4 @@ func set_state(state: String)->void:
 		'locked':
 			locked.visible = true
 func set_select(is_select: bool)->void:
-	effect_select.visible = is_select
+	select_effect.visible = is_select

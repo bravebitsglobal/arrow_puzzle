@@ -13,11 +13,11 @@ enum UserAction {
 }
 enum PopupType {
 	GameWin,
-	GameTryAgain,
 	OutOfLive,
 	ChallengeWelcome,
 	Setting,
-	DailyReward
+	DailyReward,
+	SelectAvatar
 }
 enum Sound {
 	Click

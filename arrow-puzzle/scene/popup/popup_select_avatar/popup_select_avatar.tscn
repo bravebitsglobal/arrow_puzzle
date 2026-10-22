@@ -48,128 +48,6 @@ theme_type_variation = &"HeaderLarge"
 text = "Avatar"
 horizontal_alignment = 1
 
-[node name="Indicator" type="NinePatchRect" parent="TextureRect" unique_id=408669964]
-layout_mode = 0
-offset_left = 360.5
-offset_top = 501.75
-offset_right = 616.5
-offset_bottom = 757.75
-texture = ExtResource("4_7m36k")
-patch_margin_left = 64
-patch_margin_top = 67
-patch_margin_right = 74
-
-[node name="ScrollContainer" type="ScrollContainer" parent="TextureRect" unique_id=1184627584]
-layout_mode = 0
-offset_left = 92.5
-offset_top = 236.75
-offset_right = 887.5
-offset_bottom = 1087.75
-
-[node name="AvatarContainer" type="GridContainer" parent="TextureRect/ScrollContainer" unique_id=2091107559]
-layout_mode = 2
-columns = 3
-
-[node name="Avatar" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=17255980 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar2" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=478511959 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar3" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=448974824 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar4" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1296259271 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar5" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1385888032 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar6" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1261731946 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar7" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1943049831 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar8" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=766265790 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar9" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1823354359 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar10" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=659731648 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar11" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=812143453 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar12" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=543841226 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar13" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1989712877 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar14" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1684395307 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar15" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1980985590 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar16" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1151943666 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar17" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=592274499 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar18" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1168483522 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar19" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=839202243 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
-[node name="Avatar20" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=2076409627 instance=ExtResource("4_fptm8")]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-mouse_filter = 0
-
 [node name="ButtonConfirm" type="Button" parent="TextureRect" unique_id=1089145392]
 layout_mode = 0
 offset_left = 209.5
@@ -183,15 +61,125 @@ text = "Confirm"
 [node name="ButtonEffect" parent="TextureRect/ButtonConfirm" unique_id=941576423 instance=ExtResource("5_k52e4")]
 layout_mode = 0
 
-[node name="TextureButton" type="TextureButton" parent="." unique_id=2017638252]
+[node name="ScrollContainer" type="ScrollContainer" parent="TextureRect" unique_id=1184627584]
 layout_mode = 0
-offset_left = 851.0
-offset_top = 309.0
-offset_right = 1005.0
-offset_bottom = 463.0
+offset_left = 90.5
+offset_top = 236.75
+offset_right = 883.5
+offset_bottom = 1087.75
+
+[node name="Control" type="Control" parent="TextureRect/ScrollContainer" unique_id=1479573810]
+custom_minimum_size = Vector2(776, 1816)
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("3_v02kr")
+
+[node name="Indicator" type="NinePatchRect" parent="TextureRect/ScrollContainer/Control" unique_id=408669964]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+mouse_filter = 1
+texture = ExtResource("4_7m36k")
+patch_margin_left = 64
+patch_margin_top = 63
+patch_margin_right = 74
+patch_margin_bottom = 48
+
+[node name="AvatarContainer" type="GridContainer" parent="TextureRect/ScrollContainer/Control" unique_id=957360605]
+layout_mode = 0
+offset_right = 776.0
+offset_bottom = 1816.0
+columns = 3
+
+[node name="Avatar" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=17255980 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar2" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=478511959 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar3" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=448974824 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar4" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1296259271 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar5" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1385888032 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar6" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1261731946 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar7" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1943049831 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar8" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=766265790 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar9" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1823354359 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar10" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=659731648 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar11" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=812143453 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar12" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=543841226 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar13" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1989712877 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar14" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1684395307 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar15" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1980985590 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar16" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1151943666 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar17" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=592274499 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar18" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=1168483522 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar19" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=839202243 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Avatar20" parent="TextureRect/ScrollContainer/Control/AvatarContainer" unique_id=2076409627 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="ButtonClose" type="TextureButton" parent="TextureRect" unique_id=2017638252]
+layout_mode = 0
+offset_left = 815.5
+offset_top = 16.75
+offset_right = 969.5
+offset_bottom = 170.75
 texture_normal = ExtResource("4_46qm1")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="ButtonEffect" parent="TextureButton" unique_id=1797631651 instance=ExtResource("5_k52e4")]
+[node name="ButtonEffect" parent="TextureRect/ButtonClose" unique_id=1797631651 instance=ExtResource("5_k52e4")]
 layout_mode = 0

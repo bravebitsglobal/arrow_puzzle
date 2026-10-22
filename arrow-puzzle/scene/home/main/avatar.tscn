@@ -26,7 +26,7 @@
 [node name="Avatar" type="Button" unique_id=314520713]
 offset_right = 512.0
 offset_bottom = 512.0
-mouse_filter = 2
+mouse_filter = 1
 theme = ExtResource("1_ba01u")
 theme_type_variation = &"FlatButton"
 script = ExtResource("1_caqco")

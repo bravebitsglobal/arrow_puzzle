@@ -5,8 +5,15 @@ class_name Main
 @onready var button_developer: Button = $PanelTop/ButtonDeveloper
 @onready var label_level: Label = $PanelBottom/Level/LabelLevel
 @onready var button_setting: TextureButton = $PanelTop/ButtonSetting
+@onready var avatar: Avatar = $Avatar
 
 func _ready() -> void:
+	avatar.pressed.connect(func ():
+		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.SelectAvatar, true)
+		)
+	Global.game_data.avatar.subscribe(func (id):
+		avatar.set_avatar(id)
+		)
 	button_setting.pressed.connect(func ():
 		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.Setting, true)
 		)

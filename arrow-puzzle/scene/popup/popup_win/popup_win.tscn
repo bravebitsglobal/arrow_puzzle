@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://xow6tcdxccv1"]
 
 [ext_resource type="Script" uid="uid://b8c3n3h3x17g0" path="res://scene/popup/popup_win/popup_win.gd" id="1_5rx4v"]
+[ext_resource type="Texture2D" uid="uid://bqfrei5wvk67y" path="res://ui/panel.png" id="2_iqb43"]
 [ext_resource type="Texture2D" uid="uid://inyqrwckl8to" path="res://effect/c1.png" id="2_lh1a0"]
 [ext_resource type="Texture2D" uid="uid://sylskqp12fr5" path="res://effect/c2.png" id="3_h3cli"]
 [ext_resource type="Texture2D" uid="uid://vnkhhrs7gdhl" path="res://effect/c3.png" id="4_3wcf4"]
 [ext_resource type="Texture2D" uid="uid://cy0ha33gfbc7p" path="res://effect/c4.png" id="5_n7gbw"]
-[ext_resource type="Texture2D" uid="uid://83dmi23xc7ec" path="res://ui/popup.png" id="10_rdkes"]
 [ext_resource type="Texture2D" uid="uid://wjndpew0lftb" path="res://ui/ribbon.png" id="11_5wxs5"]
 [ext_resource type="Texture2D" uid="uid://cpwo8if4yi0a1" path="res://ui/icon_close.png" id="12_8y4ub"]
 [ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="13_h3cli"]
@@ -44,26 +44,26 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -501.75
-offset_top = -740.5
+offset_top = -803.0
 offset_right = 501.75
 offset_bottom = 740.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("10_rdkes")
-patch_margin_left = 410
-patch_margin_top = 339
-patch_margin_right = 400
-patch_margin_bottom = 343
+texture = ExtResource("2_iqb43")
+patch_margin_left = 222
+patch_margin_top = 284
+patch_margin_right = 238
+patch_margin_bottom = 226
 
 [node name="TextureRect" type="TextureRect" parent="TextureRect" unique_id=1800800326]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -358.47263
-offset_top = -94.0
-offset_right = 358.47266
-offset_bottom = 154.0
+offset_left = -446.0
+offset_top = -44.0
+offset_right = 454.0
+offset_bottom = 219.0
 grow_horizontal = 2
 texture = ExtResource("11_5wxs5")
 expand_mode = 1
@@ -82,15 +82,28 @@ label_settings = SubResource("LabelSettings_6ai3d")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="TextureRect3" type="TextureRect" parent="TextureRect" unique_id=339252551]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -289.375
+offset_top = 223.0
+offset_right = 289.375
+offset_bottom = 801.75
+grow_horizontal = 2
+texture = ExtResource("16_j2g81")
+expand_mode = 1
+
 [node name="ButtonClose" type="TextureButton" parent="TextureRect" unique_id=1848773112]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -169.75
-offset_top = -43.5
+offset_top = 6.5
 offset_right = -12.508301
-offset_bottom = 111.5
+offset_bottom = 161.5
 grow_horizontal = 0
 texture_normal = ExtResource("12_8y4ub")
 ignore_texture_size = true
@@ -105,9 +118,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -230.1875
-offset_top = 681.0
+offset_top = 808.0
 offset_right = 230.1875
-offset_bottom = 889.0
+offset_bottom = 1016.0
 grow_horizontal = 2
 texture = ExtResource("13_y1toq")
 patch_margin_left = 59
@@ -145,9 +158,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -325.0
-offset_top = -526.0
+offset_top = -490.0
 offset_right = 325.0
-offset_bottom = -325.0
+offset_bottom = -275.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("14_iqb43")
@@ -174,9 +187,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -325.0
-offset_top = -319.0
+offset_top = -275.0
 offset_right = 325.0
-offset_bottom = -118.0
+offset_bottom = -68.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("14_iqb43")
@@ -185,19 +198,6 @@ text = "Continue"
 
 [node name="ButtonEffect" parent="TextureRect/ButtonContinue" unique_id=869864616 instance=ExtResource("13_rm41l")]
 layout_mode = 0
-
-[node name="TextureRect3" type="TextureRect" parent="TextureRect" unique_id=339252551]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -289.375
-offset_top = 112.0
-offset_right = 289.375
-offset_bottom = 690.75
-grow_horizontal = 2
-texture = ExtResource("16_j2g81")
-expand_mode = 1
 
 [node name="Effect" type="Control" parent="." unique_id=1529477836]
 anchors_preset = 0

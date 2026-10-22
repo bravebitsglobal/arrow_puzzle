@@ -3,11 +3,16 @@ class_name PanelOutOfLive
 @onready var button_close: TextureButton = $Window/ButtonClose
 @onready var button_get_free: Button = $Window/ButtonGetFree
 @onready var button_buy: Button = $Window/ButtonBuy
+@onready var button_restart: Button = $Window/ButtonRestart
 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	button_restart.pressed.connect(func():
+		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.OutOfLive, false)
+		Global.game_event.game_restart.emit()
+		)
 	button_close.pressed.connect(func():
 		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.OutOfLive, false)
 		get_tree().change_scene_to_file("res://scene/home/home.tscn")

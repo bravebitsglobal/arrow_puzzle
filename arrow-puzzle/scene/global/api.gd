@@ -15,6 +15,12 @@ const TIMEOUT_SEC: float = 15.0
 const LEADERBOARD_TYPES: PackedStringArray = ["monthly", "alltime", "country", "team", "monthly-plays"]
 func _ready() -> void:
 	Global.game_event.game_resolved.connect(_on_game_resolved)
+func save_profile()->void:
+	var data = {
+		"avatar": Global.game_data.avatar.value
+	}
+	var res = await _save_profile(data)
+	print("avatar asave ", res)
 func _on_game_resolved(level: int)->void:
 	print('game resolved ', level)
 	var rs = await submit_score(level)
@@ -142,7 +148,7 @@ func get_profile() -> Dictionary:
 	return await request(HTTPClient.METHOD_GET, "/profile")
 
 
-func save_profile(data: Dictionary) -> Dictionary:
+func _save_profile(data: Dictionary) -> Dictionary:
 	return await request(HTTPClient.METHOD_PUT, "/profile", {"data": data})
 
 

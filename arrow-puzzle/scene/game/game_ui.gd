@@ -1,16 +1,16 @@
 extends CanvasLayer
 class_name GameUI
-@onready var label_line: Label = $PanelGame/TopPanel/Panel/TextureRect/LabelLine
 @onready var label_level: Label = $PanelGame/TopPanel/Level/LabelLevel
 @onready var label_coin: Label = $PanelGame/TopPanel/Coin/LabelCoin
 @onready var button_hint: TextureButton = $PanelGame/BottomPanel/ButtonHint
 @onready var button_eraser: TextureButton = $PanelGame/BottomPanel/ButtonEraser
 @onready var button_magic_glasses: TextureButton = $PanelGame/BottomPanel/ButtonMagicGlasses
 @onready var button_ruler: TextureButton = $PanelGame/BottomPanel/ButtonRuler
-@onready var label_game_mode: Label = $PanelGame/TopPanel/Panel/LabelGameMode
 @onready var first_arrow: ColorRect = $PanelGame/BottomPanel/FirstArrow
 @onready var select_eraser_arrow: ColorRect = $PanelGame/SelectEraserArrow
 @onready var live_container: HBoxContainer = $PanelGame/TopPanel/LiveContainer/LiveContainer
+@onready var label_line: Label = $PanelGame/TopPanel/TextureRect/LabelLine
+@onready var label_game_mode: Label = $PanelGame/TopPanel/LabelGameMode
 
 func _ready() -> void:
 	Global.game_data.active_tutorial.subscribe(_on_active_tutorial_changed)

@@ -138,10 +138,10 @@ stretch_mode = 4
 
 [node name="LabelCoin" type="Label" parent="UI/PanelGame/TopPanel/Coin" unique_id=1032450818]
 layout_mode = 0
-offset_left = 84.0
-offset_top = 37.0
-offset_right = 291.0
-offset_bottom = 103.0
+offset_left = 94.0
+offset_top = 41.0
+offset_right = 258.0
+offset_bottom = 107.0
 text = "1245"
 label_settings = SubResource("LabelSettings_6ai3d")
 horizontal_alignment = 1
@@ -207,9 +207,9 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = 22.0
-offset_top = -36.5
+offset_top = -34.5
 offset_right = -24.0
-offset_bottom = 53.5
+offset_bottom = 55.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
@@ -287,14 +287,7 @@ layout_mode = 0
 [node name="ButtonEffect2" parent="UI/PanelGame/TopPanel/ButtonSetting" unique_id=1297023996 instance=ExtResource("14_mq16h")]
 layout_mode = 0
 
-[node name="Panel" type="Panel" parent="UI/PanelGame/TopPanel" unique_id=624172472]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 0
-offset_top = 378.0
-offset_right = 1080.0
-offset_bottom = 478.0
-
-[node name="LabelGameMode" type="Label" parent="UI/PanelGame/TopPanel/Panel" unique_id=1141844147]
+[node name="LabelGameMode" type="Label" parent="UI/PanelGame/TopPanel" unique_id=1141844147]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -302,9 +295,9 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -512.0
-offset_top = -270.0
+offset_top = 21.5
 offset_right = -25.0
-offset_bottom = -183.0
+offset_bottom = 108.5
 grow_horizontal = 0
 grow_vertical = 2
 theme = ExtResource("5_p1ry8")
@@ -312,12 +305,12 @@ text = "Level"
 label_settings = ExtResource("15_7utin")
 horizontal_alignment = 2
 
-[node name="ButtonAutoPlay" type="Button" parent="UI/PanelGame/TopPanel/Panel" unique_id=929847234]
+[node name="ButtonAutoPlay" type="Button" parent="UI/PanelGame/TopPanel" unique_id=929847234]
 layout_mode = 0
 offset_left = 339.0
-offset_top = -195.0
+offset_top = 183.0
 offset_right = 515.0
-offset_bottom = -131.0
+offset_bottom = 247.0
 theme = ExtResource("5_p1ry8")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 28
@@ -325,16 +318,16 @@ text = "Auto Play"
 icon = ExtResource("16_osgb2")
 expand_icon = true
 
-[node name="TextureRect" type="TextureRect" parent="UI/PanelGame/TopPanel/Panel" unique_id=72214491]
+[node name="TextureRect" type="TextureRect" parent="UI/PanelGame/TopPanel" unique_id=72214491]
 layout_mode = 0
 offset_left = 38.0
-offset_top = -232.0
+offset_top = 146.0
 offset_right = 278.0
-offset_bottom = -118.0
+offset_bottom = 260.0
 texture = ExtResource("16_ywpmx")
 expand_mode = 1
 
-[node name="LabelLine" type="Label" parent="UI/PanelGame/TopPanel/Panel/TextureRect" unique_id=1370495897]
+[node name="LabelLine" type="Label" parent="UI/PanelGame/TopPanel/TextureRect" unique_id=1370495897]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 60.0

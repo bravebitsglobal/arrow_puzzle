@@ -7,7 +7,7 @@ var level_generator = LevelGenerator.new()
 @onready var dot_container: Node2D = $MapContainer/DotContainer
 @onready var camera_2d: CameraController = $Camera2D
 @export var arrow_scene: PackedScene
-@onready var button_auto_play: Button = $UI/PanelGame/TopPanel/Panel/ButtonAutoPlay
+@onready var button_auto_play: Button = $UI/PanelGame/TopPanel/ButtonAutoPlay
 
 var remain_magic_glasses: int = 0
 var level
@@ -15,6 +15,7 @@ var arrows: Array[Arrow] = []
 var total_line: int = 0
 var is_using_eraser: bool = false
 var is_focus: bool = false
+var is_animating: bool = false
 class ExitPathResult:
 	var can_exit: bool
 	var exit_path: Array[PackedInt32Array]
@@ -128,6 +129,8 @@ func _active_magic_glasses()->void:
 				break
 	Global.game_data.animating.value = false
 func _on_arrow_clicked(idx: int):
+	if Global.game_data.animating.value:
+		return
 	if is_using_eraser:
 		arrows[idx].erase()
 		remove_arrow(idx)
@@ -168,13 +171,13 @@ func move_camera_to_center()->void:
 		(left_top[1] + right_bottom[1]) / 2 * Utils.cell_size)
 	camera_2d.position = center
 func check_end_game():
+	print("check end game")
 	if !Global.game_data.lives.value:
 		await get_tree().create_timer(1).timeout
 		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.OutOfLive, true)
 		return
 	if !used_cells.size():
 		await get_tree().create_timer(1).timeout
-		
 		if Global.game_data.current_challenge.value.size():
 			Global.game_data.player_data.set_challenge_resolved(
 				Global.game_data.current_challenge.value[0],
@@ -183,6 +186,7 @@ func check_end_game():
 			Global.game_data.home_tab.value = 3
 			get_tree().change_scene_to_file("res://scene/home/home.tscn")
 		else:
+			print("resolved")
 			Global.game_event.request_visible_popup.emit(GameEnum.PopupType.GameWin, true)
 			Global.game_event.game_resolved.emit(Global.game_data.level.value)
 func remove_arrow(idx: int):

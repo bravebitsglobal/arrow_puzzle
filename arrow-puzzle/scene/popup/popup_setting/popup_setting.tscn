@@ -30,13 +30,17 @@ offset_bottom = 494.5
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_lx1yv")
+patch_margin_left = 215
+patch_margin_top = 286
+patch_margin_right = 244
+patch_margin_bottom = 227
 
 [node name="Label" type="Label" parent="NinePatchRect" unique_id=793542409]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 76.5
-offset_bottom = 179.5
+offset_top = 49.5
+offset_bottom = 152.5
 grow_horizontal = 2
 theme = ExtResource("3_v7ius")
 theme_type_variation = &"HeaderLarge"
@@ -62,11 +66,18 @@ theme = ExtResource("3_v7ius")
 text = "SFX"
 
 [node name="ButtonConfirm" type="Button" parent="NinePatchRect" unique_id=2144696635]
-layout_mode = 0
-offset_left = 283.0
-offset_top = 687.5
-offset_right = 642.0
-offset_bottom = 894.5
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -257.5
+offset_top = -298.5
+offset_right = 257.5
+offset_bottom = -91.5
+grow_horizontal = 2
+grow_vertical = 0
 theme = ExtResource("3_v7ius")
 theme_type_variation = &"ButtonPrimary"
 text = "Confirm"
@@ -76,10 +87,10 @@ layout_mode = 0
 
 [node name="ButtonClose" type="TextureButton" parent="NinePatchRect" unique_id=886151194]
 layout_mode = 0
-offset_left = 738.0
-offset_top = 30.5
-offset_right = 926.0
-offset_bottom = 218.5
+offset_left = 770.0
+offset_top = 18.5
+offset_right = 930.0
+offset_bottom = 178.5
 texture_normal = ExtResource("4_tv865")
 ignore_texture_size = true
 stretch_mode = 0

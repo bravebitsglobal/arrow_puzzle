@@ -10,6 +10,7 @@ var booster_ruler: Observable = Observable.new(0)
 var player_data: PlayerData = PlayerData.new()
 var tutorial_step: Observable = Observable.new()
 var active_tutorial: Observable = Observable.new()
+var avatar: Observable = Observable.new(0)
 #game
 var remain_lines: Observable = Observable.new()
 var lives: Observable = Observable.new(MAX_LIVE)
@@ -26,7 +27,7 @@ func load_data()->void:
 	booster_magic_glasses.value = player_data.booster_magic_glasses
 	booster_ruler.value = player_data.booster_ruler
 	tutorial_step.value = player_data.tutorial_step if player_data.tutorial_step else 0
-	Global.game_event.on_setting_updated.emit()
+	avatar.value = player_data.avatar if player_data.avatar else 0
 func save_data()->void:
 	player_data.level = level.value
 	player_data.coins = coins.value
@@ -35,4 +36,5 @@ func save_data()->void:
 	player_data.booster_magic_glasses = booster_magic_glasses.value
 	player_data.booster_ruler = booster_ruler.value
 	player_data.tutorial_step = tutorial_step.value
+	player_data.avatar = avatar.value
 	player_data.save()

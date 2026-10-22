@@ -184,6 +184,7 @@ func check_end_game():
 			get_tree().change_scene_to_file("res://scene/home/home.tscn")
 		else:
 			Global.game_event.request_visible_popup.emit(GameEnum.PopupType.GameWin, true)
+			Global.game_event.game_resolved.emit(Global.game_data.level.value)
 func remove_arrow(idx: int):
 	for c in level[idx]:
 		used_cells.erase(Utils.to_index(c))

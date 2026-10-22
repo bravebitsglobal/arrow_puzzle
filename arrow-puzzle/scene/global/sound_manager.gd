@@ -6,6 +6,7 @@ class_name SoundManager
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.game_event.on_setting_updated.connect(update_setting)
+	update_setting()
 func update_setting():
 	var music_bus_index = AudioServer.get_bus_index("Music")
 	var sfx_bus_index = AudioServer.get_bus_index("SFX")

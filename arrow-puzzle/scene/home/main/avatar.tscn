@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://bibf7t1spaib0"]
+
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="1_ba01u"]
+[ext_resource type="Script" uid="uid://lr2gk36tq8f0" path="res://scene/home/main/avatar.gd" id="1_caqco"]
+[ext_resource type="Texture2D" uid="uid://d4mpeqdtriwv6" path="res://ui/avatar/Blue Grumpy Avatar@1x.png" id="2_erfns"]
+[ext_resource type="Texture2D" uid="uid://cpdhpb03xemod" path="res://ui/avatar/Green Smug Avatar@1x.png" id="2_mrnfo"]
+[ext_resource type="Texture2D" uid="uid://dsvadaregs4rs" path="res://ui/avatar/Blue Laughing Avatar@1x.png" id="3_ba01u"]
+[ext_resource type="Texture2D" uid="uid://dv21cy5rqp6vf" path="res://ui/avatar/Blue Sleepy Avatar@1x.png" id="4_g41an"]
+[ext_resource type="Texture2D" uid="uid://ckex4jgqxryy7" path="res://ui/avatar/Gold Curious Avatar@1x.png" id="5_qo0xk"]
+[ext_resource type="Texture2D" uid="uid://dasyqgar2vfp7" path="res://ui/avatar/Gold Happy Avatar@1x (1).png" id="6_a0a5i"]
+[ext_resource type="Texture2D" uid="uid://bol8sce66cs07" path="res://ui/avatar/Gold Shy Avatar@1x.png" id="7_i5dls"]
+[ext_resource type="Texture2D" uid="uid://bogxi12vmbblh" path="res://ui/avatar/Green Dreamy Avatar@1x.png" id="8_clrnx"]
+[ext_resource type="Texture2D" uid="uid://b4bcc526hkhgq" path="res://ui/avatar/Green Surprised Avatar@1x.png" id="10_u7hjs"]
+[ext_resource type="Texture2D" uid="uid://yxk1i53nbkcq" path="res://ui/avatar/Orange Nervous Avatar@1x.png" id="11_41cig"]
+[ext_resource type="Texture2D" uid="uid://cggl6mfnph7ap" path="res://ui/avatar/Orange Wink Avatar@1x.png" id="12_jaha1"]
+[ext_resource type="Texture2D" uid="uid://dsuh3o7db34vm" path="res://ui/avatar/Orange Worried Avatar@1x.png" id="13_vfm1b"]
+[ext_resource type="Texture2D" uid="uid://cropr8jxyqd3g" path="res://ui/avatar/Pink Determined Avatar@1x.png" id="14_qyk1n"]
+[ext_resource type="Texture2D" uid="uid://bw7cktrkpbfak" path="res://ui/avatar/Pink Excited Avatar@1x.png" id="15_cr83a"]
+[ext_resource type="Texture2D" uid="uid://crj0ysms2uaih" path="res://ui/avatar/Pink Sad Avatar@1x (1).png" id="16_8rc2t"]
+[ext_resource type="Texture2D" uid="uid://bk1v0hai6yfx2" path="res://ui/avatar/Pink Sad Avatar@1x.png" id="17_qy8h3"]
+[ext_resource type="Texture2D" uid="uid://b0ujjx42cu0aj" path="res://ui/avatar/Pink Silly Avatar@1x.png" id="18_0bu12"]
+[ext_resource type="Texture2D" uid="uid://bxewr7a0hhdqc" path="res://ui/avatar/Purple Angry Avatar@1x.png" id="19_wwkfj"]
+[ext_resource type="Texture2D" uid="uid://dr8ksxeivsdc6" path="res://ui/avatar/Purple Confused Avatar@1x.png" id="20_kbhw2"]
+[ext_resource type="Texture2D" uid="uid://cgnws5mp7eefi" path="res://ui/avatar/Purple Playful Avatar@1x.png" id="21_c63o4"]
+
+[node name="Avatar" type="Button" unique_id=314520713]
+offset_right = 512.0
+offset_bottom = 512.0
+mouse_filter = 2
+theme = ExtResource("1_ba01u")
+theme_type_variation = &"FlatButton"
+script = ExtResource("1_caqco")
+images = Array[Texture]([ExtResource("2_erfns"), ExtResource("3_ba01u"), ExtResource("4_g41an"), ExtResource("5_qo0xk"), ExtResource("6_a0a5i"), ExtResource("7_i5dls"), ExtResource("8_clrnx"), ExtResource("2_mrnfo"), ExtResource("10_u7hjs"), ExtResource("11_41cig"), ExtResource("12_jaha1"), ExtResource("13_vfm1b"), ExtResource("14_qyk1n"), ExtResource("15_cr83a"), ExtResource("16_8rc2t"), ExtResource("17_qy8h3"), ExtResource("18_0bu12"), ExtResource("19_wwkfj"), ExtResource("20_kbhw2"), ExtResource("21_c63o4")])
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=990652532]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_mrnfo")
+expand_mode = 1
+stretch_mode = 5

@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://cwbav0rnbhry1"]
+
+[ext_resource type="Script" uid="uid://do7cjbtc6phg5" path="res://scene/global/reward.gd" id="1_o0t6m"]
+[ext_resource type="Texture2D" uid="uid://cax207uevj6h8" path="res://ui/coins.png" id="2_a3cbs"]
+[ext_resource type="Texture2D" uid="uid://cb0gr53agl2q8" path="res://ui/icon_hint.png" id="3_vd0uy"]
+[ext_resource type="Texture2D" uid="uid://cbn3f2q52oty7" path="res://ui/icon_eraser.png" id="4_7fsqi"]
+[ext_resource type="Texture2D" uid="uid://g1dohw132wg5" path="res://ui/icon_glasses.png" id="5_xvch6"]
+[ext_resource type="Texture2D" uid="uid://drahbe5xuuh1c" path="res://ui/icon_ruler.png" id="6_weqjj"]
+[ext_resource type="Texture2D" uid="uid://b1rk8b5etvec2" path="res://ui/daily_unclaim.png" id="7_vd0uy"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="8_7fsqi"]
+
+[node name="Reward" type="Control" unique_id=260507390]
+custom_minimum_size = Vector2(180, 180)
+custom_maximum_size = Vector2(180, 180)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 180.0
+offset_bottom = 180.0
+script = ExtResource("1_o0t6m")
+images = Dictionary[int, Texture2D]({
+0: ExtResource("2_a3cbs"),
+1: ExtResource("3_vd0uy"),
+2: ExtResource("4_7fsqi"),
+3: ExtResource("5_xvch6"),
+4: ExtResource("6_weqjj")
+})
+
+[node name="TextureRect" type="NinePatchRect" parent="." unique_id=467588861]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vd0uy")
+region_rect = Rect2(0, 0, 256, 256)
+patch_margin_left = 78
+patch_margin_top = 84
+patch_margin_right = 75
+patch_margin_bottom = 89
+
+[node name="Image" type="TextureRect" parent="TextureRect" unique_id=1126520408]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.5625
+offset_right = 60.5625
+offset_bottom = 121.125
+grow_horizontal = 2
+texture = ExtResource("2_a3cbs")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="TextureRect" unique_id=2047441989]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -76.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_7fsqi")
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 48
+text = "10"
+horizontal_alignment = 1

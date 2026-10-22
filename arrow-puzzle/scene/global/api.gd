@@ -13,7 +13,12 @@ class_name Api
 @export var game_token: String
 const TIMEOUT_SEC: float = 15.0
 const LEADERBOARD_TYPES: PackedStringArray = ["monthly", "alltime", "country", "team", "monthly-plays"]
-
+func _ready() -> void:
+	Global.game_event.game_resolved.connect(_on_game_resolved)
+func _on_game_resolved(level: int)->void:
+	print('game resolved ', level)
+	var rs = await submit_score(level)
+	print("submit rs ", rs)
 var access_token: String = ""
 
 

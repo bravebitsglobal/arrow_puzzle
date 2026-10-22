@@ -1,0 +1,197 @@
+[gd_scene format=3 uid="uid://cypffk5vv04gk"]
+
+[ext_resource type="Script" uid="uid://d61r8mf38j2o" path="res://scene/popup/popup_select_avatar/popup_select_avatar.gd" id="1_b842x"]
+[ext_resource type="Texture2D" uid="uid://bqfrei5wvk67y" path="res://ui/panel.png" id="2_jefsj"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="3_v02kr"]
+[ext_resource type="Texture2D" uid="uid://d2nd6g74qs5bn" path="res://ui/tab_active.png" id="4_7m36k"]
+[ext_resource type="Texture2D" uid="uid://cpwo8if4yi0a1" path="res://ui/icon_close.png" id="4_46qm1"]
+[ext_resource type="PackedScene" uid="uid://bibf7t1spaib0" path="res://scene/home/main/avatar.tscn" id="4_fptm8"]
+[ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="5_k52e4"]
+
+[node name="PopupSelectAvatar" type="Control" unique_id=68128361]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b842x")
+
+[node name="TextureRect" type="NinePatchRect" parent="." unique_id=1527437076]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -489.5
+offset_top = -681.75
+offset_right = 489.5
+offset_bottom = 681.75
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_jefsj")
+patch_margin_left = 236
+patch_margin_top = 294
+patch_margin_right = 217
+patch_margin_bottom = 236
+
+[node name="Label" type="Label" parent="TextureRect" unique_id=331002558]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 47.5
+offset_bottom = 150.5
+grow_horizontal = 2
+theme = ExtResource("3_v02kr")
+theme_type_variation = &"HeaderLarge"
+text = "Avatar"
+horizontal_alignment = 1
+
+[node name="Indicator" type="NinePatchRect" parent="TextureRect" unique_id=408669964]
+layout_mode = 0
+offset_left = 360.5
+offset_top = 501.75
+offset_right = 616.5
+offset_bottom = 757.75
+texture = ExtResource("4_7m36k")
+patch_margin_left = 64
+patch_margin_top = 67
+patch_margin_right = 74
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TextureRect" unique_id=1184627584]
+layout_mode = 0
+offset_left = 92.5
+offset_top = 236.75
+offset_right = 887.5
+offset_bottom = 1087.75
+
+[node name="AvatarContainer" type="GridContainer" parent="TextureRect/ScrollContainer" unique_id=2091107559]
+layout_mode = 2
+columns = 3
+
+[node name="Avatar" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=17255980 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar2" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=478511959 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar3" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=448974824 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar4" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1296259271 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar5" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1385888032 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar6" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1261731946 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar7" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1943049831 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar8" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=766265790 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar9" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1823354359 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar10" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=659731648 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar11" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=812143453 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar12" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=543841226 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar13" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1989712877 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar14" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1684395307 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar15" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1980985590 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar16" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1151943666 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar17" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=592274499 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar18" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=1168483522 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar19" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=839202243 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Avatar20" parent="TextureRect/ScrollContainer/AvatarContainer" unique_id=2076409627 instance=ExtResource("4_fptm8")]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="ButtonConfirm" type="Button" parent="TextureRect" unique_id=1089145392]
+layout_mode = 0
+offset_left = 209.5
+offset_top = 1097.75
+offset_right = 772.5
+offset_bottom = 1304.75
+theme = ExtResource("3_v02kr")
+theme_type_variation = &"ButtonPrimary"
+text = "Confirm"
+
+[node name="ButtonEffect" parent="TextureRect/ButtonConfirm" unique_id=941576423 instance=ExtResource("5_k52e4")]
+layout_mode = 0
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=2017638252]
+layout_mode = 0
+offset_left = 851.0
+offset_top = 309.0
+offset_right = 1005.0
+offset_bottom = 463.0
+texture_normal = ExtResource("4_46qm1")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ButtonEffect" parent="TextureButton" unique_id=1797631651 instance=ExtResource("5_k52e4")]
+layout_mode = 0

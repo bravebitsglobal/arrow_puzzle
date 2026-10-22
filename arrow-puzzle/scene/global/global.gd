@@ -6,10 +6,11 @@ var game_event: GameEvent = GameEvent.new()
 @onready var popup_manager: PopupManager = $CanvasLayer/PopupManager
 @onready var ad_manager: AdManager = $AdManager
 @onready var sound_manager: SoundManager = $SoundManager
-
 @onready var api: Api = $API
+@onready var reward_manager: RewardManager = $RewardManager
+
 @export var api_endpoint: String
 @export var game_token: String
 @export var development: bool
-func _ready() -> void:
+func _init() -> void:
 	game_data.load_data()

@@ -16,6 +16,7 @@ func _ready() -> void:
 		change_active_tab.call_deferred(tab)
 		)
 	bind_tab_buttons()
+	Global.game_event.scene_changed.emit(GameEnum.SceneName.Home)
 
 func bind_tab_buttons():
 	for i in range(tab.get_children().size()):

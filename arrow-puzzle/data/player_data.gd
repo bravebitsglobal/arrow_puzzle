@@ -13,6 +13,11 @@ class_name PlayerData
 @export var is_show_challenge_welcome_page: bool = false
 @export var setting_enable_music: bool = true
 @export var setting_enable_sfx: bool = true
+@export var daily_count: int = 0
+@export var daily_received: Array = []
+@export var last_checkin: Array = []
+@export var device_id: String = ""
+@export var avatar: int = 0
 const SAVE_PATH = "user://player_data.tres"
 func set_challenge_resolved(year: int, month: int, date: int)->void:
 	var key = '%04d-%02d' % [year, month]

@@ -40,6 +40,10 @@ func _on_button_claim_pressed()->void:
 		Global.game_data.player_data.daily_received = []
 		Global.game_data.player_data.daily_count = 0
 	Global.game_data.player_data.save()
+	Global.firebase_manager.log_event("daily_reward_claim", {
+		"cycle_id": day_selected,
+		"day_index": day_selected
+	})
 	render_ui()
 func _on_day_clicked(idx: int)->void:
 	if idx == day_selected:

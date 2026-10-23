@@ -19,6 +19,7 @@ theme_type_variation = &"FlatButton"
 script = ExtResource("1_1cgl5")
 
 [node name="SelectEffect" parent="." unique_id=94822293 instance=ExtResource("3_70wnu")]
+visible = false
 layout_mode = 1
 offset_left = -55.0
 offset_top = -48.0

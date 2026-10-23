@@ -83,6 +83,8 @@ func check_tutorial(action, data)->void:
 		return
 	run_step(step, data)
 func get_step(level: int, action: GameEnum.UserAction):
+	if Global.game_data.current_challenge.value.size():
+		return null
 	var step_idx = TUTORIAL_STEPS.find_custom(func (i): 
 		return i.level == Global.game_data.level.value && i.trigger == action
 		)

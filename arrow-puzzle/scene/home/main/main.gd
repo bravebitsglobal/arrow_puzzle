@@ -25,6 +25,7 @@ func _ready() -> void:
 		label_level.visible = level > 0
 		)
 	button_play.pressed.connect(func():
+		Global.game_data.current_challenge.value = []
 		get_tree().change_scene_to_file("res://scene/game/game.tscn")
 		)
 	Global.game_data.coins.subscribe(func (coins):

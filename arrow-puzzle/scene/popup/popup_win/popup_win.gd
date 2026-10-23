@@ -16,7 +16,6 @@ func _ready() -> void:
 		)
 func _on_button_claim_pressed()->void:
 	
-	Global.game_data.level.value = Global.game_data.level.value + 1
 	Global.game_data.coins.value = Global.game_data.coins.value + Global.COINS_PER_LEVEL
 	Global.game_data.save_data()
 	Global.game_event.request_visible_popup.emit(GameEnum.PopupType.GameWin, false)
@@ -26,7 +25,6 @@ func _on_claim_x2_pressed()->void:
 	var is_reward = await Global.ad_manager.show_user_reward()
 	if !is_reward:
 		return
-	Global.game_data.level.value = Global.game_data.level.value + 1
 	Global.game_data.coins.value = 	Global.game_data.coins.value + Global.COINS_PER_LEVEL * 2
 	Global.game_event.request_visible_popup.emit(GameEnum.PopupType.GameWin, false)
 	Global.game_event.game_start.emit()

@@ -17,7 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="14_mq16h"]
 [ext_resource type="Texture2D" uid="uid://b6delwccy13kr" path="res://ui/notification.png" id="14_oixtr"]
 [ext_resource type="Texture2D" uid="uid://bde5tiv4j0r37" path="res://ui/booster_ruler.png" id="14_okn60"]
-[ext_resource type="LabelSettings" uid="uid://cu330jhj630oe" path="res://theme/lbl_popup_description.tres" id="15_7utin"]
 [ext_resource type="Texture2D" uid="uid://yw5kc1a62df1" path="res://ui/booster_hint.png" id="16_i6gbm"]
 [ext_resource type="Texture2D" uid="uid://ctqy8g6ugad7w" path="res://ui/light.png" id="16_osgb2"]
 [ext_resource type="Texture2D" uid="uid://ciw5645iw6c48" path="res://ui/remain.png" id="16_ywpmx"]
@@ -29,13 +28,8 @@
 font_size = 48
 font_color = Color(0.38039216, 0.16470589, 0.05882353, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_0ve75"]
-font_size = 32
-outline_size = 10
-outline_color = Color(0.15686275, 0.12156863, 0.4509804, 1)
-
 [sub_resource type="LabelSettings" id="LabelSettings_dyrae"]
-font_size = 48
+font_size = 36
 outline_size = 10
 outline_color = Color(0.15686275, 0.12156863, 0.4509804, 1)
 
@@ -163,30 +157,16 @@ texture = ExtResource("9_fkm2x")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="TextLevel" type="Label" parent="UI/PanelGame/TopPanel/Level" unique_id=641604393]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_left = 41.0
-offset_top = 5.0
-offset_right = 117.0
-offset_bottom = 5.0
-grow_vertical = 2
-text = "Level"
-label_settings = SubResource("LabelSettings_0ve75")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="LabelLevel" type="Label" parent="UI/PanelGame/TopPanel/Level" unique_id=1254112284]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_left = 131.0
+offset_left = 31.0
 offset_top = 5.0
 offset_right = 269.0
 offset_bottom = 5.0
 grow_vertical = 2
-text = "999"
+text = "Level: 999"
 label_settings = SubResource("LabelSettings_dyrae")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -283,24 +263,6 @@ stretch_mode = 0
 
 [node name="ButtonEffect" parent="UI/PanelGame/TopPanel/ButtonPause" unique_id=941576423 instance=ExtResource("14_mq16h")]
 layout_mode = 0
-
-[node name="LabelGameMode" type="Label" parent="UI/PanelGame/TopPanel" unique_id=1141844147]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -512.0
-offset_top = 21.5
-offset_right = -25.0
-offset_bottom = 108.5
-grow_horizontal = 0
-grow_vertical = 2
-theme = ExtResource("5_p1ry8")
-text = "Level"
-label_settings = ExtResource("15_7utin")
-horizontal_alignment = 2
 
 [node name="ButtonAutoPlay" type="Button" parent="UI/PanelGame/TopPanel" unique_id=929847234]
 layout_mode = 0

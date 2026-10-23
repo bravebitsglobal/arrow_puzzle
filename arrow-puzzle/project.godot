@@ -10,14 +10,16 @@ config_version=5
 
 [application]
 
-config/name="Arrow Puzzle"
+config/name="Axolotl Maze"
 run/main_scene="uid://b7p0tflhctaw"
 config/features=PackedStringArray("4.7", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
 boot_splash/image="uid://c0dfppjy28hfu"
-config/icon="res://icon.svg"
+config/icon="uid://d4heilart8j4j"
+config/macos_native_icon="uid://d4heilart8j4j"
+config/windows_native_icon="uid://d4heilart8j4j"
 
 [autoload]
 
@@ -33,7 +35,7 @@ window/handheld/orientation=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/admob/plugin.cfg")
+enabled=PackedStringArray("res://addons/admob/plugin.cfg", "res://addons/godotx_firebase/plugin.cfg")
 
 [input_devices]
 

@@ -8,7 +8,9 @@ var level_generator = LevelGenerator.new()
 @onready var camera_2d: CameraController = $Camera2D
 @export var arrow_scene: PackedScene
 @onready var button_auto_play: Button = $UI/PanelGame/TopPanel/ButtonAutoPlay
-
+var tap_count:int = 0
+var blocked_tap_count: int = 0
+var start_time: int = 0
 var remain_magic_glasses: int = 0
 var level
 var arrows: Array[Arrow] = []
@@ -16,6 +18,7 @@ var total_line: int = 0
 var is_using_eraser: bool = false
 var is_focus: bool = false
 var is_animating: bool = false
+var is_finish: bool = false
 class ExitPathResult:
 	var can_exit: bool
 	var exit_path: Array[PackedInt32Array]
@@ -44,6 +47,10 @@ func render_ruler()->void:
 		if exit_path.can_exit:
 			arrows[i].set_ruler(exit_path)
 func render_level():
+	is_finish = false
+	start_time = Time.get_unix_time_from_system() * 1000
+	tap_count = 0
+	blocked_tap_count = 0
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	total_line = level.size()
 	Global.game_data.remain_lines.value = total_line
@@ -129,6 +136,7 @@ func _active_magic_glasses()->void:
 				break
 	Global.game_data.animating.value = false
 func _on_arrow_clicked(idx: int):
+	tap_count += 1
 	if Global.game_data.animating.value and not is_using_eraser:
 		return
 	if is_using_eraser:
@@ -145,8 +153,16 @@ func _on_arrow_clicked(idx: int):
 		if Global.game_data.remain_lines.value == level.size():
 			Global.game_event.user_action.emit(GameEnum.UserAction.ResolveArrow, {})
 		Global.game_data.remain_lines.value -= 1
+		Global.firebase_manager.log_event("arrow_tap", {"level_id": Global.game_data.level.value, "row_id": idx, "result": "success"})
 	else:
+		blocked_tap_count += 1
 		Global.game_data.lives.value -= 1
+		Global.firebase_manager.log_event("life_lost", {
+			"level_id": Global.game_data.level.value, 
+			"row_id": idx, "result": "fail", "reason":"blocked",
+			"live_before": Global.game_data.lives.value + 1,
+			"live_after": Global.game_data.lives.value})
+		Global.firebase_manager.log_event("arrow_tap", {"level_id": Global.game_data.level.value, "row_id": idx, "result": "fail"})
 	arrows[idx].exit(rs)
 	check_end_game()
 	await get_tree().create_timer(1).timeout
@@ -171,12 +187,22 @@ func move_camera_to_center()->void:
 		(left_top[1] + right_bottom[1]) / 2 * Utils.cell_size)
 	camera_2d.position = center
 func check_end_game():
-	print("check end game")
+	if is_finish:
+		return
 	if !Global.game_data.lives.value:
+		is_finish = true
 		await get_tree().create_timer(1).timeout
 		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.OutOfLive, true)
+		Global.firebase_manager.log_event("level_fail", {
+				"level_id": Global.game_data.level.value - 1,
+				"active_duration_ms": Time.get_unix_time_from_system() * 1000- start_time,
+				"tap_count": tap_count,
+				"blocked_tap_count": blocked_tap_count,
+				"reason":"out_of_live"
+			})
 		return
 	if !used_cells.size():
+		is_finish = true
 		await get_tree().create_timer(1).timeout
 		if Global.game_data.current_challenge.value.size():
 			Global.game_data.player_data.set_challenge_resolved(
@@ -184,11 +210,18 @@ func check_end_game():
 				Global.game_data.current_challenge.value[1],
 				Global.game_data.current_challenge.value[2])
 			Global.game_data.home_tab.value = 2
+			Global.game_data.current_challenge.value = []
 			get_tree().change_scene_to_file("res://scene/home/home.tscn")
 		else:
-			print("resolved")
 			Global.game_event.request_visible_popup.emit(GameEnum.PopupType.GameWin, true)
 			Global.game_event.game_resolved.emit(Global.game_data.level.value)
+			Global.game_data.level.value += 1
+			Global.firebase_manager.log_event("level_complete", {
+				"level_id": Global.game_data.level.value - 1,
+				"active_duration_ms": Time.get_unix_time_from_system() * 1000- start_time,
+				"tap_count": tap_count,
+				"blocked_tap_count": blocked_tap_count
+			})
 func remove_arrow(idx: int):
 	for c in level[idx]:
 		used_cells.erase(Utils.to_index(c))
@@ -244,11 +277,16 @@ func next_level()->void:
 			Global.game_data.current_challenge.value[2])
 	else:
 		level = await Global.api.get_level(Global.game_data.level.value)
+		Global.firebase_manager.log_event("level_start", {
+			"level_id": Global.game_data.level.value,
+			})
+		
 	Global.popup_manager.hide_loading()
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	move_camera_to_center()
 	render_level()
 func restart()->void:
+	Global.firebase_manager.log_event("level_start")
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	move_camera_to_center()
 	render_level()

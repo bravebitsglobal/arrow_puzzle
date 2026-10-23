@@ -10,7 +10,6 @@ class_name GameUI
 @onready var select_eraser_arrow: ColorRect = $PanelGame/SelectEraserArrow
 @onready var live_container: HBoxContainer = $PanelGame/TopPanel/LiveContainer/LiveContainer
 @onready var label_line: Label = $PanelGame/TopPanel/TextureRect/LabelLine
-@onready var label_game_mode: Label = $PanelGame/TopPanel/LabelGameMode
 @onready var button_pause: TextureButton = $PanelGame/TopPanel/ButtonPause
 
 func _ready() -> void:
@@ -23,8 +22,6 @@ func _ready() -> void:
 			label_line.text = ''
 		else:
 			label_line.text = str(lines))
-	Global.game_data.level.subscribe(func(lvl):
-		label_level.text = str(lvl))
 	Global.game_data.coins.subscribe(func(coins):
 		label_coin.text = str(coins))
 	Global.game_data.lives.subscribe(render_live)
@@ -59,6 +56,8 @@ func _ready() -> void:
 		else:
 			button_magic_glasses.get_node("TexturePlus").visible = true
 			button_magic_glasses.get_node("Quantity").visible = false	)
+	Global.game_data.level.subscribe(func (_lvl):
+		update_game_mode_label())
 	Global.game_data.booster_ruler.subscribe(func (quantity):
 		if quantity:
 			button_ruler.get_node("TexturePlus").visible = false
@@ -67,13 +66,12 @@ func _ready() -> void:
 		else:
 			button_ruler.get_node("TexturePlus").visible = true
 			button_ruler.get_node("Quantity").visible = false)
-	Global.game_event.game_start.connect(func():
-		if Global.game_data.current_challenge.value.size():
-			label_game_mode.text = "Challenge %04d-%02d-%02d" % Global.game_data.current_challenge.value
-		else:
-			var level = await Global.api.get_level(Global.game_data.level.value)
-			label_game_mode.text = "Level %d" % Global.game_data.level.value
-		)
+	update_game_mode_label()
+func update_game_mode_label():
+	if Global.game_data.current_challenge.value.size():
+		label_level.text = "Challenge"
+	else:
+		label_level.text = "Level: %d " % [Global.game_data.level.value]
 func _on_active_tutorial_changed(step)->void:
 	if !step:
 		first_arrow.visible = false

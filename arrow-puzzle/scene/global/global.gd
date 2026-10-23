@@ -8,6 +8,7 @@ var game_event: GameEvent = GameEvent.new()
 @onready var sound_manager: SoundManager = $SoundManager
 @onready var api: Api = $API
 @onready var reward_manager: RewardManager = $RewardManager
+@onready var firebase_manager: FirebaseManager = $FirebaseManager
 
 @export var api_endpoint: String
 @export var game_token: String

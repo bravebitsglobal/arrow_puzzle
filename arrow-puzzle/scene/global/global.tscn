@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d1yld2ofggn21" path="res://scene/global/tutorial/tutorial.tscn" id="5_kuifj"]
 [ext_resource type="PackedScene" uid="uid://dpdg3l3uevofl" path="res://scene/global/reward_manager.tscn" id="7_fddw0"]
 [ext_resource type="PackedScene" uid="uid://cataudctqhi15" path="res://scene/global/sound_manager.tscn" id="10_4um8e"]
+[ext_resource type="PackedScene" uid="uid://cr8dt6dwcqay3" path="res://scene/global/firebase.tscn" id="11_fbase"]
 
 [node name="Global" type="Control" unique_id=89037677]
 layout_mode = 3
@@ -40,3 +41,7 @@ layout_mode = 1
 
 [node name="RewardManager" parent="." unique_id=1599830859 instance=ExtResource("7_fddw0")]
 layout_mode = 1
+
+[node name="FirebaseManager" parent="." unique_id=1433391905 instance=ExtResource("11_fbase")]
+layout_mode = 1
+mouse_filter = 2

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "796243593424",
+    "project_id": "axolotl-maze",
+    "storage_bucket": "axolotl-maze.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796243593424:android:a10e1ddd70996140aef6d5",
+        "android_client_info": {
+          "package_name": "com.bravebits.axolotlmaze"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpsdUrWyulgK_zGuRw8j2qmxRqPBJsHU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

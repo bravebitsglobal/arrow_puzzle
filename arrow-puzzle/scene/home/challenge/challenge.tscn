@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://ch2fpg8n3u371"]
 
 [ext_resource type="Script" uid="uid://dwv51a210qwvv" path="res://scene/home/challenge/challenge.gd" id="1_qt1ub"]
+[ext_resource type="Texture2D" uid="uid://djec80171guoc" path="res://ui/rank_background.jpg" id="2_581aq"]
 [ext_resource type="Texture2D" uid="uid://c37cxhsasdnm3" path="res://ui/daily challenge.png" id="2_xikhs"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="4_e63bl"]
 [ext_resource type="PackedScene" uid="uid://bhg2b6mre4ji8" path="res://scene/home/challenge/day.tscn" id="5_xikhs"]
+[ext_resource type="Texture2D" uid="uid://b32hy6sag3diu" path="res://ui/daily_claim.png" id="6_ti6ys"]
 [ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="7_ti6ys"]
 
 [node name="Challenge" type="Control" unique_id=1245256718]
@@ -15,21 +17,25 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qt1ub")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1940842902]
+[node name="Background" type="TextureRect" parent="." unique_id=1152432950]
+self_modulate = Color(1, 1, 1, 0.9647059)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 472.0
+offset_bottom = 472.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_581aq")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=7370139]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -92.0
+offset_top = -70.0
 offset_right = 17.0
-offset_bottom = 456.5
+offset_bottom = 478.5
 grow_horizontal = 2
 texture = ExtResource("2_xikhs")
 expand_mode = 5
@@ -50,6 +56,7 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="Label" type="Label" parent="TextureRect" unique_id=90118378]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -73,9 +80,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -502.18848
-offset_top = 475.0
+offset_top = 427.0
 offset_right = 502.18848
-offset_bottom = 1411.0
+offset_bottom = 1363.0
 grow_horizontal = 2
 
 [node name="DateContainer" type="GridContainer" parent="Calendar" unique_id=1812215832]
@@ -217,14 +224,12 @@ layout_mode = 2
 
 [node name="LabelDate" type="Label" parent="Calendar" unique_id=1651809771]
 layout_mode = 0
-offset_left = 24.188477
-offset_top = -9.0
-offset_right = 335.18848
-offset_bottom = 41.0
+offset_left = -25.811523
+offset_top = -55.0
+offset_right = 631.1885
+offset_bottom = 48.0
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"HeaderMedium"
-theme_override_colors/font_color = Color(0.39080548, 0.39080545, 0.39080545, 1)
-theme_override_font_sizes/font_size = 36
+theme_type_variation = &"HeaderLarge"
 text = "Thang 10 nam 2026"
 
 [node name="Star" type="TextureRect" parent="Calendar" unique_id=1142670469]
@@ -232,10 +237,12 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -161.18848
-offset_right = -108.37695
-offset_bottom = 52.811523
+offset_left = -260.18848
+offset_top = -49.0
+offset_right = -173.18848
+offset_bottom = 38.0
 grow_horizontal = 0
+texture = ExtResource("6_ti6ys")
 expand_mode = 1
 
 [node name="LabelStar" type="Label" parent="Calendar/Star" unique_id=19187886]
@@ -243,105 +250,99 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 57.0
-offset_top = -16.5
-offset_right = 112.0
-offset_bottom = 17.5
+offset_left = 103.0
+offset_top = -45.0
+offset_right = 248.0
+offset_bottom = 58.0
 grow_vertical = 2
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"HeaderMedium"
-theme_override_colors/font_color = Color(0.39080548, 0.39080545, 0.39080545, 1)
-theme_override_font_sizes/font_size = 36
+theme_type_variation = &"HeaderLarge"
 text = "1/31"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Calendar" unique_id=1800701006]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 106.0
-offset_bottom = 156.0
+offset_top = 65.0
+offset_bottom = 115.0
 grow_horizontal = 2
 
 [node name="Label7" type="Label" parent="Calendar/HBoxContainer" unique_id=378344040]
-self_modulate = Color(1, 1, 1, 0.36078432)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"LabelDark"
+theme_type_variation = &"HomeTabLabel"
 theme_override_font_sizes/font_size = 36
 text = "SUN"
 horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="Calendar/HBoxContainer" unique_id=1381340897]
-self_modulate = Color(1, 1, 1, 0.36078432)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"LabelDark"
+theme_type_variation = &"HomeTabLabel"
 theme_override_font_sizes/font_size = 36
 text = "MON"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="Calendar/HBoxContainer" unique_id=1053348618]
-self_modulate = Color(1, 1, 1, 0.36078432)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"LabelDark"
+theme_type_variation = &"HomeTabLabel"
 theme_override_font_sizes/font_size = 36
 text = "TUE"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="Calendar/HBoxContainer" unique_id=961075567]
-self_modulate = Color(1, 1, 1, 0.36078432)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"LabelDark"
+theme_type_variation = &"HomeTabLabel"
 theme_override_font_sizes/font_size = 36
 text = "WEB"
 horizontal_alignment = 1
 
 [node name="Label4" type="Label" parent="Calendar/HBoxContainer" unique_id=1142391937]
-self_modulate = Color(1, 1, 1, 0.36078432)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"LabelDark"
+theme_type_variation = &"HomeTabLabel"
 theme_override_font_sizes/font_size = 36
 text = "THU"
 horizontal_alignment = 1
 
 [node name="Label5" type="Label" parent="Calendar/HBoxContainer" unique_id=1399389206]
-self_modulate = Color(1, 1, 1, 0.36078432)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"LabelDark"
+theme_type_variation = &"HomeTabLabel"
 theme_override_font_sizes/font_size = 36
 text = "FRI"
 horizontal_alignment = 1
 
 [node name="Label6" type="Label" parent="Calendar/HBoxContainer" unique_id=737405839]
-self_modulate = Color(1, 1, 1, 0.36078432)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
-theme_type_variation = &"LabelDark"
+theme_type_variation = &"HomeTabLabel"
 theme_override_font_sizes/font_size = 36
 text = "SAT"
 horizontal_alignment = 1
 
 [node name="ButtonPlay" type="Button" parent="." unique_id=1289181942]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -216.21558
-offset_top = 1397.0
-offset_right = 216.21558
-offset_bottom = 1604.0
+anchor_bottom = 1.0
+offset_left = -304.1078
+offset_top = -509.0
+offset_right = 304.1078
+offset_bottom = -302.0
 grow_horizontal = 2
+grow_vertical = 0
 theme = ExtResource("4_e63bl")
 theme_type_variation = &"ButtonPrimary"
 text = "Play"

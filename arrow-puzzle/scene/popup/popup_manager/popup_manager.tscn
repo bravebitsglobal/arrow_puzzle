@@ -8,6 +8,46 @@
 [ext_resource type="PackedScene" uid="uid://jkx4lnsotbcp" path="res://scene/popup/toast/toast.tscn" id="5_x606e"]
 [ext_resource type="PackedScene" uid="uid://cet37f0ddk5m2" path="res://scene/popup/popup_daily_reward/popup_daily_reward.tscn" id="6_ldm45"]
 [ext_resource type="PackedScene" uid="uid://cypffk5vv04gk" path="res://scene/popup/popup_select_avatar/popup_select_avatar.tscn" id="7_keppy"]
+[ext_resource type="PackedScene" uid="uid://cedgj0vdsu6dr" path="res://scene/popup/popup_pause/popup_pause.tscn" id="8_ldf8t"]
+[ext_resource type="Texture2D" uid="uid://c0v0mi3h88dyf" path="res://ui/loading.png" id="9_ldm45"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="10_3ipip"]
+
+[sub_resource type="Animation" id="Animation_ldf8t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_3ipip"]
+resource_name = "loading"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2831855]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ldf8t"]
+_data = {
+&"RESET": SubResource("Animation_ldf8t"),
+&"loading": SubResource("Animation_3ipip")
+}
 
 [node name="PopupManager" type="Control" unique_id=999376964]
 layout_mode = 3
@@ -24,14 +64,59 @@ popup_scene = Dictionary[int, PackedScene]({
 2: ExtResource("4_ptp21"),
 3: ExtResource("5_keppy"),
 4: ExtResource("6_ldm45"),
-5: ExtResource("7_keppy")
+5: ExtResource("7_keppy"),
+6: ExtResource("8_ldf8t")
 })
 toast_scene = ExtResource("5_x606e")
 
 [node name="PopupLoading" type="Control" parent="." unique_id=197987376]
 visible = false
 layout_mode = 1
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="PopupLoading" unique_id=959656964]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -214.0
+offset_right = 128.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(128, 128)
+texture = ExtResource("9_ldm45")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="PopupLoading" unique_id=289715090]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = 66.0
+offset_right = 37.5
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("10_3ipip")
+theme_type_variation = &"HeaderMedium"
+theme_override_font_sizes/font_size = 56
+text = "Loading..."
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PopupLoading" unique_id=635574259]
+libraries/ = SubResource("AnimationLibrary_ldf8t")
+autoplay = &"loading"
 
 [node name="ToastContainer" type="Control" parent="." unique_id=1166185136]
 z_index = 1000

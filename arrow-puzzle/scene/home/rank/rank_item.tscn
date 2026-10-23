@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://defnl1j7hq4j"]
+
+[ext_resource type="Script" uid="uid://nxr8i4lnibai" path="res://scene/home/rank/rank_item.gd" id="1_gay87"]
+[ext_resource type="Texture2D" uid="uid://dqgbodnbsw1rh" path="res://ui/Illustration77.png" id="2_lsbfd"]
+[ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="3_j7wfy"]
+[ext_resource type="PackedScene" uid="uid://bibf7t1spaib0" path="res://scene/home/main/avatar.tscn" id="4_mcq2c"]
+
+[node name="RankItem" type="Control" unique_id=1628978007]
+custom_minimum_size = Vector2(1080, 170)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1750.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_gay87")
+
+[node name="Avatar" parent="." unique_id=314520713 instance=ExtResource("4_mcq2c")]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -2.0
+offset_right = 196.0
+offset_bottom = 169.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1573609980]
+layout_mode = 0
+offset_left = 181.0
+offset_top = -11.0
+offset_right = 885.0
+offset_bottom = 191.0
+texture = ExtResource("2_lsbfd")
+patch_margin_left = 57
+patch_margin_top = 42
+patch_margin_right = 45
+patch_margin_bottom = 41
+
+[node name="LabelRank" type="Label" parent="NinePatchRect" unique_id=230977449]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 37.0
+offset_right = 117.0
+offset_bottom = 103.0
+theme = ExtResource("3_j7wfy")
+theme_type_variation = &"HeaderMedium"
+theme_override_colors/font_color = Color(1, 0.61683404, 0.5836617, 1)
+theme_override_font_sizes/font_size = 48
+text = "1"
+
+[node name="LabelName" type="Label" parent="NinePatchRect" unique_id=1927718055]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 30.0
+offset_right = 663.0
+offset_bottom = 96.0
+theme = ExtResource("3_j7wfy")
+theme_type_variation = &"HeaderMedium"
+theme_override_font_sizes/font_size = 48
+text = "Player Unknown"
+
+[node name="LabelScore" type="Label" parent="NinePatchRect" unique_id=1786066441]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 104.0
+offset_right = 646.0
+offset_bottom = 170.0
+theme = ExtResource("3_j7wfy")
+theme_type_variation = &"HeaderMedium"
+theme_override_font_sizes/font_size = 48
+text = "Score: 30w"

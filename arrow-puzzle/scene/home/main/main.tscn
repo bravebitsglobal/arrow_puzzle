@@ -106,10 +106,10 @@ offset_bottom = 449.0
 
 [node name="ButtonSetting" type="TextureButton" parent="PanelTop" unique_id=823963294]
 layout_mode = 0
-offset_left = 940.0
-offset_top = 68.0
-offset_right = 1043.0
-offset_bottom = 171.0
+offset_left = 886.0
+offset_top = 32.0
+offset_right = 1054.0
+offset_bottom = 200.0
 texture_normal = ExtResource("7_imhgi")
 ignore_texture_size = true
 stretch_mode = 4

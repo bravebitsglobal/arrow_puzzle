@@ -7,11 +7,13 @@ const TAB_ANIMATION_DURATION = 0.2
 
 @onready var challenge: Control = $Challenge
 @onready var main: Control = $Main
+@onready var rank: Control = $Rank
+
 var tab_content: Array
-@onready var texture_highlight: TextureRect = $PanelBottom/MarginContainer/Control/TextureHighlight
+@onready var texture_highlight: NinePatchRect = $PanelBottom/MarginContainer/Control/TextureHighlight
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	tab_content = [main, null, null, challenge]
+	tab_content = [main, rank, challenge]
 	Global.game_data.home_tab.subscribe(func (tab):
 		change_active_tab.call_deferred(tab)
 		)
@@ -37,7 +39,7 @@ func change_active_tab(new_tab: int)->void:
 		var tween = create_tween().set_parallel(true)
 		tween.tween_property(texture_highlight, "global_position", new_node.global_position, TAB_ANIMATION_DURATION)
 	active_tab = new_tab
-	var show_challenge = active_tab == 3
+	var show_challenge = active_tab == 2
 	if show_challenge:
 		if !Global.game_data.player_data.is_show_challenge_welcome_page:
 			Global.game_event.request_visible_popup.emit(GameEnum.PopupType.ChallengeWelcome, true)

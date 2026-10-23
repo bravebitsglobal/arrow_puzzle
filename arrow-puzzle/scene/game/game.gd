@@ -129,10 +129,11 @@ func _active_magic_glasses()->void:
 				break
 	Global.game_data.animating.value = false
 func _on_arrow_clicked(idx: int):
-	if Global.game_data.animating.value:
+	if Global.game_data.animating.value and not is_using_eraser:
 		return
 	if is_using_eraser:
 		arrows[idx].erase()
+		Global.game_data.remain_lines.value -= 1
 		remove_arrow(idx)
 		is_using_eraser = false
 		Global.game_event.game_booster_done.emit(GameEnum.Booster.Eraser)
@@ -143,10 +144,9 @@ func _on_arrow_clicked(idx: int):
 		remove_arrow(idx)
 		if Global.game_data.remain_lines.value == level.size():
 			Global.game_event.user_action.emit(GameEnum.UserAction.ResolveArrow, {})
-		Global.game_data.remain_lines.value = Global.game_data.remain_lines.value - 1
-		
+		Global.game_data.remain_lines.value -= 1
 	else:
-		Global.game_data.lives.value = Global.game_data.lives.value - 1
+		Global.game_data.lives.value -= 1
 	arrows[idx].exit(rs)
 	check_end_game()
 	await get_tree().create_timer(1).timeout
@@ -183,7 +183,7 @@ func check_end_game():
 				Global.game_data.current_challenge.value[0],
 				Global.game_data.current_challenge.value[1],
 				Global.game_data.current_challenge.value[2])
-			Global.game_data.home_tab.value = 3
+			Global.game_data.home_tab.value = 2
 			get_tree().change_scene_to_file("res://scene/home/home.tscn")
 		else:
 			print("resolved")
@@ -236,6 +236,7 @@ func calculate_exit_path(data)->ExitPathResult:
 	result.exit_path = exit_path
 	return result
 func next_level()->void:
+	Global.popup_manager.show_loading()
 	if Global.game_data.current_challenge.value.size():
 		level = await Global.api.get_challenge_by_date(
 			Global.game_data.current_challenge.value[0],
@@ -243,7 +244,7 @@ func next_level()->void:
 			Global.game_data.current_challenge.value[2])
 	else:
 		level = await Global.api.get_level(Global.game_data.level.value)
-		
+	Global.popup_manager.hide_loading()
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	move_camera_to_center()
 	render_level()

@@ -17,7 +17,8 @@ enum PopupType {
 	ChallengeWelcome,
 	Setting,
 	DailyReward,
-	SelectAvatar
+	SelectAvatar,
+	Pause
 }
 enum Sound {
 	Click

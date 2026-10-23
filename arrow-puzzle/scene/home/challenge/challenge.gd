@@ -7,6 +7,7 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July", 
 @export var cell_size: Vector2 = Vector2(120, 120)
 @onready var date_container: GridContainer = $Calendar/DateContainer
 @onready var button_play: Button = $ButtonPlay
+@onready var label_date: Label = $Calendar/LabelDate
 
 
 var month: int 
@@ -18,6 +19,7 @@ var date_nodes: Dictionary[int, Day] = {}
 var last_select_date: int = 0
 func _ready() -> void:
 	var date_dict = Time.get_date_dict_from_system()
+	label_date.text = "%s  %d" % [MONTHS[date_dict['month']], date_dict['day']]
 	month = date_dict['month']
 	year = date_dict['year']
 	resolved_date = Global.game_data.player_data.get_challenge_dates(year, month)

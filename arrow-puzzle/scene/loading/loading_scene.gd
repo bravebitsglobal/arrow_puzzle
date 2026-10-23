@@ -9,18 +9,21 @@ func _ready() -> void:
 	tween.tween_property(texture_progress_bar, "value", 100, LOADING_TIME)
 	texture_progress_bar.value_changed.connect(func (value: float):
 		label.text = str(value) + "%")
-	await authen()
+	var authen_raw = await authen()
+	var profile = await Global.api.get_profile()
+	profile.user_id = authen_raw.user.id
 	if tween.is_running():
 		await tween.finished
 	get_tree().change_scene_to_file("res://scene/home/home.tscn")
 
 # Đăng nhập GameHub bằng device id + country của thiết bị. Lỗi thì vẫn vào game (chơi offline).
-func authen() -> void:
+func authen():
 	var res = await Global.api.device_register(get_device_id(), get_country())
 	if not res.ok:
 		print("authen failed: ", res.code, " ", res.error)
 	else:
 		print(res)
+	return res.data
 
 func get_device_id() -> String:
 	var device_id = OS.get_unique_id()

@@ -10,10 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://c1rqqfildtio5" path="res://ui/coin.png" id="8_17rxn"]
 [ext_resource type="Texture2D" uid="uid://b4cu42s00hayy" path="res://ui/level_container.png" id="9_fkm2x"]
 [ext_resource type="Texture2D" uid="uid://cc5vy0x7o5v" path="res://ui/heart_fill.png" id="10_4qy8q"]
-[ext_resource type="Texture2D" uid="uid://c8ddefbty2a13" path="res://ui/icon_setting.png" id="10_mq16h"]
 [ext_resource type="Texture2D" uid="uid://cjbk6cptkbgvr" path="res://ui/icon_plus.png" id="11_okn60"]
 [ext_resource type="Texture2D" uid="uid://dg0ghgvdyehma" path="res://ui/heart_empty.png" id="11_ywpmx"]
 [ext_resource type="Texture2D" uid="uid://w0ek8vlfsf8m" path="res://ui/booster_glasses.png" id="13_o100e"]
+[ext_resource type="Texture2D" uid="uid://c61mascij6xk2" path="res://ui/pause.png" id="13_osgb2"]
 [ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="14_mq16h"]
 [ext_resource type="Texture2D" uid="uid://b6delwccy13kr" path="res://ui/notification.png" id="14_oixtr"]
 [ext_resource type="Texture2D" uid="uid://bde5tiv4j0r37" path="res://ui/booster_ruler.png" id="14_okn60"]
@@ -269,7 +269,7 @@ texture = ExtResource("10_4qy8q")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="ButtonSetting" type="TextureButton" parent="UI/PanelGame/TopPanel" unique_id=1515433849]
+[node name="ButtonPause" type="TextureButton" parent="UI/PanelGame/TopPanel" unique_id=1515433849]
 custom_minimum_size = Vector2(131.885, 135.735)
 layout_mode = 0
 offset_left = 934.0
@@ -277,14 +277,11 @@ offset_top = 1.0
 offset_right = 1065.885
 offset_bottom = 136.735
 size_flags_vertical = 4
-texture_normal = ExtResource("10_mq16h")
+texture_normal = ExtResource("13_osgb2")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="ButtonEffect" parent="UI/PanelGame/TopPanel/ButtonSetting" unique_id=941576423 instance=ExtResource("14_mq16h")]
-layout_mode = 0
-
-[node name="ButtonEffect2" parent="UI/PanelGame/TopPanel/ButtonSetting" unique_id=1297023996 instance=ExtResource("14_mq16h")]
+[node name="ButtonEffect" parent="UI/PanelGame/TopPanel/ButtonPause" unique_id=941576423 instance=ExtResource("14_mq16h")]
 layout_mode = 0
 
 [node name="LabelGameMode" type="Label" parent="UI/PanelGame/TopPanel" unique_id=1141844147]

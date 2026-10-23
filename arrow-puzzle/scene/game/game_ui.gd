@@ -11,8 +11,12 @@ class_name GameUI
 @onready var live_container: HBoxContainer = $PanelGame/TopPanel/LiveContainer/LiveContainer
 @onready var label_line: Label = $PanelGame/TopPanel/TextureRect/LabelLine
 @onready var label_game_mode: Label = $PanelGame/TopPanel/LabelGameMode
+@onready var button_pause: TextureButton = $PanelGame/TopPanel/ButtonPause
 
 func _ready() -> void:
+	button_pause.pressed.connect(func ():
+		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.Pause, true)
+		)
 	Global.game_data.active_tutorial.subscribe(_on_active_tutorial_changed)
 	Global.game_data.remain_lines.subscribe(func (lines):
 		if !lines:
@@ -88,9 +92,9 @@ func _on_booster_hint_click()->void:
 		Global.game_data.booster_hint.value = Global.game_data.booster_hint.value - 1
 		Global.game_event.user_action.emit(GameEnum.UserAction.ActiveBooster, 
 			{"booster": GameEnum.Booster.Hint})
-	else:
-		await Global.ad_manager.show_user_reward()
-		Global.game_data.booster_hint.value = 3
+	#else:
+		#await Global.ad_manager.show_user_reward()
+		#Global.game_data.booster_hint.value = 3
 	Global.game_data.save_data()
 func _on_booster_eraser_click()->void:
 	if Global.game_data.animating.value:
@@ -105,9 +109,9 @@ func _on_booster_eraser_click()->void:
 		Global.game_event.user_action.emit(GameEnum.UserAction.ActiveBooster, 
 			{"booster": GameEnum.Booster.Eraser})
 		select_eraser_arrow.visible = true
-	else:
-		await Global.ad_manager.show_user_reward()
-		Global.game_data.booster_eraser.value = 3
+	#else:
+		#await Global.ad_manager.show_user_reward()
+		#Global.game_data.booster_eraser.value = 3
 	Global.game_data.save_data()
 func _on_booster_magic_glasses_click()->void:
 	if Global.game_data.animating.value:
@@ -120,9 +124,9 @@ func _on_booster_magic_glasses_click()->void:
 		Global.game_data.booster_magic_glasses.value = Global.game_data.booster_magic_glasses.value - 1
 		Global.game_event.user_action.emit(GameEnum.UserAction.ActiveBooster, 
 			{"booster": GameEnum.Booster.MagicGlasses})
-	else:
-		await Global.ad_manager.show_user_reward()
-		Global.game_data.booster_magic_glasses.value = 3
+	#else:
+		#await Global.ad_manager.show_user_reward()
+		#Global.game_data.booster_magic_glasses.value = 3
 	Global.game_data.save_data()
 func _on_booster_ruler_click()->void:
 	if Global.game_data.animating.value:
@@ -136,9 +140,9 @@ func _on_booster_ruler_click()->void:
 		Global.game_event.user_action.emit(GameEnum.UserAction.ActiveBooster, 
 			{"booster": GameEnum.Booster.Ruler})
 		Global.game_data.is_ruler.value = true
-	else:
-		await Global.ad_manager.show_user_reward()
-		Global.game_data.booster_ruler.value = 3
+	#else:
+		#await Global.ad_manager.show_user_reward()
+		#Global.game_data.booster_ruler.value = 3
 	Global.game_data.save_data()
 func render_live(lives: int)->void:
 	if !live_container:

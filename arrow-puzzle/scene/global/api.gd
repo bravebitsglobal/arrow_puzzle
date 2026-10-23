@@ -145,7 +145,8 @@ func join_team(team_id: String) -> Dictionary:
 # ----------------------------------------------------------------
 
 func get_profile() -> Dictionary:
-	return await request(HTTPClient.METHOD_GET, "/profile")
+	var raw =  await request(HTTPClient.METHOD_GET, "/profile")
+	return raw.data.data
 
 
 func _save_profile(data: Dictionary) -> Dictionary:

@@ -11,14 +11,6 @@ font_size = 36
 outline_size = 5
 outline_color = Color(0.19607843, 0.14509805, 0.36078432, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_u7ukx"]
-font_size = 36
-font_color = Color(0.18553862, 0.18268532, 0.19922224, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_fjem1"]
-font_size = 36
-font_color = Color(0.050409324, 0.05127941, 0.06851389, 1)
-
 [node name="Day" type="Button" unique_id=573855203]
 custom_minimum_size = Vector2(120, 120)
 offset_right = 116.0
@@ -54,7 +46,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureDisable" type="TextureRect" parent="CenterContainer" unique_id=1893961766]
-visible = false
 layout_mode = 2
 texture = ExtResource("3_5s4dk")
 
@@ -69,19 +60,17 @@ offset_right = 28.5
 offset_bottom = 70.0
 grow_horizontal = 2
 theme = ExtResource("1_mugqg")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_type_variation = &"HeaderMedium"
 text = "232"
-label_settings = SubResource("LabelSettings_u7ukx")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LabelEnable" type="Label" parent="CenterContainer" unique_id=1216367573]
-visible = false
 layout_mode = 2
 theme = ExtResource("1_mugqg")
+theme_type_variation = &"HeaderMedium"
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "232"
-label_settings = SubResource("LabelSettings_fjem1")
 horizontal_alignment = 1
 vertical_alignment = 1
 

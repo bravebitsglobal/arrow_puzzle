@@ -10,6 +10,8 @@ var level_generator = LevelGenerator.new()
 @onready var button_auto_play: Button = $UI/PanelGame/TopPanel/ButtonAutoPlay
 var tap_count:int = 0
 var blocked_tap_count: int = 0
+# idx cac arrow da bi tru live do bi block trong game hien tai
+var penalized_arrows: Dictionary = {}
 var start_time: int = 0
 var remain_magic_glasses: int = 0
 var level
@@ -40,17 +42,21 @@ func auto_play()->void:
 func render_ruler()->void:
 	if !level:
 		return
+	Global.game_data.is_ruler.value = true
 	for i in range(level.size()):
 		if arrows[i].is_exit:
 			continue
-		var exit_path = calculate_exit_path(level[i])
-		if exit_path.can_exit:
-			arrows[i].set_ruler(exit_path)
+		arrows[i].set_ruler(calculate_exit_path(level[i]))
+func clear_ruler()->void:
+	Global.game_data.is_ruler.value = false
+	for a in arrows:
+		a.clear_ruler()
 func render_level():
 	is_finish = false
 	start_time = Time.get_unix_time_from_system() * 1000
 	tap_count = 0
 	blocked_tap_count = 0
+	penalized_arrows.clear()
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	total_line = level.size()
 	Global.game_data.remain_lines.value = total_line
@@ -139,6 +145,8 @@ func _on_arrow_clicked(idx: int):
 	tap_count += 1
 	if Global.game_data.animating.value and not is_using_eraser:
 		return
+	if Global.game_data.is_ruler.value:
+		clear_ruler()
 	if is_using_eraser:
 		arrows[idx].erase()
 		Global.game_data.remain_lines.value -= 1
@@ -156,12 +164,15 @@ func _on_arrow_clicked(idx: int):
 		Global.firebase_manager.log_event("arrow_tap", {"level_id": Global.game_data.level.value, "row_id": idx, "result": "success"})
 	else:
 		blocked_tap_count += 1
-		Global.game_data.lives.value -= 1
-		Global.firebase_manager.log_event("life_lost", {
-			"level_id": Global.game_data.level.value, 
-			"row_id": idx, "result": "fail", "reason":"blocked",
-			"live_before": Global.game_data.lives.value + 1,
-			"live_after": Global.game_data.lives.value})
+		# Moi arrow chi bi tru live 1 lan khi bi block trong mot game
+		if !penalized_arrows.has(idx):
+			penalized_arrows[idx] = true
+			Global.game_data.lives.value -= 1
+			Global.firebase_manager.log_event("life_lost", {
+				"level_id": Global.game_data.level.value,
+				"row_id": idx, "result": "fail", "reason":"blocked",
+				"live_before": Global.game_data.lives.value + 1,
+				"live_after": Global.game_data.lives.value})
 		Global.firebase_manager.log_event("arrow_tap", {"level_id": Global.game_data.level.value, "row_id": idx, "result": "fail"})
 	arrows[idx].exit(rs)
 	check_end_game()

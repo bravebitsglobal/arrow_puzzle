@@ -18,6 +18,7 @@ var COLORS = [
 @export var PATTERNS: Array[Texture2D] = []
 const ROTATES = [0, 180, -90, 90]
 const CELL_SIZE = 50
+const RULER_MAX_CELLS = 10
 var data: Array[PackedInt32Array]
 @onready var head: Node2D = $Head
 @onready var foot_1: Node2D = $Foot1
@@ -42,8 +43,8 @@ enum Action{
 }
 var action: Action = Action.Idle
 var tween: Tween
-const SPEED: float = 500
-const GO_IN_SPEED: float = 500
+const SPEED: float = 1500
+const GO_IN_SPEED: float = 1000
 var exit_path: Array[PackedInt32Array]
 var tail_progress: float = 0
 var head_progress: float = 0
@@ -203,9 +204,17 @@ func erase()->void:
 	is_exit = true
 	self.visible = false
 func set_ruler(exit_rs: Game.ExitPathResult)->void:
+	ruler.clear_points()
 	ruler.visible = true
-	for i in range(data.size(), exit_rs.exit_path.size()):
+	# Bat dau tu dau arrow, keo thang theo huong thoat toi khi ra ngoai hoac cham arrow khac
+	# Gioi han toi da RULER_MAX_CELLS o tinh tu dau
+	var head_idx = data.size() - 1
+	var end_idx = mini(exit_rs.exit_path.size(), head_idx + RULER_MAX_CELLS + 1)
+	for i in range(head_idx, end_idx):
 		ruler.add_point(Utils.to_pos(exit_rs.exit_path[i]))
+func clear_ruler()->void:
+	ruler.visible = false
+	ruler.clear_points()
 ## Đổi màu cả arrow (thân, đầu, đuôi). Nhận Color hoặc chuỗi hex như trong COLORS.
 func set_color(color: Variant) -> void:
 	var c: Color = Color(color) if color is String else color

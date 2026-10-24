@@ -23,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_7d0ro")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="Panel" type="Panel" parent="." unique_id=696387314]
 custom_minimum_size = Vector2(0, 100)

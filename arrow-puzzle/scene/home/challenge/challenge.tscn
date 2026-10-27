@@ -272,7 +272,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
 theme_type_variation = &"HomeTabLabel"
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 56
 text = "SUN"
 horizontal_alignment = 1
 
@@ -281,7 +281,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
 theme_type_variation = &"HomeTabLabel"
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 56
 text = "MON"
 horizontal_alignment = 1
 
@@ -290,7 +290,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
 theme_type_variation = &"HomeTabLabel"
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 56
 text = "TUE"
 horizontal_alignment = 1
 
@@ -299,7 +299,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
 theme_type_variation = &"HomeTabLabel"
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 56
 text = "WEB"
 horizontal_alignment = 1
 
@@ -308,7 +308,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
 theme_type_variation = &"HomeTabLabel"
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 56
 text = "THU"
 horizontal_alignment = 1
 
@@ -317,7 +317,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
 theme_type_variation = &"HomeTabLabel"
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 56
 text = "FRI"
 horizontal_alignment = 1
 
@@ -326,7 +326,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("4_e63bl")
 theme_type_variation = &"HomeTabLabel"
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 56
 text = "SAT"
 horizontal_alignment = 1
 

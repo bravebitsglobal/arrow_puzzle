@@ -8,6 +8,7 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July", 
 @onready var date_container: GridContainer = $Calendar/DateContainer
 @onready var button_play: Button = $ButtonPlay
 @onready var label_date: Label = $Calendar/LabelDate
+@onready var label_star: Label = $Calendar/Star/LabelStar
 
 
 var month: int 
@@ -23,6 +24,8 @@ func _ready() -> void:
 	month = date_dict['month']
 	year = date_dict['year']
 	resolved_date = Global.game_data.player_data.get_challenge_dates(year, month)
+	var days = get_days_in_month(year, month)
+	label_star.text = "%d/%d" % [resolved_date.size(), days]
 	render_calendar()
 	for i in date_container.get_children():
 		i.clicked.connect(_on_date_clicked)

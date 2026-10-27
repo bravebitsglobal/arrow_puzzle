@@ -2,14 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="1_mugqg"]
 [ext_resource type="Script" uid="uid://cf7d8do65j5d5" path="res://scene/home/challenge/day.gd" id="2_fjem1"]
-[ext_resource type="Texture2D" uid="uid://8kgjmlwnt46e" path="res://ui/date_lock.png" id="3_5s4dk"]
-[ext_resource type="Texture2D" uid="uid://danixhk4bkv7k" path="res://ui/date_current.png" id="3_6fp7c"]
+[ext_resource type="Texture2D" uid="uid://d2nd6g74qs5bn" path="res://ui/tab_active.png" id="3_6fp7c"]
 [ext_resource type="Texture2D" uid="uid://c3npknkf0gie0" path="res://ui/date_resolve.png" id="5_u7ukx"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_6fp7c"]
-font_size = 36
-outline_size = 5
-outline_color = Color(0.19607843, 0.14509805, 0.36078432, 1)
 
 [node name="Day" type="Button" unique_id=573855203]
 custom_minimum_size = Vector2(120, 120)
@@ -29,52 +23,50 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureSelected" type="TextureRect" parent="CenterContainer" unique_id=716237315]
+custom_minimum_size = Vector2(130, 130)
 layout_mode = 2
 texture = ExtResource("3_6fp7c")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="LabelSelected" type="Label" parent="CenterContainer/TextureSelected" unique_id=1679304230]
-layout_mode = 0
-offset_left = 11.0
-offset_top = 18.0
-offset_right = 116.5
-offset_bottom = 68.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("1_mugqg")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "232"
-label_settings = SubResource("LabelSettings_6fp7c")
+theme_type_variation = &"HomeTabLabel"
+theme_override_font_sizes/font_size = 56
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelDisable" type="Label" parent="CenterContainer" unique_id=238897363]
+self_modulate = Color(0.46462417, 0.46462423, 0.46462423, 1)
+layout_mode = 2
+theme = ExtResource("1_mugqg")
+theme_type_variation = &"HomeTabLabel"
+theme_override_font_sizes/font_size = 56
+text = "23"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureDisable" type="TextureRect" parent="CenterContainer" unique_id=1893961766]
 layout_mode = 2
-texture = ExtResource("3_5s4dk")
-
-[node name="LabelDisable" type="Label" parent="CenterContainer/TextureDisable" unique_id=238897363]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -28.5
-offset_top = 20.0
-offset_right = 28.5
-offset_bottom = 70.0
-grow_horizontal = 2
-theme = ExtResource("1_mugqg")
-theme_type_variation = &"HeaderMedium"
-text = "232"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="LabelEnable" type="Label" parent="CenterContainer" unique_id=1216367573]
 layout_mode = 2
 theme = ExtResource("1_mugqg")
-theme_type_variation = &"HeaderMedium"
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_type_variation = &"HomeTabLabel"
+theme_override_font_sizes/font_size = 56
 text = "232"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureCompleted" type="TextureRect" parent="CenterContainer" unique_id=475717903]
-visible = false
+custom_minimum_size = Vector2(130, 130)
 layout_mode = 2
 texture = ExtResource("5_u7ukx")
+expand_mode = 1

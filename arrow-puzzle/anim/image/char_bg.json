@@ -1,0 +1,53 @@
+{ "skeleton": { "images": "Z:/Animation/Char-Bg/image/" },
+"PhotoshopToSpine": { "scale": 1, "padding": 0, "trim": true },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Bg", "bone": "root", "attachment": "Bg" },
+	{ "name": "tail", "bone": "root", "attachment": "tail" },
+	{ "name": "body", "bone": "root", "attachment": "body" },
+	{ "name": "mouth", "bone": "root", "attachment": "mouth" },
+	{ "name": "eyeR1", "bone": "root", "attachment": "eyeR1" },
+	{ "name": "eyeR2", "bone": "root", "attachment": "eyeR2" },
+	{ "name": "eyeL1", "bone": "root", "attachment": "eyeL1" },
+	{ "name": "eyeL2", "bone": "root", "attachment": "eyeL2" },
+	{ "name": "handL", "bone": "root", "attachment": "handL" },
+	{ "name": "handR", "bone": "root", "attachment": "handR" }
+],
+"skins": {
+	"default": {
+		"Bg": {
+			"Bg": { "x": 543.5, "y": -966, "width": 1087, "height": 1932 }
+		},
+		"tail": {
+			"tail": { "x": 372, "y": -1472.5, "width": 216, "height": 205 }
+		},
+		"body": {
+			"body": { "x": 535, "y": -1231, "width": 716, "height": 838 }
+		},
+		"mouth": {
+			"mouth": { "x": 587.5, "y": -1171.5, "width": 33, "height": 35 }
+		},
+		"eyeR1": {
+			"eyeR1": { "x": 653.5, "y": -1065, "width": 105, "height": 106 }
+		},
+		"eyeR2": {
+			"eyeR2": { "x": 648.5, "y": -1066, "width": 95, "height": 100 }
+		},
+		"eyeL1": {
+			"eyeL1": { "x": 458.5, "y": -1149.5, "width": 107, "height": 107 }
+		},
+		"eyeL2": {
+			"eyeL2": { "x": 461.5, "y": -1147, "width": 99, "height": 102 }
+		},
+		"handL": {
+			"handL": { "x": 502, "y": -1333, "width": 152, "height": 166 }
+		},
+		"handR": {
+			"handR": { "x": 719, "y": -1311, "width": 118, "height": 162 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

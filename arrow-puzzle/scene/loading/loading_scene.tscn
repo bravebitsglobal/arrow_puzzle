@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://b7p0tflhctaw"]
 
 [ext_resource type="Script" uid="uid://d2oltlrl4mj51" path="res://scene/loading/loading_scene.gd" id="1_26iq7"]
-[ext_resource type="Texture2D" uid="uid://dmnlk336wuw2l" path="res://ui/loading.jpg" id="2_7d0ro"]
+[ext_resource type="Texture2D" uid="uid://b8nnnllihsfly" path="res://anim/image/Bg.png" id="2_7d0ro"]
 [ext_resource type="Texture2D" uid="uid://dqgbodnbsw1rh" path="res://ui/Illustration77.png" id="4_7d0ro"]
 [ext_resource type="Texture2D" uid="uid://c17dguhslpo5r" path="res://ui/Illustration88.png" id="5_8uhwx"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="5_uq73k"]
+[ext_resource type="Texture2D" uid="uid://oakpuigjlwq5" path="res://ui/logo.png" id="6_8uhwx"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://dd6iay2ydcjc" path="res://anim/new_spine_skeleton_data_resource.tres" id="6_26iq7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]
 font_size = 36
@@ -31,8 +33,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -458.0
-offset_bottom = -358.0
+offset_top = -119.0
+offset_bottom = -19.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("5_uq73k")
@@ -69,3 +71,28 @@ grow_vertical = 2
 text = "0%"
 label_settings = SubResource("LabelSettings_6ai3d")
 horizontal_alignment = 1
+
+[node name="SpineSprite" type="SpineSprite" parent="Panel" unique_id=1681992573]
+skeleton_data_res = ExtResource("6_26iq7")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+position = Vector2(532.00006, -781.00006)
+scale = Vector2(0.87273455, 0.87273455)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1860448021]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -353.71997
+offset_top = -876.0
+offset_right = 353.71997
+offset_bottom = -398.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_8uhwx")
+expand_mode = 1
+stretch_mode = 4

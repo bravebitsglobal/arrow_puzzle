@@ -24,6 +24,13 @@
 [ext_resource type="PackedScene" uid="uid://jcdecnx5nira" path="res://scene/global/tutorial/tutorial_target.tscn" id="20_xx4si"]
 [ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="24_osgb2"]
 
+[sub_resource type="Gradient" id="Gradient_ywpmx"]
+colors = PackedColorArray(0.21269843, 0.11944682, 0.5576055, 1, 0.10203224, 0.046289362, 0.305181, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ywpmx"]
+gradient = SubResource("Gradient_ywpmx")
+fill_to = Vector2(0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_6ai3d"]
 font_size = 48
 font_color = Color(0.38039216, 0.16470589, 0.05882353, 1)
@@ -54,13 +61,14 @@ arrow_scene = ExtResource("2_33cqm")
 [node name="Background" type="CanvasLayer" parent="." unique_id=945685704]
 layer = -100
 
-[node name="ColorRect" type="ColorRect" parent="Background" unique_id=1619338948]
+[node name="ColorRect" type="TextureRect" parent="Background" unique_id=1728537959]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.92941177, 0.92156863, 0.99607843, 1)
+texture = SubResource("GradientTexture2D_ywpmx")
+metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=733687426]
 position = Vector2(514, 813)
@@ -266,10 +274,10 @@ layout_mode = 0
 
 [node name="ButtonAutoPlay" type="Button" parent="UI/PanelGame/TopPanel" unique_id=929847234]
 layout_mode = 0
-offset_left = 339.0
-offset_top = 183.0
-offset_right = 515.0
-offset_bottom = 247.0
+offset_left = 823.0
+offset_top = 164.0
+offset_right = 1062.0
+offset_bottom = 254.0
 theme = ExtResource("5_p1ry8")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 28
@@ -279,22 +287,22 @@ expand_icon = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/PanelGame/TopPanel" unique_id=72214491]
 layout_mode = 0
-offset_left = 38.0
-offset_top = 146.0
-offset_right = 278.0
-offset_bottom = 260.0
+offset_left = 31.0
+offset_top = 141.0
+offset_right = 348.89474
+offset_bottom = 292.0
 texture = ExtResource("16_ywpmx")
 expand_mode = 1
 
 [node name="LabelLine" type="Label" parent="UI/PanelGame/TopPanel/TextureRect" unique_id=1370495897]
 layout_mode = 0
-offset_left = 66.0
-offset_top = 60.0
-offset_right = 176.0
-offset_bottom = 102.0
+offset_left = 100.0
+offset_top = 82.0
+offset_right = 210.0
+offset_bottom = 132.0
 theme = ExtResource("5_p1ry8")
 theme_type_variation = &"LabelDark"
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 36
 text = "18"
 horizontal_alignment = 1
 

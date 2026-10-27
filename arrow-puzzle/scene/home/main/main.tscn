@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://476vs03e3417" path="res://ui/btn_primary.png" id="9_am5cq"]
 [ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="9_wfedn"]
 [ext_resource type="PackedScene" uid="uid://bibf7t1spaib0" path="res://scene/home/main/avatar.tscn" id="11_p0pbj"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://dd6iay2ydcjc" path="res://anim/new_spine_skeleton_data_resource.tres" id="12_imfv8"]
 [ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="20_plyuu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sh07k"]
@@ -40,6 +41,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_am5cq")
+stretch_mode = 5
 metadata/_edit_lock_ = true
 
 [node name="PanelTop" type="Panel" parent="." unique_id=181405793]
@@ -51,10 +53,10 @@ grow_horizontal = 2
 [node name="Coin" type="Panel" parent="PanelTop" unique_id=535993124]
 custom_minimum_size = Vector2(300, 120)
 layout_mode = 1
-offset_left = 64.0
-offset_top = 68.0
-offset_right = 364.0
-offset_bottom = 188.0
+offset_left = 554.0
+offset_top = 58.0
+offset_right = 854.0
+offset_bottom = 178.0
 size_flags_vertical = 4
 theme = ExtResource("3_4xg5n")
 
@@ -119,10 +121,10 @@ layout_mode = 0
 
 [node name="ButtonDeveloper" type="Button" parent="PanelTop" unique_id=581519320]
 layout_mode = 0
-offset_left = 50.0
-offset_top = 239.0
-offset_right = 335.0
-offset_bottom = 324.0
+offset_left = 731.0
+offset_top = 238.0
+offset_right = 1048.0
+offset_bottom = 357.0
 theme_override_font_sizes/font_size = 56
 text = "Developer"
 
@@ -145,9 +147,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -303.42737
-offset_top = -785.0
+offset_top = -566.0
 offset_right = 303.42737
-offset_bottom = -522.0
+offset_bottom = -303.0
 grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("9_am5cq")
@@ -159,6 +161,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -37.0
+offset_bottom = -37.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "PLAY"
@@ -177,12 +181,11 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -139.5
-offset_top = -523.0
+offset_top = -425.0
 offset_right = 139.5
-offset_bottom = -438.0
+offset_bottom = -340.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("3_und5j")
 patch_margin_left = 25
 patch_margin_top = 25
 patch_margin_right = 25
@@ -209,10 +212,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -256.0
-offset_top = -282.0
-offset_right = 256.0
-offset_bottom = 230.0
+offset_left = -488.0
+offset_top = -909.0
+offset_right = -292.0
+offset_bottom = -713.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
+
+[node name="SpineSprite" type="SpineSprite" parent="." unique_id=1085189259]
+skeleton_data_res = ExtResource("12_imfv8")
+preview_skin = "default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+position = Vector2(543.00006, 828)
+scale = Vector2(0.8173651, 0.8173651)

@@ -1,0 +1,16 @@
+[remap]
+
+importer="spine.atlas"
+type="SpineAtlasResource"
+uid="uid://dhcorbpwey58d"
+path="res://.godot/imported/char_bg.atlas-eae3d49996564e9c34c4077c5cee1b37.spatlas"
+
+[deps]
+
+source_file="res://anim/char_bg.atlas"
+dest_files=["res://.godot/imported/char_bg.atlas-eae3d49996564e9c34c4077c5cee1b37.spatlas"]
+
+[params]
+
+normal_map_prefix="n"
+specular_map_prefix="s"

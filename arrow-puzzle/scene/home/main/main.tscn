@@ -41,7 +41,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_am5cq")
-stretch_mode = 5
+stretch_mode = 6
 metadata/_edit_lock_ = true
 
 [node name="PanelTop" type="Panel" parent="." unique_id=181405793]
@@ -199,8 +199,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_4xg5n")
-theme_type_variation = &"LabelDark"
-theme_override_font_sizes/font_size = 36
+theme_type_variation = &"HeaderMedium"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 44
 text = "Level 15"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -220,11 +221,27 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 
-[node name="SpineSprite" type="SpineSprite" parent="." unique_id=1085189259]
+[node name="AnimationButton" type="Button" parent="." unique_id=2080277218]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -258.0
+offset_top = -1241.0
+offset_right = 210.0
+offset_bottom = -572.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_4xg5n")
+theme_type_variation = &"FlatButton"
+
+[node name="SpineSprite" type="SpineSprite" parent="AnimationButton" unique_id=1085189259]
 skeleton_data_res = ExtResource("12_imfv8")
 preview_skin = "default"
 preview_animation = "-- Empty --"
 preview_frame = false
 preview_time = 0.0
-position = Vector2(543.00006, 828)
+position = Vector2(234, 94)
 scale = Vector2(0.8173651, 0.8173651)

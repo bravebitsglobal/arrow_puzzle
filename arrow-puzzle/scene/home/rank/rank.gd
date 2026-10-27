@@ -21,5 +21,5 @@ func load_data()->void:
 		if !name:
 			name = "Unknown Player"
 		var avatar = i.avatar if i.avatar != null else 0
-		node.set_data(i.rank, i.score, name, avatar)
+		node.set_data(i.userId, i.rank, i.score, name, avatar)
 	Global.popup_manager.hide_loading()

@@ -65,3 +65,15 @@ theme_override_constants/margin_bottom = 20
 
 [node name="RankItemContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer" unique_id=2137797753]
 layout_mode = 2
+
+[node name="RankItem" parent="ScrollContainer/MarginContainer/RankItemContainer" unique_id=1628978007 instance=ExtResource("5_450s3")]
+layout_mode = 2
+
+[node name="RankItem2" parent="ScrollContainer/MarginContainer/RankItemContainer" unique_id=1083794562 instance=ExtResource("5_450s3")]
+layout_mode = 2
+
+[node name="RankItem3" parent="ScrollContainer/MarginContainer/RankItemContainer" unique_id=64759537 instance=ExtResource("5_450s3")]
+layout_mode = 2
+
+[node name="RankItem4" parent="ScrollContainer/MarginContainer/RankItemContainer" unique_id=1699405826 instance=ExtResource("5_450s3")]
+layout_mode = 2

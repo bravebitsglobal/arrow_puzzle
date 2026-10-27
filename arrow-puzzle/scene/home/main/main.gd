@@ -6,9 +6,16 @@ class_name Main
 @onready var label_level: Label = $PanelBottom/Level/LabelLevel
 @onready var button_setting: TextureButton = $PanelTop/ButtonSetting
 @onready var avatar: Avatar = $Avatar
-@onready var spine_sprite: SpineSprite = $SpineSprite
+@onready var animation_button: Button = $AnimationButton
+@onready var spine_sprite: SpineSprite = $AnimationButton/SpineSprite
 
 func _ready() -> void:
+	animation_button.pressed.connect(func ():
+		spine_sprite.get_animation_state().set_animation('action')
+		spine_sprite.animation_completed.connect(func (spine, state, track):
+			spine_sprite.get_animation_state().set_animation('idle')
+			, CONNECT_ONE_SHOT)
+		)
 	spine_sprite.get_animation_state().set_animation('idle')
 	avatar.pressed.connect(func ():
 		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.SelectAvatar, true)

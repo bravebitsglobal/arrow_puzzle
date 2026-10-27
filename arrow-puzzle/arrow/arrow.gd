@@ -43,6 +43,9 @@ enum Action{
 }
 var action: Action = Action.Idle
 var tween: Tween
+var shake_tween: Tween
+const SHAKE_AMPLITUDE: float = 8
+const SHAKE_STEP_TIME: float = 0.05
 const SPEED: float = 1500
 const GO_IN_SPEED: float = 1000
 var exit_path: Array[PackedInt32Array]
@@ -115,7 +118,7 @@ func go_in():
 		action = Action.Idle
 		update_line_collision()
 		)
-func exit(result: Game.ExitPathResult):
+func exit(result: Game.ExitPathResult, blocked_arrow: Arrow = null):
 	if result.can_exit:
 		ruler.visible = false
 	exit_path = result.exit_path
@@ -135,6 +138,9 @@ func exit(result: Game.ExitPathResult):
 		stun.visible = true
 		get_tree().create_timer(3).timeout.connect(func ():
 			stun.visible = false)
+		if blocked_arrow:
+			var hit_dir := Utils.to_pos(exit_path[exit_path.size() - 1]) - Utils.to_pos(exit_path[exit_path.size() - 2])
+			tween.tween_callback(blocked_arrow.shake.bind(hit_dir.normalized()))
 		tween.tween_property(self, 'tail_progress', 0, dur)
 		tween.parallel().tween_property(self, 'head_progress', arrow_size, dur)
 	tween.finished.connect(func():
@@ -145,6 +151,16 @@ func exit(result: Game.ExitPathResult):
 		else:
 			action = Action.Idle
 		)
+## Rung theo huong bi dam: day lui theo dir roi dao dong tat dan ve vi tri cu.
+func shake(dir: Vector2) -> void:
+	if shake_tween:
+		shake_tween.kill()
+	position = Vector2.ZERO
+	shake_tween = create_tween()
+	var amps := [SHAKE_AMPLITUDE, -SHAKE_AMPLITUDE * 0.6, SHAKE_AMPLITUDE * 0.35, -SHAKE_AMPLITUDE * 0.15]
+	for a in amps:
+		shake_tween.tween_property(self, 'position', dir * a, SHAKE_STEP_TIME).set_trans(Tween.TRANS_SINE)
+	shake_tween.tween_property(self, 'position', Vector2.ZERO, SHAKE_STEP_TIME).set_trans(Tween.TRANS_SINE)
 func render():
 	if !data:
 		return
@@ -203,15 +219,14 @@ func active_highlight()->void:
 func erase()->void:
 	is_exit = true
 	self.visible = false
-func set_ruler(exit_rs: Game.ExitPathResult)->void:
+func set_ruler()->void:
 	ruler.clear_points()
 	ruler.visible = true
-	# Bat dau tu dau arrow, keo thang theo huong thoat toi khi ra ngoai hoac cham arrow khac
-	# Gioi han toi da RULER_MAX_CELLS o tinh tu dau
-	var head_idx = data.size() - 1
-	var end_idx = mini(exit_rs.exit_path.size(), head_idx + RULER_MAX_CELLS + 1)
-	for i in range(head_idx, end_idx):
-		ruler.add_point(Utils.to_pos(exit_rs.exit_path[i]))
+	# Ke thang tu dau arrow theo huong thoat RULER_MAX_CELLS o, khong dung lai khi cham arrow khac
+	var head_pos := Utils.to_pos(data[data.size() - 1])
+	var dir := head_pos - Utils.to_pos(data[data.size() - 2])
+	for i in range(RULER_MAX_CELLS + 1):
+		ruler.add_point(head_pos + dir * i)
 func clear_ruler()->void:
 	ruler.visible = false
 	ruler.clear_points()

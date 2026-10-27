@@ -24,6 +24,8 @@ var is_finish: bool = false
 class ExitPathResult:
 	var can_exit: bool
 	var exit_path: Array[PackedInt32Array]
+	# idx arrow bi dam vao khi khong thoat duoc, -1 neu thoat duoc
+	var blocked_idx: int = -1
 func _ready() -> void:
 	if Global.development:
 		button_auto_play.visible = true
@@ -46,7 +48,7 @@ func render_ruler()->void:
 	for i in range(level.size()):
 		if arrows[i].is_exit:
 			continue
-		arrows[i].set_ruler(calculate_exit_path(level[i]))
+		arrows[i].set_ruler()
 func clear_ruler()->void:
 	Global.game_data.is_ruler.value = false
 	for a in arrows:
@@ -82,7 +84,7 @@ func render_level():
 			var dot = dot_scene.instantiate()
 			dot.position = pos
 			dot_container.add_child(dot)
-			used_cells[Utils.to_index(c)] = true
+			used_cells[Utils.to_index(c)] = arrow_idx
 		arrow.on_click.connect(func ():
 			_on_arrow_clicked(arrow_idx))
 	Global.game_event.user_action.emit.call_deferred(GameEnum.UserAction.LevelStart, {"game": self})
@@ -174,7 +176,7 @@ func _on_arrow_clicked(idx: int):
 				"live_before": Global.game_data.lives.value + 1,
 				"live_after": Global.game_data.lives.value})
 		Global.firebase_manager.log_event("arrow_tap", {"level_id": Global.game_data.level.value, "row_id": idx, "result": "fail"})
-	arrows[idx].exit(rs)
+	arrows[idx].exit(rs, arrows[rs.blocked_idx] if rs.blocked_idx >= 0 else null)
 	check_end_game()
 	await get_tree().create_timer(1).timeout
 	Global.game_data.animating.value = false
@@ -252,6 +254,7 @@ func calculate_exit_path(data)->ExitPathResult:
 				exit_path.append(next_pos)
 				if used_cells.has(idx):
 					result.can_exit = false
+					result.blocked_idx = used_cells[idx]
 					break
 		Utils.Direction.Down:
 			for i in range(head[1]+1, head[1] + out):
@@ -260,6 +263,7 @@ func calculate_exit_path(data)->ExitPathResult:
 				exit_path.append(next_pos)
 				if used_cells.has(idx):
 					result.can_exit = false
+					result.blocked_idx = used_cells[idx]
 					break
 		Utils.Direction.Left:
 			for i in range(head[0]-1, head[0] - out, -1):
@@ -268,6 +272,7 @@ func calculate_exit_path(data)->ExitPathResult:
 				exit_path.append(next_pos)
 				if used_cells.has(idx):
 					result.can_exit = false
+					result.blocked_idx = used_cells[idx]
 					break
 		Utils.Direction.Right:
 			for i in range(head[0]+1, head[0] + out):
@@ -276,6 +281,7 @@ func calculate_exit_path(data)->ExitPathResult:
 				exit_path.append(next_pos)
 				if used_cells.has(idx):
 					result.can_exit = false
+					result.blocked_idx = used_cells[idx]
 					break
 	result.exit_path = exit_path
 	return result

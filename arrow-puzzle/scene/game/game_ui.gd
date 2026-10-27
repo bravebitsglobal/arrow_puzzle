@@ -81,11 +81,11 @@ func _on_active_tutorial_changed(step)->void:
 func _on_booster_hint_click()->void:
 	if Global.game_data.animating.value:
 		return
-	print("not active tutorial ", Global.game_data.active_tutorial.value)
 	if Global.game_data.active_tutorial.value:
 		Global.game_event.user_action.emit(GameEnum.UserAction.ActiveBooster, 
 		{"booster": GameEnum.Booster.Hint})
 		return
+	print("booster hint ", Global.game_data.booster_hint.value)
 	if Global.game_data.booster_hint.value:
 		Global.game_data.booster_hint.value = Global.game_data.booster_hint.value - 1
 		Global.game_event.user_action.emit(GameEnum.UserAction.ActiveBooster, 

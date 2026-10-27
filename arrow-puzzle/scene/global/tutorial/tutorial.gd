@@ -92,6 +92,7 @@ func get_step(level: int, action: GameEnum.UserAction):
 		return null
 	return TUTORIAL_STEPS[step_idx]
 func run_step(step, data)->void:
+	print("run tutorial step", step, data)
 	Global.game_data.active_tutorial.value = step
 	match step.action:
 		"focus_booster_button":
@@ -103,3 +104,5 @@ func run_step(step, data)->void:
 		"focus_an_arrow":
 			var game:Game = data['game']
 			game.focus_arrow(game.get_hint_idx())
+		_:
+			Global.game_data.active_tutorial.value = null

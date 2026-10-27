@@ -21,10 +21,11 @@ script = ExtResource("1_1cgl5")
 [node name="SelectEffect" parent="." unique_id=94822293 instance=ExtResource("3_70wnu")]
 visible = false
 layout_mode = 1
-offset_left = -55.0
-offset_top = -48.0
-offset_right = 54.0
-offset_bottom = 3.0
+offset_left = -81.0
+offset_top = -77.0
+offset_right = 231.0
+offset_bottom = 185.0
+scale = Vector2(0.696599, 0.696599)
 
 [node name="Claimed" type="TextureRect" parent="." unique_id=588016488]
 layout_mode = 1

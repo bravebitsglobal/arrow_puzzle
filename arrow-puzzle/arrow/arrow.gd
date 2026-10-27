@@ -10,10 +10,30 @@ var COLORS = [
 	"#8E2BD9", # tím
 	"#E8197F", # hồng
 ]
-@onready var eyes_close: Sprite2D = $Head/Down/EyesClose
-@onready var eyes_close_right: Sprite2D = $Head/Right/EyesCloseRight
-@onready var eyes_close_left: Sprite2D = $Head/Left/EyesCloseLeft
-@onready var stun: Sprite2D = $Head/Stun
+@onready var head_down: Sprite2D = $Head/Down
+@onready var head_left: Sprite2D = $Head/Left
+@onready var head_right: Sprite2D = $Head/Right
+enum Face{
+	Open,
+	Close,
+	Stun
+}
+# Right dung chung anh voi Left (sprite Right da flip_h trong scene)
+# TODO: arrow/head/head-left-open.png dang 1254px nen trang, tam dung texture/2.png (cung hinh, 256px trong suot)
+const HEAD_DOWN_TEXTURES = {
+	Face.Open: preload("res://arrow/head/head-down-open.png"),
+	Face.Close: preload("res://arrow/head/head-down-close.png"),
+	Face.Stun: preload("res://arrow/head/head-down-stun.png"),
+}
+const HEAD_SIDE_TEXTURES = {
+	Face.Open: preload("res://arrow/texture/2.png"),
+	Face.Close: preload("res://arrow/head/head-left-close.png"),
+	Face.Stun: preload("res://arrow/head/head-left-stun.png"),
+}
+const STUN_TIME: float = 3
+var is_stunned: bool = false
+# Tang moi lan bi stun, de timer cua lan stun cu khong ket thuc stun moi
+var _stun_id: int = 0
 
 @export var PATTERNS: Array[Texture2D] = []
 const ROTATES = [0, 180, -90, 90]
@@ -135,9 +155,7 @@ func exit(result: Game.ExitPathResult, blocked_arrow: Arrow = null):
 	tween.tween_property(self, 'tail_progress', move_distance, dur)
 	tween.parallel().tween_property(self, 'head_progress', move_distance + arrow_size, dur)
 	if !result.can_exit:
-		stun.visible = true
-		get_tree().create_timer(3).timeout.connect(func ():
-			stun.visible = false)
+		set_stun()
 		if blocked_arrow:
 			var hit_dir := Utils.to_pos(exit_path[exit_path.size() - 1]) - Utils.to_pos(exit_path[exit_path.size() - 2])
 			tween.tween_callback(blocked_arrow.shake.bind(hit_dir.normalized()))
@@ -161,6 +179,20 @@ func shake(dir: Vector2) -> void:
 	for a in amps:
 		shake_tween.tween_property(self, 'position', dir * a, SHAKE_STEP_TIME).set_trans(Tween.TRANS_SINE)
 	shake_tween.tween_property(self, 'position', Vector2.ZERO, SHAKE_STEP_TIME).set_trans(Tween.TRANS_SINE)
+func set_face(face: Face) -> void:
+	head_down.texture = HEAD_DOWN_TEXTURES[face]
+	head_left.texture = HEAD_SIDE_TEXTURES[face]
+	head_right.texture = HEAD_SIDE_TEXTURES[face]
+func set_stun() -> void:
+	is_stunned = true
+	_stun_id += 1
+	var id := _stun_id
+	set_face(Face.Stun)
+	await get_tree().create_timer(STUN_TIME).timeout
+	if id != _stun_id:
+		return
+	is_stunned = false
+	set_face(Face.Open)
 func render():
 	if !data:
 		return
@@ -250,20 +282,11 @@ func _on_blink_timer_timeout() -> void:
 	# Thực hiện chớp mắt
 	blink_eye()
 func blink_eye() -> void:
-	# Đổi sang mắt nhắm
-	eyes_close.visible = true
-	eyes_close_left.visible = true
-	eyes_close_right.visible = true
-	
-	# Đợi một khoảng thời gian cực ngắn (0.12s)
-	await get_tree().create_timer(blink_duration).timeout
-	
-	# Đổi lại mắt mở
-	eyes_close.visible = false
-	eyes_close_left.visible = false
-	eyes_close_right.visible = false
-	
-	# Lên lịch cho lần chớp mắt tiếp theo
+	if !is_stunned:
+		set_face(Face.Close)
+		await get_tree().create_timer(blink_duration).timeout
+		if !is_stunned:
+			set_face(Face.Open)
 	schedule_next_blink()
 func get_dir(index: float)->int:
 	var i = exit_path[floor(index)]

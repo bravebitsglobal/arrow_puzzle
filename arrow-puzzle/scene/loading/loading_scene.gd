@@ -28,6 +28,7 @@ func load_data() -> bool:
 		return false
 	var profile = profile_res.data.data
 	profile.user_id = authen_res.data.user.id
+	Global.game_data.profile.value = profile
 	return true
 
 # Đăng nhập GameHub bằng device id + country của thiết bị.

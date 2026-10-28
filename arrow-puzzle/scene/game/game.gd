@@ -16,6 +16,11 @@ var start_time: int = 0
 var remain_magic_glasses: int = 0
 var level
 var arrows: Array[Arrow] = []
+# cell index -> Dot
+var dots: Dictionary = {}
+# Toc do lan toa khi an dot luc thang (px/s)
+const DISSOLVE_SPEED: float = 600
+const DotScript = preload("res://dot/dot.gd")
 var total_line: int = 0
 var is_using_eraser: bool = false
 var is_focus: bool = false
@@ -69,6 +74,7 @@ func render_level():
 	arrows.clear()
 	for d in dot_container.get_children():
 		d.queue_free()
+	dots.clear()
 	await get_tree().process_frame
 	for arrow_idx in range(level.size()):
 		var points = level[arrow_idx]
@@ -84,10 +90,16 @@ func render_level():
 			var dot = dot_scene.instantiate()
 			dot.position = pos
 			dot_container.add_child(dot)
+			dots[Utils.to_index(c)] = dot
 			used_cells[Utils.to_index(c)] = arrow_idx
+		arrow.tail_passed.connect(_on_arrow_tail_passed)
 		arrow.on_click.connect(func ():
 			_on_arrow_clicked(arrow_idx))
 	Global.game_event.user_action.emit.call_deferred(GameEnum.UserAction.LevelStart, {"game": self})
+func _on_arrow_tail_passed(cell: PackedInt32Array, color: Color) -> void:
+	var dot = dots.get(Utils.to_index(cell))
+	if dot:
+		dot.pulse(color)
 func _on_user_action(action: GameEnum.UserAction, data: Dictionary)->void:
 	match action:
 		GameEnum.UserAction.ActiveBooster:
@@ -216,7 +228,12 @@ func check_end_game():
 		return
 	if !used_cells.size():
 		is_finish = true
-		await get_tree().create_timer(1).timeout
+		# Doi arrow cuoi roi khoi o cuoi cung, roi an cac dot lan toa tu giua ra
+		for a in arrows:
+			if !a.has_left_cells:
+				await a.left_cells
+		await dissolve_dots()
+		await get_tree().create_timer(0.3).timeout
 		if Global.game_data.current_challenge.value.size():
 			Global.game_data.player_data.set_challenge_resolved(
 				Global.game_data.current_challenge.value[0],
@@ -235,6 +252,20 @@ func check_end_game():
 				"tap_count": tap_count,
 				"blocked_tap_count": blocked_tap_count
 			})
+## An tat ca dot theo hieu ung lan toa tu tam ban ra xung quanh, doi den khi xong.
+func dissolve_dots() -> void:
+	if !dots.size():
+		return
+	var rect := Rect2(dots.values()[0].position, Vector2.ZERO)
+	for dot in dots.values():
+		rect = rect.expand(dot.position)
+	var center := rect.get_center()
+	var max_delay: float = 0
+	for dot in dots.values():
+		var delay: float = dot.position.distance_to(center) / DISSOLVE_SPEED
+		max_delay = maxf(max_delay, delay)
+		dot.dissolve(delay)
+	await get_tree().create_timer(max_delay + DotScript.DISSOLVE_TIME).timeout
 func remove_arrow(idx: int):
 	for c in level[idx]:
 		used_cells.erase(Utils.to_index(c))

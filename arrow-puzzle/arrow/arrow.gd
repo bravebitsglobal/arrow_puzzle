@@ -72,6 +72,14 @@ var exit_path: Array[PackedInt32Array]
 var tail_progress: float = 0
 var head_progress: float = 0
 signal on_click
+## Phat ra khi duoi arrow vua roi khoi mot o luc thoat ra (de lam vet tren dot)
+signal tail_passed(cell: PackedInt32Array, color: Color)
+# So o tren exit_path duoi da di qua (da phat tail_passed)
+var _trail_index: int = 0
+## Phat ra 1 lan khi duoi arrow da roi khoi o cuoi cung cua arrow (luc thoat ra)
+signal left_cells
+var has_left_cells: bool = false
+var color: Color
 var is_exit: bool = false
 var _mouse_pressed_pos: Vector2 = Vector2.ZERO
 var _is_mouse_pressed: bool = false
@@ -146,6 +154,7 @@ func exit(result: Game.ExitPathResult, blocked_arrow: Arrow = null):
 	var arrow_size = data.size() * CELL_SIZE
 	tail_progress = 0
 	head_progress = arrow_size
+	_trail_index = 0
 	action = Action.GoingOut
 	if tween:
 		tween.kill()
@@ -164,6 +173,7 @@ func exit(result: Game.ExitPathResult, blocked_arrow: Arrow = null):
 	tween.finished.connect(func():
 		update_line()
 		if result.can_exit:
+			_mark_left_cells()
 			action = Action.Exited
 			self.visible = false
 		else:
@@ -243,6 +253,20 @@ func _append_distinct(pts: PackedVector2Array, p: Vector2) -> void:
 func _physics_process(_delta: float) -> void:
 	if action != Action.Idle:
 		update_line()
+	if action == Action.GoingOut and is_exit:
+		_emit_trail()
+func _emit_trail() -> void:
+	var passed := mini(floori(tail_progress / CELL_SIZE), exit_path.size())
+	while _trail_index < passed:
+		tail_passed.emit(exit_path[_trail_index], color)
+		_trail_index += 1
+	if _trail_index >= data.size():
+		_mark_left_cells()
+func _mark_left_cells() -> void:
+	if has_left_cells:
+		return
+	has_left_cells = true
+	left_cells.emit()
 func active_highlight()->void:
 	highlight.visible = true
 	highlight_animation_player.play("highlight")
@@ -250,6 +274,7 @@ func active_highlight()->void:
 	highlight.visible = false
 func erase()->void:
 	is_exit = true
+	_mark_left_cells()
 	self.visible = false
 func set_ruler()->void:
 	ruler.clear_points()
@@ -263,8 +288,9 @@ func clear_ruler()->void:
 	ruler.visible = false
 	ruler.clear_points()
 ## Đổi màu cả arrow (thân, đầu, đuôi). Nhận Color hoặc chuỗi hex như trong COLORS.
-func set_color(color: Variant) -> void:
-	var c: Color = Color(color) if color is String else color
+func set_color(value: Variant) -> void:
+	var c: Color = Color(value) if value is String else value
+	color = c
 	(material as ShaderMaterial).set_shader_parameter("target_color", c)
 func set_random_color() -> void:
 	set_color(COLORS.pick_random())

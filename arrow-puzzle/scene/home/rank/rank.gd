@@ -12,7 +12,6 @@ func load_data()->void:
 	for i in rank_item_container.get_children():
 		i.queue_free()
 	var leader = await Global.api.get_leaderboard('alltime')
-	print("leader ", leader)
 	var entries = leader.data.entries
 	for i in entries:
 		var node: RankItem = rank_item_scene.instantiate()

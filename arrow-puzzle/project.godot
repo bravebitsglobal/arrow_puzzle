@@ -17,7 +17,7 @@ boot_splash/show_image=false
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
 boot_splash/image="uid://c0dfppjy28hfu"
-config/icon="uid://d4heilart8j4j"
+config/icon="uid://j86nsfeu5864"
 config/macos_native_icon="uid://d4heilart8j4j"
 config/windows_native_icon="uid://d4heilart8j4j"
 

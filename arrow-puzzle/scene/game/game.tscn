@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://bde5tiv4j0r37" path="res://ui/booster_ruler.png" id="14_okn60"]
 [ext_resource type="Texture2D" uid="uid://yw5kc1a62df1" path="res://ui/booster_hint.png" id="16_i6gbm"]
 [ext_resource type="Texture2D" uid="uid://ctqy8g6ugad7w" path="res://ui/light.png" id="16_osgb2"]
+[ext_resource type="PackedScene" uid="uid://cn6slprgwcwf3" path="res://component/show_on_development.tscn" id="16_xx4si"]
 [ext_resource type="Texture2D" uid="uid://ciw5645iw6c48" path="res://ui/remain.png" id="16_ywpmx"]
 [ext_resource type="Texture2D" uid="uid://bf8p1vafi5pew" path="res://ui/booster_eraser.png" id="19_4qy8q"]
 [ext_resource type="PackedScene" uid="uid://jcdecnx5nira" path="res://scene/global/tutorial/tutorial_target.tscn" id="20_xx4si"]
@@ -284,6 +285,9 @@ theme_override_font_sizes/font_size = 28
 text = "Auto Play"
 icon = ExtResource("16_osgb2")
 expand_icon = true
+
+[node name="ShowOnDevelopment" parent="UI/PanelGame/TopPanel/ButtonAutoPlay" unique_id=162006001 instance=ExtResource("16_xx4si")]
+layout_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="UI/PanelGame/TopPanel" unique_id=72214491]
 layout_mode = 0

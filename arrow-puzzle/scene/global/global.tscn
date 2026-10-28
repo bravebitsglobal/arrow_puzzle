@@ -18,7 +18,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_7dyo8")
-development = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=695521333]
 layer = 10

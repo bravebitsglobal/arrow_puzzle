@@ -12,10 +12,13 @@ class_name Main
 func _ready() -> void:
 	animation_button.pressed.connect(func ():
 		spine_sprite.get_animation_state().set_animation('action')
-		spine_sprite.animation_completed.connect(func (spine, state, track):
-			spine_sprite.get_animation_state().set_animation('idle')
-			, CONNECT_ONE_SHOT)
 		)
+	spine_sprite.animation_completed.connect(func (spine, state, track):
+		var random = randi_range(0, 1)
+		if random:
+			spine_sprite.get_animation_state().set_animation('idle')
+		else:
+			spine_sprite.get_animation_state().set_animation('action'))
 	spine_sprite.get_animation_state().set_animation('idle')
 	avatar.pressed.connect(func ():
 		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.SelectAvatar, true)

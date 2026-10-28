@@ -1,0 +1,58 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scene/popup/loading/loading_arrow.gd" id="1_script"]
+[ext_resource type="Material" uid="uid://ij548ok7kshs" path="res://arrow/arrow_color_material.tres" id="2_color"]
+[ext_resource type="Texture2D" uid="uid://crea03d20b5ky" path="res://arrow/texture/3.png" id="3_body"]
+[ext_resource type="Texture2D" uid="uid://dr7ulog8y64jo" path="res://arrow/texture/be02db5c-d492-4597-84e5-54ffdd43798c.png" id="4_up"]
+[ext_resource type="Texture2D" uid="uid://cpe7r2c5d8ntv" path="res://arrow/texture/than ngang.png" id="5_down"]
+[ext_resource type="Texture2D" uid="uid://cm81d6edqptfq" path="res://arrow/texture/2.png" id="6_side"]
+
+[node name="LoadingArrow" type="Node2D"]
+texture_repeat = 2
+material = ExtResource("2_color")
+script = ExtResource("1_script")
+
+[node name="Line2D" type="Line2D" parent="."]
+use_parent_material = true
+width = 40.0
+texture = ExtResource("3_body")
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+sharp_limit = 1.0
+round_precision = 16
+antialiased = true
+
+[node name="Head" type="Node2D" parent="."]
+use_parent_material = true
+rotation = -0.08726646
+scale = Vector2(1.3167543, 1.3167543)
+
+[node name="Up" type="Sprite2D" parent="Head"]
+visible = false
+use_parent_material = true
+position = Vector2(-2.3841856e-07, -4.556659)
+scale = Vector2(0.23302928, 0.23302928)
+texture = ExtResource("4_up")
+
+[node name="Down" type="Sprite2D" parent="Head"]
+visible = false
+use_parent_material = true
+position = Vector2(0, -6.0755444)
+scale = Vector2(0.21770546, 0.21770546)
+texture = ExtResource("5_down")
+
+[node name="Left" type="Sprite2D" parent="Head"]
+visible = false
+use_parent_material = true
+position = Vector2(0, -6)
+scale = Vector2(0.20469363, 0.20469363)
+texture = ExtResource("6_side")
+
+[node name="Right" type="Sprite2D" parent="Head"]
+visible = false
+use_parent_material = true
+position = Vector2(0, -6)
+scale = Vector2(0.20469363, 0.20469363)
+texture = ExtResource("6_side")
+flip_h = true

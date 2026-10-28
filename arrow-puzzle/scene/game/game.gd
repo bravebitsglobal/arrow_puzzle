@@ -32,8 +32,6 @@ class ExitPathResult:
 	# idx arrow bi dam vao khi khong thoat duoc, -1 neu thoat duoc
 	var blocked_idx: int = -1
 func _ready() -> void:
-	if Global.development:
-		button_auto_play.visible = true
 	next_level()
 	Global.game_event.game_start.connect(func():
 		next_level())

@@ -1,7 +1,7 @@
 extends Node2D
 class_name Arrow
 # 7 màu đậm, bão hòa cao để nổi trên nền sáng #edebfe (tương phản >= ~3:1).
-var COLORS = [
+const COLORS = [
 	"#E8202A", # đỏ
 	"#F05A00", # cam
 	"#0E9A3E", # xanh lá

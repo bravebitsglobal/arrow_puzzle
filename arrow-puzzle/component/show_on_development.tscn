@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cn6slprgwcwf3"]
+
+[ext_resource type="Script" uid="uid://bs86sds0o34sx" path="res://component/show_on_development.gd" id="1_ht7wy"]
+
+[node name="ShowOnDevelopment" type="Control" unique_id=162006001]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ht7wy")

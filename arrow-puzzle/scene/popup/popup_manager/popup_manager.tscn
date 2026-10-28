@@ -9,45 +9,25 @@
 [ext_resource type="PackedScene" uid="uid://cet37f0ddk5m2" path="res://scene/popup/popup_daily_reward/popup_daily_reward.tscn" id="6_ldm45"]
 [ext_resource type="PackedScene" uid="uid://cypffk5vv04gk" path="res://scene/popup/popup_select_avatar/popup_select_avatar.tscn" id="7_keppy"]
 [ext_resource type="PackedScene" uid="uid://cedgj0vdsu6dr" path="res://scene/popup/popup_pause/popup_pause.tscn" id="8_ldf8t"]
-[ext_resource type="Texture2D" uid="uid://c0v0mi3h88dyf" path="res://ui/loading.png" id="9_ldm45"]
 [ext_resource type="Theme" uid="uid://qg7210sv585g" path="res://theme/ui_theme.tres" id="10_3ipip"]
+[ext_resource type="PackedScene" path="res://scene/popup/loading/loading_arrow.tscn" id="11_arrow"]
+[ext_resource type="Shader" uid="uid://c88cy3nggnpd6" path="res://arrow/arrow_color.gdshader" id="12_5gnvg"]
 
-[sub_resource type="Animation" id="Animation_ldf8t"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
+[sub_resource type="LabelSettings" id="LabelSettings_ldf8t"]
+font_size = 72
+outline_size = 20
+outline_color = Color(0.1458351, 3.946722e-06, 0.66088563, 1)
 
-[sub_resource type="Animation" id="Animation_3ipip"]
-resource_name = "loading"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.2831855]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ldf8t"]
-_data = {
-&"RESET": SubResource("Animation_ldf8t"),
-&"loading": SubResource("Animation_3ipip")
-}
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x2wh0"]
+resource_local_to_scene = true
+shader = ExtResource("12_5gnvg")
+shader_parameter/target_color = Color(1, 0.33, 0.73, 1)
+shader_parameter/strength = 1.0
+shader_parameter/source_hue = 0.9
+shader_parameter/reference_luma = 0.72
+shader_parameter/hue_inner = 0.045
+shader_parameter/hue_outer = 0.065
+shader_parameter/min_saturation = 0.12
 
 [node name="PopupManager" type="Control" unique_id=999376964]
 layout_mode = 3
@@ -78,24 +58,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="PopupLoading" unique_id=959656964]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -214.0
-offset_right = 128.0
-offset_bottom = 42.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(128, 128)
-texture = ExtResource("9_ldm45")
-expand_mode = 1
-stretch_mode = 5
-
 [node name="Label" type="Label" parent="PopupLoading" unique_id=289715090]
 layout_mode = 1
 anchors_preset = 8
@@ -103,20 +65,33 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -37.5
-offset_top = 66.0
-offset_right = 37.5
-offset_bottom = 89.0
+offset_left = -200.0
+offset_top = -40.0
+offset_right = 200.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("10_3ipip")
 theme_type_variation = &"HeaderMedium"
 theme_override_font_sizes/font_size = 56
 text = "Loading..."
+label_settings = SubResource("LabelSettings_ldf8t")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="PopupLoading" unique_id=635574259]
-libraries/ = SubResource("AnimationLibrary_ldf8t")
-autoplay = &"loading"
+[node name="ArrowCenter" type="Control" parent="PopupLoading" unique_id=1201269695]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LoadingArrow" parent="PopupLoading/ArrowCenter" unique_id=1243169421 instance=ExtResource("11_arrow")]
+material = SubResource("ShaderMaterial_x2wh0")
 
 [node name="ToastContainer" type="Control" parent="." unique_id=1166185136]
 z_index = 1000

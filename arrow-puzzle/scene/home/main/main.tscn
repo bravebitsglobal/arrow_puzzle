@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c8ddefbty2a13" path="res://ui/icon_setting.png" id="7_imhgi"]
 [ext_resource type="Texture2D" uid="uid://476vs03e3417" path="res://ui/btn_primary.png" id="9_am5cq"]
 [ext_resource type="FontFile" uid="uid://dg7cbqcpa8ufw" path="res://ui/font/Mikado Black.otf" id="9_wfedn"]
+[ext_resource type="PackedScene" uid="uid://cn6slprgwcwf3" path="res://component/show_on_development.tscn" id="10_wit2e"]
 [ext_resource type="PackedScene" uid="uid://bibf7t1spaib0" path="res://scene/home/main/avatar.tscn" id="11_p0pbj"]
 [ext_resource type="SpineSkeletonDataResource" uid="uid://dd6iay2ydcjc" path="res://anim/new_spine_skeleton_data_resource.tres" id="12_imfv8"]
 [ext_resource type="PackedScene" uid="uid://cweainaq47u2x" path="res://component/button_effect.tscn" id="20_plyuu"]
@@ -48,6 +49,8 @@ metadata/_edit_lock_ = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_top = 48.0
+offset_bottom = 48.0
 grow_horizontal = 2
 
 [node name="Coin" type="Panel" parent="PanelTop" unique_id=535993124]
@@ -127,6 +130,9 @@ offset_right = 1048.0
 offset_bottom = 357.0
 theme_override_font_sizes/font_size = 56
 text = "Developer"
+
+[node name="ShowOnDevelopment" parent="PanelTop/ButtonDeveloper" unique_id=162006001 instance=ExtResource("10_wit2e")]
+layout_mode = 1
 
 [node name="PanelBottom" type="Panel" parent="." unique_id=848475349]
 layout_mode = 1
@@ -208,17 +214,10 @@ vertical_alignment = 1
 
 [node name="Avatar" parent="." unique_id=17255980 instance=ExtResource("11_p0pbj")]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -488.0
-offset_top = -909.0
-offset_right = -292.0
-offset_bottom = -713.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 48.0
+offset_top = 74.0
+offset_right = 244.0
+offset_bottom = 270.0
 mouse_filter = 0
 
 [node name="AnimationButton" type="Button" parent="." unique_id=2080277218]

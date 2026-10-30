@@ -58,6 +58,7 @@ func clear_ruler()->void:
 		a.clear_ruler()
 func render_level():
 	is_finish = false
+	Global.game_data.is_ruler.value = false
 	start_time = Time.get_unix_time_from_system() * 1000
 	tap_count = 0
 	blocked_tap_count = 0

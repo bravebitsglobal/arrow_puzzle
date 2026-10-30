@@ -62,7 +62,7 @@ func _on_analytics_initialized(success: bool) -> void:
 func log_event(event_name: String, params: Dictionary = {}) -> void:
 	var clean_name := _sanitize_name(event_name)
 	var clean_params := _sanitize_params(params)
-	if Global.development:
+	if Global.is_debug():
 		print("[Firebase] event ", clean_name, " ", clean_params)
 	if analytics == null:
 		return

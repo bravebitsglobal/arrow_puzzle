@@ -30,6 +30,7 @@ func _ready() -> void:
 		Global.game_event.request_visible_popup.emit(GameEnum.PopupType.Setting, true)
 		)
 	button_developer.pressed.connect(func():
+		print("button dev pressed")
 		get_tree().change_scene_to_file("res://scene/developer/developer.tscn")
 		)
 	Global.game_data.level.subscribe(func (level):

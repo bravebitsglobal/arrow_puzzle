@@ -12,6 +12,7 @@ var game_event: GameEvent = GameEvent.new()
 
 @export var api_endpoint: String
 @export var game_token: String
-@export var development: bool
 func _init() -> void:
 	game_data.load_data()
+func is_debug()->bool:
+	return OS.is_debug_build()

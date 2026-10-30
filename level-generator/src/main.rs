@@ -46,6 +46,12 @@ Challenge (--challenge START_ID -c COUNT): generates COUNT levels on random larg
   The upload key decides which game they go to; --game-id only names the output folder.
   Default difficulty is hard. --dry-run generates and saves without uploading.
 
+Levels (--levels FROM TO): generates main game levels FROM..TO with random shapes, saves them to
+  <output>/levels/level_<N>.json and uploads them via POST <api-url>/api/upload/levels (upsert,
+  overwrites existing ids). Board sides grow with the level id from --size-from to --size-to
+  (aliases of --min-size/--max-size, default 30..60) across the range, with a little random jitter. Default difficulty is medium.
+  --dry-run generates and saves without uploading.
+
 Examples:
   level-generator 10 10                     one 10x10 level, random simple shape
   level-generator 24 24 -s star -d hard     24x24 star, hard difficulty
@@ -55,7 +61,11 @@ Examples:
   cat board.json | level-generator -p -     same, reading the cells from stdin
   level-generator --upload output/300       upload level_001.json.. as levels 1..
   level-generator --challenge 1 -c 30 --api-key KEY --game-id arrow
-                                            30 random large challenge levels as ids 1..30"
+                                            30 random large challenge levels as ids 1..30
+  level-generator --levels 351 400 --api-key KEY
+                                            levels 351..400, sides growing 30 -> 60
+  level-generator --levels 401 450 --size-from 40 --size-to 55 --api-key KEY
+                                            levels 401..450, sides growing 40 -> 55"
 )]
 struct Cli {
     /// Level width (cells). Optional with --points
@@ -90,10 +100,10 @@ struct Cli {
     /// GameHub base URL for --upload
     #[arg(long, default_value = "https://gamehub.bravebits.ai")]
     api_url: String,
-    /// Upload key (x-upload-key) for --upload/--challenge; defaults to $GAMEHUB_UPLOAD_KEY
+    /// Upload key (x-upload-key) for --upload/--challenge/--levels; defaults to $GAMEHUB_UPLOAD_KEY
     #[arg(long, alias = "api-key")]
     upload_key: Option<String>,
-    /// With --upload: only list what would be sent. With --challenge: generate and save, no upload
+    /// With --upload: only list what would be sent. With --challenge/--levels: generate and save, no upload
     #[arg(long)]
     dry_run: bool,
     /// Generate COUNT (-c) random large levels and upload them as challenge levels from this id
@@ -102,12 +112,16 @@ struct Cli {
     /// Game id for --challenge (names the output folder; the upload key picks the game on the server)
     #[arg(long, requires = "challenge")]
     game_id: Option<String>,
-    /// Smallest board side for --challenge
-    #[arg(long, default_value_t = 40)]
-    min_size: usize,
-    /// Largest board side for --challenge
-    #[arg(long, default_value_t = 50)]
-    max_size: usize,
+    /// Generate main game levels FROM..TO (board grows with the id) and upload them
+    #[arg(long, num_args = 2, value_names = ["FROM", "TO"],
+          conflicts_with_all = ["width", "height", "points", "shape", "upload", "challenge"])]
+    levels: Option<Vec<u32>>,
+    /// Smallest board side for --challenge/--levels [default: 40 / 30]
+    #[arg(long, visible_alias = "size-from")]
+    min_size: Option<usize>,
+    /// Largest board side for --challenge/--levels [default: 50 / 60]
+    #[arg(long, visible_alias = "size-to")]
+    max_size: Option<usize>,
 }
 
 /// --points input: a bare list of cells, or an object that also carries the board size.
@@ -137,6 +151,9 @@ fn main() -> ExitCode {
     }
     if let Some(start) = cli.challenge {
         return run_challenge(&cli, start);
+    }
+    if let Some(range) = &cli.levels {
+        return run_levels(&cli, range[0], range[1]);
     }
     let custom =match &cli.points {
         Some(path) => match load_points(path, cli.width, cli.height) {
@@ -290,8 +307,48 @@ fn run_challenge(cli: &Cli, start: u32) -> ExitCode {
         eprintln!("challenge ids must be within 1..=1000000 (got {start}..{last})");
         return ExitCode::FAILURE;
     }
-    if cli.min_size < 3 || cli.min_size > cli.max_size {
-        eprintln!("need 3 <= --min-size <= --max-size");
+    let (min, max) = (cli.min_size.unwrap_or(40), cli.max_size.unwrap_or(50));
+    let dir = cli.output.join("challenge").join(cli.game_id.as_deref().unwrap_or("default"));
+    run_batch(cli, "challenge", "challenges", start, last as u32, min, max, &dir, DifficultyArg::Hard, |_, rng| {
+        (rng.gen_range(min..=max), rng.gen_range(min..=max))
+    })
+}
+
+/// --levels: generate main game levels from..=to whose board grows with the id, then upload them.
+fn run_levels(cli: &Cli, from: u32, to: u32) -> ExitCode {
+    if from == 0 || from > to || to > 1_000_000 {
+        eprintln!("--levels needs 1 <= FROM <= TO <= 1000000 (got {from} {to})");
+        return ExitCode::FAILURE;
+    }
+    let (min, max) = (cli.min_size.unwrap_or(30), cli.max_size.unwrap_or(60));
+    let jitter = (max.saturating_sub(min) / 10).max(2) as i64;
+    let dir = cli.output.join("levels");
+    run_batch(cli, "level", "levels", from, to, min, max, &dir, DifficultyArg::Medium, |id, rng| {
+        // Linear from min at FROM to max at TO, each side jittered by up to ±span/10.
+        let t = if to > from { (id - from) as f64 / (to - from) as f64 } else { 0.0 };
+        let base = (min as f64 + t * max.saturating_sub(min) as f64).round() as i64;
+        let mut side = || (base + rng.gen_range(-jitter..=jitter)).clamp(min as i64, max as i64) as usize;
+        (side(), side())
+    })
+}
+
+/// Generate ids from..=to on boards sized by `size(id, rng)` with random shapes, save them to dir
+/// and upload them to /api/upload/<kind> (unless --dry-run).
+#[allow(clippy::too_many_arguments)]
+fn run_batch(
+    cli: &Cli,
+    label: &str,
+    kind: &str,
+    from: u32,
+    to: u32,
+    min: usize,
+    max: usize,
+    dir: &PathBuf,
+    default_difficulty: DifficultyArg,
+    mut size: impl FnMut(u32, &mut rand::rngs::StdRng) -> (usize, usize),
+) -> ExitCode {
+    if min < 3 || min > max {
+        eprintln!("need 3 <= --size-from (--min-size) <= --size-to (--max-size)");
         return ExitCode::FAILURE;
     }
     // Check the key before spending time on generation.
@@ -300,24 +357,22 @@ fn run_challenge(cli: &Cli, start: u32) -> ExitCode {
         eprintln!("missing upload key: pass --api-key/--upload-key or set GAMEHUB_UPLOAD_KEY");
         return ExitCode::FAILURE;
     }
-    let dir = cli.output.join("challenge").join(cli.game_id.as_deref().unwrap_or("default"));
-    if let Err(e) = std::fs::create_dir_all(&dir) {
+    if let Err(e) = std::fs::create_dir_all(dir) {
         eprintln!("cannot create {}: {e}", dir.display());
         return ExitCode::FAILURE;
     }
-    let (difficulty, difficulty_id) = difficulty(cli.difficulty.unwrap_or(DifficultyArg::Hard));
+    let (difficulty, difficulty_id) = difficulty(cli.difficulty.unwrap_or(default_difficulty));
     let mut rng = match cli.seed {
         Some(s) => rand::rngs::StdRng::seed_from_u64(s),
         None => rand::rngs::StdRng::from_entropy(),
     };
 
     let mut levels = Vec::new();
-    for id in start..=last as u32 {
+    for id in from..=to {
         // A shape can fail on an unlucky board; retry with a new size and shape.
         let mut generated = None;
         for _ in 0..5 {
-            let width = rng.gen_range(cli.min_size..=cli.max_size);
-            let height = rng.gen_range(cli.min_size..=cli.max_size);
+            let (width, height) = size(id, &mut rng);
             let shape = *shapes::shapes_for_size(width, height).choose(&mut rng).unwrap();
             let mask = shapes::build_mask(shape, width, height);
             let target = clamp_target(cli.arrows, &mask);
@@ -327,7 +382,7 @@ fn run_challenge(cli: &Cli, start: u32) -> ExitCode {
             }
         }
         let Some((shape, width, height, arrows, total)) = generated else {
-            eprintln!("challenge {id}: failed to generate a level");
+            eprintln!("{label} {id}: failed to generate a level");
             return ExitCode::FAILURE;
         };
         let level = to_json(width, height, difficulty_id, &arrows);
@@ -338,7 +393,7 @@ fn run_challenge(cli: &Cli, start: u32) -> ExitCode {
         }
         let covered: usize = arrows.iter().map(|a| a.cells.len()).sum();
         println!(
-            "challenge {id}: {} {width}x{height}, {} arrows, fill {:.1}%",
+            "{label} {id}: {} {width}x{height}, {} arrows, fill {:.1}%",
             shape.name(),
             arrows.len(),
             covered as f64 * 100.0 / total as f64
@@ -349,7 +404,7 @@ fn run_challenge(cli: &Cli, start: u32) -> ExitCode {
     if cli.dry_run {
         return ExitCode::SUCCESS;
     }
-    match upload::upload(&cli.api_url, &key.unwrap(), "challenges", &levels) {
+    match upload::upload(&cli.api_url, &key.unwrap(), kind, &levels) {
         Ok(()) => ExitCode::SUCCESS,
         Err(e) => {
             eprintln!("upload failed: {e}");

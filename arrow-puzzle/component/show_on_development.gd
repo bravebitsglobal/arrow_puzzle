@@ -3,4 +3,4 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	get_parent().visible = Global.development
+	get_parent().visible = Global.is_debug()

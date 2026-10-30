@@ -1,0 +1,902 @@
+=== Sheet: 06 Obstacle Overlay 1-350 ===
+
+Row 1:
+  Col 1: 06 – OBSTACLE OVERLAY CONFIG 1–350
+
+Row 2:
+  Col 1: Base level L1–350 = BENCHMARK_LOCKED. Bảng này chỉ thêm obstacle lên benchmark base.
+Các Count/N là Internal Tuning V1. Bomb N = số Arrow removal hợp lệ còn lại trước khi nổ; không dùng thời gian. Nếu overlay fail solver: đổi target/N, không đổi benchmark base.
+
+Row 4:
+  Col 1: Level
+  Col 2: Benchmark Base
+  Col 3: Role
+  Col 4: Forced Tutorial
+  Col 5: Frozen Count
+  Col 6: Frozen N list
+  Col 7: Bomb Count
+  Col 8: Bomb N list
+  Col 9: Lock Groups
+  Col 10: Locks / Group
+  Col 11: Hidden Count
+  Col 12: Hidden N list
+  Col 13: Crate Count
+  Col 14: Crate N list
+  Col 15: Max Types
+  Col 16: Source
+  Col 17: Validation
+
+Row 5:
+  Col 1: 1.0
+  Col 2: ArrowPuzzle_L001 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 6:
+  Col 1: 2.0
+  Col 2: ArrowPuzzle_L002 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 7:
+  Col 1: 3.0
+  Col 2: ArrowPuzzle_L003 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 8:
+  Col 1: 4.0
+  Col 2: ArrowPuzzle_L004 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 9:
+  Col 1: 5.0
+  Col 2: ArrowPuzzle_L005 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 10:
+  Col 1: 6.0
+  Col 2: ArrowPuzzle_L006 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 11:
+  Col 1: 7.0
+  Col 2: ArrowPuzzle_L007 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 12:
+  Col 1: 8.0
+  Col 2: ArrowPuzzle_L008 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 13:
+  Col 1: 9.0
+  Col 2: ArrowPuzzle_L009 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 14:
+  Col 1: 10.0
+  Col 2: ArrowPuzzle_L010 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 15:
+  Col 1: 11.0
+  Col 2: ArrowPuzzle_L011 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 16:
+  Col 1: 12.0
+  Col 2: ArrowPuzzle_L012 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 17:
+  Col 1: 13.0
+  Col 2: ArrowPuzzle_L013 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 18:
+  Col 1: 14.0
+  Col 2: ArrowPuzzle_L014 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 19:
+  Col 1: 15.0
+  Col 2: ArrowPuzzle_L015 LOCKED
+  Col 3: Core benchmark
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 0.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 20:
+  Col 1: 16.0
+  Col 2: ArrowPuzzle_L016 LOCKED
+  Col 3: Frozen Tutorial
+  Col 4: Frozen
+  Col 5: 1.0
+  Col 6: 3
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 21:
+  Col 1: 17.0
+  Col 2: ArrowPuzzle_L017 LOCKED
+  Col 3: Frozen Practice
+  Col 4: -
+  Col 5: 2.0
+  Col 6: 3,4
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 22:
+  Col 1: 18.0
+  Col 2: ArrowPuzzle_L018 LOCKED
+  Col 3: Frozen Practice
+  Col 4: -
+  Col 5: 2.0
+  Col 6: 4,4
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 23:
+  Col 1: 19.0
+  Col 2: ArrowPuzzle_L019 LOCKED
+  Col 3: Frozen Mastery
+  Col 4: -
+  Col 5: 2.0
+  Col 6: 4,5
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 24:
+  Col 1: 20.0
+  Col 2: ArrowPuzzle_L020 LOCKED
+  Col 3: Frozen Mastery
+  Col 4: -
+  Col 5: 3.0
+  Col 6: 4,5,5
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 25:
+  Col 1: 21.0
+  Col 2: ArrowPuzzle_L021 LOCKED
+  Col 3: Frozen Mastery
+  Col 4: -
+  Col 5: 2.0
+  Col 6: 5,6
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 26:
+  Col 1: 22.0
+  Col 2: ArrowPuzzle_L022 LOCKED
+  Col 3: Frozen Mastery
+  Col 4: -
+  Col 5: 3.0
+  Col 6: 5,5,6
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 27:
+  Col 1: 23.0
+  Col 2: ArrowPuzzle_L023 LOCKED
+  Col 3: Frozen Mastery
+  Col 4: -
+  Col 5: 3.0
+  Col 6: 5,6,6
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 28:
+  Col 1: 24.0
+  Col 2: ArrowPuzzle_L024 LOCKED
+  Col 3: Bomb Tutorial
+  Col 4: Bomb
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 1.0
+  Col 8: 8
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Bomb tutorial: N=8; solver requires BombMoveSlack>=1.
+
+Row 29:
+  Col 1: 25.0
+  Col 2: ArrowPuzzle_L025 LOCKED
+  Col 3: Bomb Practice
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 1.0
+  Col 8: 7
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 30:
+  Col 1: 26.0
+  Col 2: ArrowPuzzle_L026 LOCKED
+  Col 3: Frozen + Bomb
+  Col 4: -
+  Col 5: 1.0
+  Col 6: 5
+  Col 7: 1.0
+  Col 8: 7
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 31:
+  Col 1: 27.0
+  Col 2: ArrowPuzzle_L027 LOCKED
+  Col 3: Frozen + Bomb
+  Col 4: -
+  Col 5: 1.0
+  Col 6: 5
+  Col 7: 1.0
+  Col 8: 6
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 32:
+  Col 1: 28.0
+  Col 2: ArrowPuzzle_L028 LOCKED
+  Col 3: Bomb Practice
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 2.0
+  Col 8: 9,9
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 33:
+  Col 1: 29.0
+  Col 2: ArrowPuzzle_L029 LOCKED
+  Col 3: Frozen + Bomb
+  Col 4: -
+  Col 5: 2.0
+  Col 6: 5,6
+  Col 7: 1.0
+  Col 8: 7
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 34:
+  Col 1: 30.0
+  Col 2: ArrowPuzzle_L030 LOCKED
+  Col 3: Bomb Mastery
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 2.0
+  Col 8: 8,7
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 35:
+  Col 1: 31.0
+  Col 2: ArrowPuzzle_L031 LOCKED
+  Col 3: Frozen + Bomb
+  Col 4: -
+  Col 5: 2.0
+  Col 6: 6,6
+  Col 7: 1.0
+  Col 8: 6
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 36:
+  Col 1: 32.0
+  Col 2: ArrowPuzzle_L032 LOCKED
+  Col 3: Lock Tutorial
+  Col 4: Lock
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 1.0
+  Col 10: 1
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 37:
+  Col 1: 33.0
+  Col 2: ArrowPuzzle_L033 LOCKED
+  Col 3: Lock Practice
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 1.0
+  Col 10: 2
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 38:
+  Col 1: 34.0
+  Col 2: ArrowPuzzle_L034 LOCKED
+  Col 3: Lock Practice
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 2.0
+  Col 10: 1,1
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 39:
+  Col 1: 35.0
+  Col 2: ArrowPuzzle_L035 LOCKED
+  Col 3: Frozen + Lock
+  Col 4: -
+  Col 5: 1.0
+  Col 6: 6
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 1.0
+  Col 10: 2
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 40:
+  Col 1: 36.0
+  Col 2: ArrowPuzzle_L036 LOCKED
+  Col 3: Bomb + Lock
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 1.0
+  Col 8: 7
+  Col 9: 1.0
+  Col 10: 1
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 41:
+  Col 1: 37.0
+  Col 2: ArrowPuzzle_L037 LOCKED
+  Col 3: Frozen + Lock
+  Col 4: -
+  Col 5: 1.0
+  Col 6: 6
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 2.0
+  Col 10: 1,2
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 42:
+  Col 1: 38.0
+  Col 2: ArrowPuzzle_L038 LOCKED
+  Col 3: Bomb + Lock
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 1.0
+  Col 8: 7
+  Col 9: 2.0
+  Col 10: 2,2
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 43:
+  Col 1: 39.0
+  Col 2: ArrowPuzzle_L039 LOCKED
+  Col 3: Frozen + Lock
+  Col 4: -
+  Col 5: 2.0
+  Col 6: 6,7
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 2.0
+  Col 10: 2,2
+  Col 11: 0.0
+  Col 12: -
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 44:
+  Col 1: 40.0
+  Col 2: ArrowPuzzle_L040 LOCKED
+  Col 3: Hidden Tutorial
+  Col 4: Hidden
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 1.0
+  Col 12: 3
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 45:
+  Col 1: 41.0
+  Col 2: ArrowPuzzle_L041 LOCKED
+  Col 3: Hidden Practice
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 2.0
+  Col 12: 3,4
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 46:
+  Col 1: 42.0
+  Col 2: ArrowPuzzle_L042 LOCKED
+  Col 3: Hidden Practice
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 2.0
+  Col 12: 4,5
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 1.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 47:
+  Col 1: 43.0
+  Col 2: ArrowPuzzle_L043 LOCKED
+  Col 3: Frozen + Hidden
+  Col 4: -
+  Col 5: 1.0
+  Col 6: 6
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 2.0
+  Col 12: 5,5
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 48:
+  Col 1: 44.0
+  Col 2: ArrowPuzzle_L044 LOCKED
+  Col 3: Bomb + Hidden
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 1.0
+  Col 8: 7
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 2.0
+  Col 12: 5,6
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 49:
+  Col 1: 45.0
+  Col 2: ArrowPuzzle_L045 LOCKED
+  Col 3: Lock + Hidden
+  Col 4: -
+  Col 5: 0.0
+  Col 6: -
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 1.0
+  Col 10: 1
+  Col 11: 3.0
+  Col 12: 4,5,6
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+
+Row 50:
+  Col 1: 46.0
+  Col 2: ArrowPuzzle_L046 LOCKED
+  Col 3: Frozen + Hidden
+  Col 4: -
+  Col 5: 1.0
+  Col 6: 6
+  Col 7: 0.0
+  Col 8: -
+  Col 9: 0.0
+  Col 10: -
+  Col 11: 3.0
+  Col 12: 5,6,6
+  Col 13: 0.0
+  Col 14: -
+  Col 15: 2.0
+  Col 16: INTERNAL_TUNING_V1
+  Col 17: Must pass benchmark-aware solver
+

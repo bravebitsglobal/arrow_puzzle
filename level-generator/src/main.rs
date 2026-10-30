@@ -1,4 +1,6 @@
 mod generator;
+mod overlay;
+mod pipeline;
 mod shapes;
 mod upload;
 
@@ -52,6 +54,12 @@ Levels (--levels FROM TO): generates main game levels FROM..TO with random shape
   (aliases of --min-size/--max-size, default 30..60) across the range, with a little random jitter. Default difficulty is medium.
   --dry-run generates and saves without uploading.
 
+Overlay (--overlay BASE_DIR): GDD sheet 07 L1-350 pipeline. Loads every BASE_DIR/level_<N>.json as the
+  locked benchmark base (made by tools/build_300.py), attaches the sheet-06 obstacles from --overlay-config
+  (made by scripts/extract_overlay.py), checks the safety formulas, proves each level with the obstacle-aware
+  solver and writes <output>/overlay/level_<N>.json plus report.json. Base cells are never changed; a level
+  whose overlay can't pass is reported FLAG_GD_LOWER_N. --seed makes it reproducible.
+
 Examples:
   level-generator 10 10                     one 10x10 level, random simple shape
   level-generator 24 24 -s star -d hard     24x24 star, hard difficulty
@@ -62,6 +70,7 @@ Examples:
   level-generator --upload output/300       upload level_001.json.. as levels 1..
   level-generator --challenge 1 -c 30 --api-key KEY --game-id arrow
                                             30 random large challenge levels as ids 1..30
+  level-generator --overlay output/300       obstacles on the 350 benchmark levels
   level-generator --levels 351 400 --api-key KEY
                                             levels 351..400, sides growing 30 -> 60
   level-generator --levels 401 450 --size-from 40 --size-to 55 --api-key KEY
@@ -116,6 +125,13 @@ struct Cli {
     #[arg(long, num_args = 2, value_names = ["FROM", "TO"],
           conflicts_with_all = ["width", "height", "points", "shape", "upload", "challenge"])]
     levels: Option<Vec<u32>>,
+    /// Attach the sheet-06 obstacle overlay to the benchmark levels in this directory
+    #[arg(long, value_name = "BASE_DIR",
+          conflicts_with_all = ["width", "height", "points", "shape", "upload", "challenge", "levels"])]
+    overlay: Option<PathBuf>,
+    /// Overlay config JSON for --overlay (from scripts/extract_overlay.py)
+    #[arg(long, value_name = "FILE", default_value = "docs/overlay_config.json")]
+    overlay_config: PathBuf,
     /// Smallest board side for --challenge/--levels [default: 40 / 30]
     #[arg(long, visible_alias = "size-from")]
     min_size: Option<usize>,
@@ -155,7 +171,10 @@ fn main() -> ExitCode {
     if let Some(range) = &cli.levels {
         return run_levels(&cli, range[0], range[1]);
     }
-    let custom =match &cli.points {
+    if let Some(dir) = &cli.overlay {
+        return run_overlay(&cli, dir);
+    }
+    let custom = match &cli.points {
         Some(path) => match load_points(path, cli.width, cli.height) {
             Ok(board) => Some(board),
             Err(e) => {
@@ -413,6 +432,76 @@ fn run_batch(
     }
 }
 
+/// --overlay: run the GDD L1-350 pipeline on every base level in dir.
+fn run_overlay(cli: &Cli, dir: &PathBuf) -> ExitCode {
+    let configs = match overlay::load(&cli.overlay_config) {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("{e}");
+            return ExitCode::FAILURE;
+        }
+    };
+    let bases = match upload::collect(dir) {
+        Ok(l) if l.is_empty() => {
+            eprintln!("no level_<N>.json files in {}", dir.display());
+            return ExitCode::FAILURE;
+        }
+        Ok(l) => l,
+        Err(e) => {
+            eprintln!("{e}");
+            return ExitCode::FAILURE;
+        }
+    };
+    let out = cli.output.join("overlay");
+    if let Err(e) = std::fs::create_dir_all(&out) {
+        eprintln!("cannot create {}: {e}", out.display());
+        return ExitCode::FAILURE;
+    }
+    let mut rng = match cli.seed {
+        Some(s) => rand::rngs::StdRng::seed_from_u64(s),
+        None => rand::rngs::StdRng::from_entropy(),
+    };
+
+    let (mut report, mut failed) = (Vec::new(), 0);
+    for (id, data) in &bases {
+        let outcome = match pipeline::Base::from_json(data) {
+            Ok(base) => pipeline::run_level(*id, &base, configs.get(id), &mut rng),
+            Err(e) => pipeline::Outcome {
+                level: None,
+                report: serde_json::json!({"level": id, "status": "CONTENT_ERROR", "reason": e}),
+            },
+        };
+        let r = &outcome.report;
+        match &outcome.level {
+            Some(level) => {
+                let path = out.join(format!("level_{id}.json"));
+                if let Err(e) = write_json(&path, level) {
+                    eprintln!("cannot write {}: {e}", path.display());
+                    return ExitCode::FAILURE;
+                }
+                let o = &level["obstacles"];
+                let n = |k: &str| o[k].as_array().map_or(0, Vec::len);
+                println!(
+                    "level {id}: OK  frozen {} bomb {} lock {} hidden {} crate {}  bomb_slack {}  attempts {}",
+                    n("frozen"), n("bomb"), n("lock"), n("hidden"), n("crate"), r["bomb_slack"], r["attempts"]
+                );
+            }
+            None => {
+                failed += 1;
+                eprintln!("level {id}: {} - {}", r["status"].as_str().unwrap_or(""), r["reason"].as_str().unwrap_or(""));
+            }
+        }
+        report.push(outcome.report);
+    }
+    let path = out.join("report.json");
+    if let Err(e) = write_json(&path, &report) {
+        eprintln!("cannot write {}: {e}", path.display());
+        return ExitCode::FAILURE;
+    }
+    println!("{} levels OK, {failed} failed; report {}", bases.len() - failed, path.display());
+    if failed > 0 { ExitCode::FAILURE } else { ExitCode::SUCCESS }
+}
+
 fn run_upload(cli: &Cli, dir: &PathBuf) -> ExitCode {
     let levels = match upload::collect(dir) {
         Ok(l) if l.is_empty() => {
@@ -476,7 +565,7 @@ fn load_points(path: &PathBuf, cli_w: Option<usize>, cli_h: Option<usize>) -> Re
     Ok((width, height, mask))
 }
 
-fn write_json(path: &PathBuf, level: &LevelJson) -> std::io::Result<()> {
+fn write_json(path: &PathBuf, level: &impl Serialize) -> std::io::Result<()> {
     let mut buf = Vec::new();
     let mut ser = serde_json::Serializer::with_formatter(&mut buf, serde_json::ser::PrettyFormatter::with_indent(b"    "));
     level.serialize(&mut ser)?;

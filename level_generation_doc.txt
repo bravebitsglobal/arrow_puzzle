@@ -1,0 +1,241 @@
+Sheet: 07 Level Generation
+Size: 28 rows x 9 columns
+====================================================================================================
+
+Row 1:
+  Col 1: 07 – LEVEL GENERATION / BENCHMARK OVERLAY PIPELINE
+
+Row 2:
+  Col 1: L1–350 không generate lại base metrics. Generator chỉ validate/load benchmark base rồi gắn obstacle overlay. L351+ mới dùng procedural base generation học từ benchmark distribution.
+
+Row 4:
+  Col 1: I. L1–350 Pipeline
+
+Row 5:
+  Col 1: Step
+  Col 2: Input
+  Col 3: Action
+  Col 4: Hard Constraint
+  Col 5: Validation
+  Col 6: Retry
+  Col 7: Output
+  Col 8: Tracking
+  Col 9: Owner
+
+Row 6:
+  Col 1: 1.0
+  Col 2: level_index
+  Col 3: Load BenchmarkLevelConfig L###.
+  Col 4: Shape/grid/ArrowCount/Occupancy/Length = locked.
+  Col 5: benchmark_checksum valid.
+  Col 6: Fail → content error.
+  Col 7: BaseBenchmarkLevel
+  Col 8: level_load
+  Col 9: GD/Dev
+
+Row 7:
+  Col 1: 2.0
+  Col 2: base layout
+  Col 3: Load exact layout hoặc generate theo hard benchmark params tùy benchmark_layout_mode.
+  Col 4: Không được đổi locked fields.
+  Col 5: Core solver pass.
+  Col 6: Nếu param-mode: regenerate layout only, not params.
+  Col 7: BaseBoard
+  Col 8: generation_attempt
+  Col 9: Generator
+
+Row 8:
+  Col 1: 3.0
+  Col 2: overlay row
+  Col 3: Read exact row từ sheet 06.
+  Col 4: Obstacle Count/N fixed cho level.
+  Col 5: Config complete.
+  Col 6: Missing → no obstacle only if L<16; otherwise content error.
+  Col 7: OverlayConfig
+  Col 8: generation_attempt
+  Col 9: GD
+
+Row 9:
+  Col 1: 4.0
+  Col 2: Frozen assignment
+  Col 3: Assign exact count/N vào Arrow candidate.
+  Col 4: Không share Bomb/Lock/Hidden target.
+  Col 5: FrozenPreUnlockSafety >=1.
+  Col 6: Reassign target max20.
+  Col 7: Board+Frozen
+  Col 8: generation_result
+  Col 9: Generator
+
+Row 10:
+  Col 1: 5.0
+  Col 2: Bomb assignment
+  Col 3: Assign exact Bomb N vào Bomb target.
+  Col 4: Bomb target ACTIVE; không Frozen/Lock/Hidden.
+  Col 5: BombMoveSlack hard >=1; preferred >=3.
+  Col 6: Reassign target max20.
+  Col 7: Board+Bomb
+  Col 8: generation_result
+  Col 9: Generator
+
+Row 11:
+  Col 1: 6.0
+  Col 2: Lock assignment
+  Col 3: Create group + 1 Key/group + Locks/group.
+  Col 4: No self-cycle; Key không bị own-group lock và phải có path để trở thành CanExit=true.
+  Col 5: Graph acyclic + KeyExitReachable=true.
+  Col 6: Reassign Key/Locks; không thay benchmark base.
+  Col 7: Board+Lock
+  Col 8: generation_result
+  Col 9: Generator
+
+Row 12:
+  Col 1: 7.0
+  Col 2: Hidden assignment
+  Col 3: Assign exact Hidden count/N.
+  Col 4: At least 1 progress action before reveal.
+  Col 5: HiddenPreRevealSafety >=1.
+  Col 6: Reassign target.
+  Col 7: Board+Hidden
+  Col 8: generation_result
+  Col 9: Generator
+
+Row 13:
+  Col 1: 8.0
+  Col 2: Crate placement
+  Col 3: Place exact Crate count/N on empty playable cells.
+  Col 4: No overlap; each blocks meaningful ray.
+  Col 5: CrateMeaningfulUnlock >=1; initial crate block share <=40%.
+  Col 6: Move crate.
+  Col 7: Board+Crate
+  Col 8: generation_result
+  Col 9: Generator
+
+Row 14:
+  Col 1: 9.0
+  Col 2: Mix cap
+  Col 3: Check type_count<=level max type config.
+  Col 4: Tutorial exactly 1 type.
+  Col 5: Pass.
+  Col 6: Reject overlay assignment.
+  Col 7: MixedBoard
+  Col 8: generation_result
+  Col 9: Generator
+
+Row 15:
+  Col 1: 10.0
+  Col 2: Combined Solver
+  Col 3: Solve full obstacle-aware state.
+  Col 4: No booster required; no soft-lock.
+  Col 5: WIN reachable.
+  Col 6: If assignment retries fail → flag GD to lower N/count for this level.
+  Col 7: SolutionTrace
+  Col 8: generation_result
+  Col 9: Solver
+
+Row 16:
+  Col 1: 11.0
+  Col 2: Difficulty audit
+  Col 3: Compare base benchmark difficulty + obstacle metrics.
+  Col 4: Base benchmark fields unchanged.
+  Col 5: Overlay does not exceed band safety.
+  Col 6: Manual review if outlier.
+  Col 7: FinalLevel
+  Col 8: level_start
+  Col 9: GD
+
+Row 17:
+  Col 1: II. Safety Formulas
+
+Row 18:
+  Col 1: Metric
+  Col 2: Formula / Rule
+  Col 3: Pass
+  Col 4: Interpretation
+  Col 5: Used By
+  Col 6: Source
+  Col 7: Note
+
+Row 19:
+  Col 1: FrozenPreUnlockSafety
+  Col 2: reachable_other_removals_before_target - FrozenN
+  Col 3: >=1
+  Col 4: Có ít nhất 1 removal buffer.
+  Col 5: Frozen validator
+  Col 6: AGREED_RULE
+  Col 7: Booster không required.
+
+Row 20:
+  Col 1: HiddenPreRevealSafety
+  Col 2: reachable_non_hidden_removals - HiddenN
+  Col 3: >=1
+  Col 4: Không ép đoán Hidden.
+  Col 5: Hidden validator
+  Col 6: AGREED_RULE
+  Col 7: - 
+
+Row 21:
+  Col 1: BombMoveSlack
+  Col 2: BombN - min_required_other_removals_before_bomb_can_exit
+  Col 3: >=1 hard; >=3 preferred
+  Col 4: Số removal buffer trước khi Bomb bắt buộc phải clear.
+  Col 5: Bomb validator
+  Col 6: INTERNAL_TUNING_V1
+  Col 7: Nếu =0, Bomb nổ đúng lúc vừa được mở → reject.
+
+Row 22:
+  Col 1: CrateMeaningfulUnlock
+  Col 2: newly_legal_after_crate_remove - legal_before_remove
+  Col 3: >=1
+  Col 4: Crate có ý nghĩa gameplay.
+  Col 5: Crate validator
+  Col 6: AGREED_RULE
+  Col 7: Reject cosmetic crate.
+
+Row 23:
+  Col 1: InactiveRatio
+  Col 2: (Frozen+Locked+Hidden)/ArrowCount
+  Col 3: <=35% V1
+  Col 4: Giữ readability.
+  Col 5: Mix validator
+  Col 6: INTERNAL_TUNING_V1
+  Col 7: Tutorial thấp hơn.
+
+Row 24:
+  Col 1: III. L351+ Rule
+
+Row 25:
+  Col 1: Rule
+  Col 2: Final
+  Col 3: How
+  Col 4: Data Source
+  Col 5: Validation
+  Col 6: Owner
+  Col 7: Note
+
+Row 26:
+  Col 1: Base parameter bands
+  Col 2: Không dùng range tay cũ; derive percentile từ benchmark L1–350.
+  Col 3: P20/P50/P80 theo progression window.
+  Col 4: Imported benchmark dataset.
+  Col 5: Bot + human playtest.
+  Col 6: GD/Data
+  Col 7: - 
+
+Row 27:
+  Col 1: Shape pool
+  Col 2: Reuse/reskin benchmark mask topology trước, sau đó thêm custom mask.
+  Col 3: shape_family + mask metrics.
+  Col 4: Benchmark shape library.
+  Col 5: Connectivity/readability.
+  Col 6: GD/Art
+  Col 7: - 
+
+Row 28:
+  Col 1: Difficulty calibration
+  Col 2: Bot target + real user KPI.
+  Col 3: Classifier dùng benchmark as anchor.
+  Col 4: Benchmark/bot telemetry.
+  Col 5: Win/fail/quit/blocked tap.
+  Col 6: GD/Data
+  Col 7: - 
+

@@ -209,9 +209,10 @@ func claim_mail(mail_id: String) -> Dictionary:
 ## Server lưu nội dung level trong field `data` (xem SaveLevelDto { data: object }).
 ## Hàm bóc `data` ra, nếu là chuỗi JSON thì parse thành object/array rồi gán lại res.data.
 ## points_as_int = true: JSON parse số thành float, nên ép các phần tử trong mảng "points" về int.
+## Trả về level data {width, height, points, obstacles, ...} hoặc null.
 func get_level(level_id: int, points_as_int: bool = true) :
 	var res := await request(HTTPClient.METHOD_GET, "/levels/%d" % level_id)
-	return _extract_level_points(res, points_as_int)
+	return _extract_level(res, points_as_int)
 
 
 # ----------------------------------------------------------------
@@ -220,7 +221,7 @@ func get_level(level_id: int, points_as_int: bool = true) :
 
 ## Lấy level daily challenge theo ngày (GET /api/challenges/daily?date=YYYY-MM-DD).
 ## date rỗng = server tự lấy ngày hiện tại. Server chọn level theo (ngày trong năm - 1) % số level challenge.
-## Response giống level: {levelId, data: {width, height, difficulty, points}}. Trả về points hoặc null.
+## Response giống level: {levelId, data: {width, height, difficulty, points}}. Trả về data hoặc null.
 func get_daily_challenge(date: String = "", points_as_int: bool = true):
 	var query := {}
 	if date != "":
@@ -229,7 +230,7 @@ func get_daily_challenge(date: String = "", points_as_int: bool = true):
 			return null
 		query["date"] = date
 	var res := await request(HTTPClient.METHOD_GET, "/challenges/daily", null, query)
-	return _extract_level_points(res, points_as_int)
+	return _extract_level(res, points_as_int)
 
 
 ## Tiện cho calendar: lấy challenge theo năm/tháng/ngày.
@@ -240,11 +241,11 @@ func get_challenge_by_date(year: int, month: int, day: int, points_as_int: bool 
 ## Lấy level challenge theo levelId (GET /api/challenges/levels/{levelId}).
 func get_challenge_level(level_id: int, points_as_int: bool = true):
 	var res := await request(HTTPClient.METHOD_GET, "/challenges/levels/%d" % level_id)
-	return _extract_level_points(res, points_as_int)
+	return _extract_level(res, points_as_int)
 
 
-## Bóc res.data["data"] (parse nếu là chuỗi JSON), ép points về int, gán lại res.data và trả về points.
-func _extract_level_points(res: Dictionary, points_as_int: bool) -> Variant:
+## Bóc res.data["data"] (parse nếu là chuỗi JSON), ép points về int, gán lại res.data và trả về level data.
+func _extract_level(res: Dictionary, points_as_int: bool) -> Variant:
 	if res.ok and res.data is Dictionary and res.data.has("data"):
 		var level_data: Variant = res.data["data"]
 		if level_data is String:
@@ -254,7 +255,7 @@ func _extract_level_points(res: Dictionary, points_as_int: bool) -> Variant:
 		if points_as_int:
 			_points_to_int(level_data)
 		res.data = level_data
-		return level_data.points
+		return level_data
 	return null
 
 

@@ -87,6 +87,21 @@ const CLICK_THRESHOLD: float = 5.0  # Nguong phan biet click va drag (pixels)
 var highlight_tween: Tween
 const HIGHLIGHT_TIME = 10
 var enable: bool = true
+# Mau nhuom theo trang thai obstacle (Frozen/Hidden...), giu lai khi set_enable
+var obstacle_tint: Color = Color.WHITE
+# Nhan hien thi obstacle (so N, LOCK, KEY...) gan theo dau arrow
+var badge: Label
+const BADGE_OFFSET := Vector2(-22, -70)
+# Pattern than arrow theo obstacle (texture xam, to mau bang obstacle_body.gdshader)
+const BODY_PATTERNS = {
+	"frozen": preload("res://arrow/texture/frozen.png"),
+	"bomb": preload("res://arrow/texture/bomb.png"),
+	"lock": preload("res://arrow/texture/lock.png"),
+	"key": preload("res://arrow/texture/key.png"),
+}
+const BODY_SHADER = preload("res://arrow/obstacle_body.gdshader")
+var body_material: ShaderMaterial
+var _default_body_texture: Texture2D
 @export var min_blink_interval: float = 2.0  # Tối thiểu 2 giây chớp 1 lần
 @export var max_blink_interval: float = 6.0  # Tối đa 6 giây chớp 1 lần
 # Thời gian nhắm mắt (chớp cực nhanh)
@@ -95,6 +110,7 @@ var enable: bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	blink_timer.timeout.connect(_on_blink_timer_timeout)
+	_default_body_texture = line_2d.texture
 	set_random_color()
 	render()
 	schedule_next_blink()
@@ -292,14 +308,60 @@ func set_color(value: Variant) -> void:
 	var c: Color = Color(value) if value is String else value
 	color = c
 	(material as ShaderMaterial).set_shader_parameter("target_color", c)
+	if body_material:
+		body_material.set_shader_parameter("target_color", c)
 func set_random_color() -> void:
 	set_color(COLORS.pick_random())
 func set_enable(is_enable)->void:
 	enable = is_enable
 	if enable:
-		modulate = Color(1,1,1,1)
+		modulate = obstacle_tint
 	else:
 		modulate = Color(0,0,0,0.2)
+## Hien trang thai obstacle: text "" an badge; tint nhuom ca arrow; hide_dir an huong dau (Hidden).
+func set_obstacle(text: String, badge_color: Color, tint: Color, hide_dir: bool) -> void:
+	obstacle_tint = tint
+	if enable:
+		modulate = tint
+	if data.size() >= 2:
+		head.get_child(Utils.get_exit_dir(data)).visible = !hide_dir
+	if text.is_empty():
+		if badge:
+			badge.visible = false
+		return
+	if !badge:
+		badge = Label.new()
+		badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		badge.z_index = 10
+		badge.position = BADGE_OFFSET
+		badge.add_theme_font_size_override("font_size", 28)
+		badge.add_theme_color_override("font_color", Color.WHITE)
+		head.add_child(badge)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = badge_color
+	sb.set_corner_radius_all(10)
+	sb.set_content_margin_all(4)
+	badge.add_theme_stylebox_override("normal", sb)
+	badge.text = text
+	badge.visible = true
+## Doi texture than arrow: key trong BODY_PATTERNS ("frozen", "bomb", "lock", "key"), "" = than thuong.
+func set_body_pattern(key: String) -> void:
+	if !BODY_PATTERNS.has(key):
+		line_2d.texture = _default_body_texture
+		line_2d.material = null
+		line_2d.use_parent_material = true
+		return
+	if !body_material:
+		body_material = ShaderMaterial.new()
+		body_material.shader = BODY_SHADER
+		body_material.set_shader_parameter("target_color", color)
+	body_material.set_shader_parameter("pattern", BODY_PATTERNS[key])
+	line_2d.texture = BODY_PATTERNS[key]
+	line_2d.use_parent_material = false
+	line_2d.material = body_material
+## Phan hoi trung tinh khi cham arrow chua active (Frozen/Locked/Hidden): rung nhe, khong mat live.
+func neutral_feedback() -> void:
+	shake(Vector2.RIGHT * 0.5)
 func schedule_next_blink() -> void:
 	# Chọn ngẫu nhiên thời gian cho lần chớp mắt tiếp theo
 	var random_time = randf_range(min_blink_interval, max_blink_interval)

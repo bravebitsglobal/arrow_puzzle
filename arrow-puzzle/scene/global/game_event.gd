@@ -5,6 +5,8 @@ class_name GameEvent
 signal request_visible_popup(popup_type: GameEnum.PopupType, visible: bool)
 #game event
 signal game_restart
+# Nguoi choi Continue tu popup fail (het live hoac Bomb no)
+signal game_continue
 signal game_start
 signal game_resolved(level: int)
 signal active_game_booster(booster: GameEnum.Booster)

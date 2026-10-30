@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scene/test/obstacle_sim.gd" id="1"]
+[ext_resource type="Script" path="res://helper/camera_controller.gd" id="2"]
+
+[node name="ObstacleSim" type="Node2D"]
+script = ExtResource("1")
+
+[node name="MapContainer" type="Node2D" parent="."]
+
+[node name="LineContainer" type="Node2D" parent="MapContainer"]
+
+[node name="DotContainer" type="Node2D" parent="MapContainer"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PanelGame" type="Control" parent="UI"]
+
+[node name="TopPanel" type="Control" parent="UI/PanelGame"]
+
+[node name="ButtonAutoPlay" type="Button" parent="UI/PanelGame/TopPanel"]

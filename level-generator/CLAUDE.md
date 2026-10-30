@@ -72,3 +72,25 @@ Decisions made:
 Open questions for the user:
 - **Lessmore Y axis:** it is read top-down. This is unverified, because a vertical mirror is still solvable. If levels look upside down in game, change `load_lessmore`.
 - **Shapes not yet approved:** gem (L6), peanut (L10), panda head (L21), pointed shield (L23), panda (L26).
+
+## Obstacle overlay (GDD sheet 07 L1–350 pipeline)
+
+The base levels in `output/300` are BENCHMARK_LOCKED: grid, arrows and cells are never changed. The overlay step only adds obstacles to them.
+1. `python scripts/extract_overlay.py ../document/Arrow_Puzzle_GDD_V4.5_Interstitial_Retry_Continue.xlsm docs/overlay_config.json` extracts GDD sheet 06 (counts and N lists per level).
+2. `level-generator --overlay output/300 [--seed S]` runs `src/pipeline.rs`. Steps:
+   - checksum the base and run the core solver;
+   - assign Frozen, Bomb, Lock/Key, Hidden and Crate;
+   - check the mix cap and InactiveRatio;
+   - run the combined solver;
+   - audit the result.
+   It writes `output/overlay/level_<N>.json` and `output/overlay/report.json`.
+   - The output keeps the base fields and adds `obstacles`: arrow indices into `points`, crates as 1-based `{x, y, n}`, and locks as `{group, key, locked}`.
+   - A level that can't pass after 20 retries is reported `FLAG_GD_LOWER_N`, which is the GDD fallback.
+- **Solver state:** the state is just the set of removed arrows, because every counter depends only on the removal count. The search branches only while a Bomb is ACTIVE.
+- **Playable mask:** it is not stored in the base, so an empty cell counts as playable when it lies inside the shape's row and column spans.
+- **CrateMeaningfulUnlock:** it counts plain arrows whose ray passes the crate and that have at most N transitive blockers.
+- **Status (2026-10-30):** 225/350 levels pass. All 125 failures are Crate levels: the benchmark boards are ~99% full, so no interior hole has a meaningful ray. GD needs to decide what to do with these.
+- **Uploaded (2026-10-30):** levels 1–350 were uploaded from `output/upload350`.
+  - That folder holds the 225 overlay levels.
+  - The 125 failed Crate levels fall back to their `output/300` base level, with no obstacles.
+- **Not done yet:** the Godot game does not implement the obstacles.

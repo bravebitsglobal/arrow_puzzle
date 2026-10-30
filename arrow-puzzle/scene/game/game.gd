@@ -26,11 +26,30 @@ var is_using_eraser: bool = false
 var is_focus: bool = false
 var is_animating: bool = false
 var is_finish: bool = false
+# Obstacle (GDD sheet 04), nap tu field "obstacles" cua level
+var level_obstacles: Dictionary = {}
+# arrow idx -> N con lai truoc khi active
+var frozen_n: Dictionary = {}
+var hidden_n: Dictionary = {}
+# arrow idx -> N con lai truoc khi no (Bomb dang active)
+var bomb_n: Dictionary = {}
+# arrow idx -> lock group; locked_group la arrow bi khoa, key_group la arrow chia khoa
+var locked_group: Dictionary = {}
+var key_group: Dictionary = {}
+# cell index -> {"n": int, "node": Node2D}
+var crates: Dictionary = {}
+# Bomb vua no, cho nguoi choi Continue (BOMB_FAIL_PENDING), -1 neu khong co
+var bomb_pending: int = -1
+const LOCK_COLORS = ["#C9A000", "#7A4CC2", "#2A9D8F", "#D1495B"]
+const CRATE_SIZE: float = 44
+const CRATE_TEXTURE = preload("res://arrow/texture/crate.png")
 class ExitPathResult:
 	var can_exit: bool
 	var exit_path: Array[PackedInt32Array]
-	# idx arrow bi dam vao khi khong thoat duoc, -1 neu thoat duoc
+	# idx arrow bi dam vao khi khong thoat duoc, -1 neu thoat duoc hoac bi Crate chan
 	var blocked_idx: int = -1
+	# cell index cua Crate chan duong, -1 neu khong co
+	var blocked_crate: int = -1
 func _ready() -> void:
 	next_level()
 	Global.game_event.game_start.connect(func():
@@ -38,6 +57,7 @@ func _ready() -> void:
 	Global.game_event.game_restart.connect(func():
 		restart())
 	Global.game_event.user_action.connect(_on_user_action)
+	Global.game_event.game_continue.connect(_on_game_continue)
 	button_auto_play.pressed.connect(auto_play)
 func auto_play()->void:
 	for i in range(level.size()):
@@ -49,7 +69,8 @@ func render_ruler()->void:
 		return
 	Global.game_data.is_ruler.value = true
 	for i in range(level.size()):
-		if arrows[i].is_exit:
+		# Hidden chua lo huong, ruler khong duoc tiet lo
+		if arrows[i].is_exit or hidden_n.has(i):
 			continue
 		arrows[i].set_ruler()
 func clear_ruler()->void:
@@ -63,6 +84,8 @@ func render_level():
 	tap_count = 0
 	blocked_tap_count = 0
 	penalized_arrows.clear()
+	bomb_pending = -1
+	Global.game_data.bomb_exploded.value = false
 	Global.game_data.lives.value = Global.game_data.MAX_LIVE
 	total_line = level.size()
 	Global.game_data.remain_lines.value = total_line
@@ -94,6 +117,7 @@ func render_level():
 		arrow.tail_passed.connect(_on_arrow_tail_passed)
 		arrow.on_click.connect(func ():
 			_on_arrow_clicked(arrow_idx))
+	load_obstacles()
 	Global.game_event.user_action.emit.call_deferred(GameEnum.UserAction.LevelStart, {"game": self})
 func _on_arrow_tail_passed(cell: PackedInt32Array, color: Color) -> void:
 	var dot = dots.get(Utils.to_index(cell))
@@ -117,8 +141,14 @@ func _active_hint()->void:
 	arrows[idx].active_highlight()
 	move_camera_to_arrow(idx)
 func get_hint_idx()->int:
+	# Uu tien Bomb sap no nhat neu thoat duoc
+	var bombs := bomb_n.keys()
+	bombs.sort_custom(func(a, b): return bomb_n[a] < bomb_n[b])
+	for i in bombs:
+		if is_arrow_active(i) and calculate_exit_path(level[i]).can_exit:
+			return i
 	for i in range(level.size()):
-		if arrows[i].is_exit:
+		if arrows[i].is_exit or !is_arrow_active(i):
 			continue
 		var exit_path = calculate_exit_path(level[i])
 		if exit_path.can_exit:
@@ -141,8 +171,10 @@ func _active_magic_glasses()->void:
 		if !used_cells.size():
 			check_end_game()
 			break
+		if is_finish:
+			break
 		for i in range(level.size()):
-			if arrows[i].is_exit:
+			if arrows[i].is_exit or !is_arrow_active(i):
 				continue
 			var exit_path = calculate_exit_path(level[i])
 			if exit_path.can_exit:
@@ -151,6 +183,7 @@ func _active_magic_glasses()->void:
 				await get_tree().create_timer(1).timeout
 				arrows[i].exit(exit_path)
 				remove_arrow(i)
+				_on_arrow_cleared(i)
 				await get_tree().create_timer(1).timeout
 				break
 	Global.game_data.animating.value = false
@@ -167,6 +200,15 @@ func _on_arrow_clicked(idx: int):
 		is_using_eraser = false
 		Global.game_event.game_booster_done.emit(GameEnum.Booster.Eraser)
 		Global.game_data.animating.value = false
+		_on_arrow_cleared(idx)
+		check_end_game()
+		return
+	if is_finish:
+		return
+	# Frozen/Locked/Hidden: phan hoi trung tinh, khong mat live
+	if !is_arrow_active(idx):
+		arrows[idx].neutral_feedback()
+		Global.firebase_manager.log_event("arrow_tap", {"level_id": Global.game_data.level.value, "row_id": idx, "result": "inactive"})
 		return
 	var rs = calculate_exit_path(level[idx])
 	if rs.can_exit:
@@ -174,6 +216,7 @@ func _on_arrow_clicked(idx: int):
 		if Global.game_data.remain_lines.value == level.size():
 			Global.game_event.user_action.emit(GameEnum.UserAction.ResolveArrow, {})
 		Global.game_data.remain_lines.value -= 1
+		_on_arrow_cleared(idx)
 		Global.firebase_manager.log_event("arrow_tap", {"level_id": Global.game_data.level.value, "row_id": idx, "result": "success"})
 	else:
 		blocked_tap_count += 1
@@ -188,6 +231,8 @@ func _on_arrow_clicked(idx: int):
 				"live_after": Global.game_data.lives.value})
 		Global.firebase_manager.log_event("arrow_tap", {"level_id": Global.game_data.level.value, "row_id": idx, "result": "fail"})
 	arrows[idx].exit(rs, arrows[rs.blocked_idx] if rs.blocked_idx >= 0 else null)
+	if rs.blocked_crate >= 0:
+		_shake_crate(rs.blocked_crate)
 	check_end_game()
 	await get_tree().create_timer(1).timeout
 	Global.game_data.animating.value = false
@@ -282,48 +327,51 @@ func calculate_exit_path(data)->ExitPathResult:
 				var next_pos = [head[0], i]
 				var idx = Utils.to_index(next_pos)
 				exit_path.append(next_pos)
-				if used_cells.has(idx):
-					result.can_exit = false
-					result.blocked_idx = used_cells[idx]
+				if _is_blocked_cell(idx, result):
 					break
 		Utils.Direction.Down:
 			for i in range(head[1]+1, head[1] + out):
 				var next_pos = [head[0], i]
 				var idx = Utils.to_index(next_pos)
 				exit_path.append(next_pos)
-				if used_cells.has(idx):
-					result.can_exit = false
-					result.blocked_idx = used_cells[idx]
+				if _is_blocked_cell(idx, result):
 					break
 		Utils.Direction.Left:
 			for i in range(head[0]-1, head[0] - out, -1):
 				var next_pos = [i, head[1]]
 				var idx = Utils.to_index(next_pos)
 				exit_path.append(next_pos)
-				if used_cells.has(idx):
-					result.can_exit = false
-					result.blocked_idx = used_cells[idx]
+				if _is_blocked_cell(idx, result):
 					break
 		Utils.Direction.Right:
 			for i in range(head[0]+1, head[0] + out):
 				var next_pos = [i, head[1]]
 				var idx = Utils.to_index(next_pos)
 				exit_path.append(next_pos)
-				if used_cells.has(idx):
-					result.can_exit = false
-					result.blocked_idx = used_cells[idx]
+				if _is_blocked_cell(idx, result):
 					break
 	result.exit_path = exit_path
 	return result
+## Blocker tren exit ray: Arrow hoac Crate.
+func _is_blocked_cell(cell: int, result: ExitPathResult) -> bool:
+	if used_cells.has(cell):
+		result.can_exit = false
+		result.blocked_idx = used_cells[cell]
+		return true
+	if crates.has(cell):
+		result.can_exit = false
+		result.blocked_crate = cell
+		return true
+	return false
 func next_level()->void:
 	Global.popup_manager.show_loading()
 	if Global.game_data.current_challenge.value.size():
-		level = await Global.api.get_challenge_by_date(
+		set_level_data(await Global.api.get_challenge_by_date(
 			Global.game_data.current_challenge.value[0],
 			Global.game_data.current_challenge.value[1],
-			Global.game_data.current_challenge.value[2])
+			Global.game_data.current_challenge.value[2]))
 	else:
-		level = await Global.api.get_level(Global.game_data.level.value)
+		set_level_data(await Global.api.get_level(Global.game_data.level.value))
 		Global.firebase_manager.log_event("level_start", {
 			"level_id": Global.game_data.level.value,
 			})
@@ -346,3 +394,155 @@ func clear_focus()->void:
 	is_focus = false
 	for i in range(arrows.size()):
 		arrows[i].set_enable(true)
+func set_level_data(data) -> void:
+	level = data.points if data else null
+	level_obstacles = data.get("obstacles", {}) if data else {}
+# ----------------------------------------------------------------
+# Obstacle (GDD sheet 01/04)
+# ----------------------------------------------------------------
+## Nap trang thai obstacle tu level_obstacles. Arrow la idx trong points, Crate la o [x, y].
+func load_obstacles() -> void:
+	frozen_n.clear()
+	hidden_n.clear()
+	bomb_n.clear()
+	locked_group.clear()
+	key_group.clear()
+	crates.clear()
+	for o in level_obstacles.get("frozen", []):
+		frozen_n[int(o.arrow)] = int(o.n)
+	for o in level_obstacles.get("hidden", []):
+		hidden_n[int(o.arrow)] = int(o.n)
+	for o in level_obstacles.get("bomb", []):
+		bomb_n[int(o.arrow)] = int(o.n)
+	for g in level_obstacles.get("lock", []):
+		key_group[int(g.key)] = int(g.group)
+		for a in g.locked:
+			locked_group[int(a)] = int(g.group)
+		# Key va Locked cung group dung chung mau group de nguoi choi nhan ra
+		for a in [g.key] + g.locked:
+			arrows[int(a)].set_color(LOCK_COLORS[int(g.group) % LOCK_COLORS.size()])
+	for o in level_obstacles.get("crate", []):
+		var cell: Array = [int(o.x), int(o.y)]
+		crates[Utils.to_index(cell)] = {"n": int(o.n), "node": _make_crate(cell, int(o.n))}
+	_refresh_obstacles()
+## Arrow co the tap de thoat (khong Frozen/Locked/Hidden).
+func is_arrow_active(idx: int) -> bool:
+	return !frozen_n.has(idx) and !locked_group.has(idx) and !hidden_n.has(idx)
+## OnArrowCleared theo thu tu GDD: (occupancy da xoa) -> defuse Bomb -> Key -> progress -> Bomb countdown.
+## Goi cho moi lan xoa hop le: tap thoat, Eraser, Magic Glasses.
+func _on_arrow_cleared(idx: int) -> void:
+	bomb_n.erase(idx)
+	if key_group.has(idx):
+		var group = key_group[idx]
+		key_group.erase(idx)
+		for a in locked_group.keys():
+			if locked_group[a] == group:
+				locked_group.erase(a)
+	frozen_n.erase(idx)
+	hidden_n.erase(idx)
+	locked_group.erase(idx)
+	for a in frozen_n.keys():
+		frozen_n[a] -= 1
+		if frozen_n[a] <= 0:
+			frozen_n.erase(a)
+	for a in hidden_n.keys():
+		hidden_n[a] -= 1
+		if hidden_n[a] <= 0:
+			hidden_n.erase(a)
+	for c in crates.keys():
+		crates[c]["n"] -= 1
+		if crates[c]["n"] <= 0:
+			_break_crate(c)
+		else:
+			crates[c].node.get_child(1).text = str(crates[c]["n"])
+	var exploded := -1
+	for b in bomb_n.keys():
+		bomb_n[b] -= 1
+		if bomb_n[b] <= 0 and exploded < 0:
+			exploded = b
+	_refresh_obstacles()
+	if exploded >= 0:
+		_explode_bomb(exploded)
+func _refresh_obstacles() -> void:
+	for i in range(arrows.size()):
+		if arrows[i].is_exit:
+			continue
+		if hidden_n.has(i):
+			arrows[i].set_obstacle("? %d" % hidden_n[i], Color("#555555"), Color(0.55, 0.55, 0.55), true)
+		elif frozen_n.has(i):
+			arrows[i].set_obstacle("%d" % frozen_n[i], Color("#3C8DDB"), Color.WHITE, false)
+		elif locked_group.has(i):
+			arrows[i].set_obstacle("LOCK", Color(LOCK_COLORS[locked_group[i] % LOCK_COLORS.size()]), Color.WHITE, false)
+		elif bomb_n.has(i):
+			arrows[i].set_obstacle("%d" % bomb_n[i], Color("#222222") if bomb_n[i] > 3 else Color("#E8202A"), Color.WHITE, false)
+		elif key_group.has(i):
+			arrows[i].set_obstacle("KEY", Color(LOCK_COLORS[key_group[i] % LOCK_COLORS.size()]), Color.WHITE, false)
+		else:
+			arrows[i].set_obstacle("", Color.WHITE, Color.WHITE, false)
+		var pattern := ""
+		if frozen_n.has(i):
+			pattern = "frozen"
+		elif locked_group.has(i):
+			pattern = "lock"
+		elif bomb_n.has(i):
+			pattern = "bomb"
+		elif key_group.has(i):
+			pattern = "key"
+		arrows[i].set_body_pattern(pattern)
+func _explode_bomb(idx: int) -> void:
+	is_finish = true
+	bomb_pending = idx
+	Global.game_data.bomb_exploded.value = true
+	arrows[idx].shake(Vector2.UP)
+	Global.firebase_manager.log_event("level_fail", {
+			"level_id": Global.game_data.level.value,
+			"active_duration_ms": Time.get_unix_time_from_system() * 1000- start_time,
+			"tap_count": tap_count,
+			"blocked_tap_count": blocked_tap_count,
+			"reason":"bomb"
+		})
+	await get_tree().create_timer(1).timeout
+	Global.game_event.request_visible_popup.emit(GameEnum.PopupType.OutOfLive, true)
+## Continue tu popup fail: Bomb chi mat trang thai Bomb, arrow van o tren ban.
+func _on_game_continue() -> void:
+	if bomb_pending >= 0:
+		bomb_n.erase(bomb_pending)
+		bomb_pending = -1
+		Global.game_data.bomb_exploded.value = false
+		_refresh_obstacles()
+	is_finish = false
+	check_end_game()
+func _make_crate(cell: Array, n: int) -> Node2D:
+	var node := Node2D.new()
+	node.position = Utils.to_pos(cell)
+	node.z_index = 5
+	var h := CRATE_SIZE / 2
+	var box := Sprite2D.new()
+	box.texture = CRATE_TEXTURE
+	box.scale = Vector2.ONE * CRATE_SIZE / CRATE_TEXTURE.get_width()
+	box.modulate = Color("#9C6B3C")
+	node.add_child(box)
+	var label := Label.new()
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_size_override("font_size", 26)
+	label.add_theme_color_override("font_color", Color.WHITE)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.size = Vector2(CRATE_SIZE, CRATE_SIZE)
+	label.position = Vector2(-h, -h)
+	label.text = str(n)
+	node.add_child(label)
+	line_container.add_child(node)
+	return node
+func _shake_crate(cell: int) -> void:
+	var node: Node2D = crates[cell].node
+	var base := node.position
+	var tw := create_tween()
+	for a in [6.0, -4.0, 2.0, 0.0]:
+		tw.tween_property(node, "position", base + Vector2(a, 0), 0.05)
+func _break_crate(cell: int) -> void:
+	var node: Node2D = crates[cell].node
+	crates.erase(cell)
+	var tw := create_tween()
+	tw.tween_property(node, "scale", Vector2.ZERO, 0.2)
+	tw.tween_callback(node.queue_free)

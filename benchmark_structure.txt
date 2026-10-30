@@ -1,0 +1,611 @@
+=== Sheet: 02 Benchmark L1-350 ===
+
+Row 1:
+  Col 1: 02 – BENCHMARK LEVEL POLICY 1–350
+
+Row 2:
+  Col 1: IMPORTANT: L1–350 dùng trực tiếp toàn bộ thông số + shape đã benchmark từ Arrow Puzzle.
+GDD KHÔNG tự gán lại Grid/Arrow Count/Occupancy/Arrow Length cho 350 level này.
+Nếu file benchmark chi tiết chưa nằm trong workbook, các field đó được load từ BenchmarkLevelConfig bên ngoài và coi là LOCKED.
+
+Row 4:
+  Col 1: I. Locked Fields
+
+Row 5:
+  Col 1: Field
+  Col 2: Policy L1–350
+  Col 3: Generator được đổi?
+  Col 4: Obstacle Overlay được đổi?
+  Col 5: Tracking
+  Col 6: Note
+
+Row 6:
+  Col 1: benchmark_level_id
+  Col 2: ArrowPuzzle_L###
+  Col 3: Không
+  Col 4: Không
+  Col 5: level_start
+  Col 6: Map 1:1 theo level.
+
+Row 7:
+  Col 1: shape_id / playable_mask
+  Col 2: Exact benchmark
+  Col 3: Không
+  Col 4: Không
+  Col 5: level_start
+  Col 6: Có thể reskin ART nhưng không đổi mask/topology.
+
+Row 8:
+  Col 1: grid_width / height
+  Col 2: Exact benchmark
+  Col 3: Không
+  Col 4: Không
+  Col 5: level_start
+  Col 6: Bounding grid gốc.
+
+Row 9:
+  Col 1: arrow_count
+  Col 2: Exact benchmark
+  Col 3: Không
+  Col 4: Không
+  Col 5: level_start
+  Col 6: Không derive lại từ occupancy.
+
+Row 10:
+  Col 1: occupancy_ratio
+  Col 2: Exact benchmark
+  Col 3: Không
+  Col 4: Không
+  Col 5: level_start
+  Col 6: Dùng số benchmark thực tế.
+
+Row 11:
+  Col 1: arrow_length distribution
+  Col 2: Exact benchmark
+  Col 3: Không
+  Col 4: Không
+  Col 5: level_start
+  Col 6: Không áp range tier của mình.
+
+Row 12:
+  Col 1: arrow geometry / layout
+  Col 2: Theo dữ liệu benchmark team đã capture.
+  Col 3: Không nếu exact layout đã copy; nếu benchmark chỉ có param thì generator phải match hard target.
+  Col 4: Không
+  Col 5: level_start
+  Col 6: Config flag benchmark_layout_mode.
+
+Row 13:
+  Col 1: base difficulty attributes
+  Col 2: Theo benchmark/bot analysis.
+  Col 3: Không
+  Col 4: Không
+  Col 5: level_start
+  Col 6: Obstacle tạo difficulty layer riêng.
+
+Row 14:
+  Col 1: II. Overlay Policy
+
+Row 15:
+  Col 1: Rule
+  Col 2: Final Decision
+  Col 3: Reason
+  Col 4: Fallback
+  Col 5: Owner
+  Col 6: Tracking
+
+Row 16:
+  Col 1: Core preservation
+  Col 2: Obstacle không được thay shape/grid/Arrow Count/base occupancy của L1–350.
+  Col 3: Giữ fidelity benchmark.
+  Col 4: Nếu overlay unsolvable → đổi obstacle target/N, KHÔNG đổi benchmark base.
+  Col 5: GD
+  Col 6: generation_result
+
+Row 17:
+  Col 1: Tutorial
+  Col 2: Tutorial overlay có thể khóa input/highlight nhưng không thay base shape.
+  Col 3: Không phá benchmark content.
+  Col 4: Nếu benchmark L16/L24/... không phù hợp tutorial → dùng authored tutorial overlay cùng benchmark mask.
+  Col 5: GD
+  Col 6: tutorial_*
+
+Row 18:
+  Col 1: Shape reskin
+  Col 2: Có thể đổi hình nhận diện/art interpretation nhưng playable mask giữ nguyên.
+  Col 3: Giữ topology + difficulty.
+  Col 4: Art mapping sheet.
+  Col 5: Art/GD
+  Col 6: shape_id
+
+Row 19:
+  Col 1: L351+
+  Col 2: Generator dùng distribution học từ benchmark L1–350.
+  Col 3: Mở content mới nhưng giữ curve.
+  Col 4: Derive percentile band từ imported benchmark dataset.
+  Col 5: GD/Data
+  Col 6: generator_version
+
+Row 20:
+  Col 1: III. Benchmark Import Schema
+
+Row 21:
+  Col 1: Level
+  Col 2: Benchmark Ref
+  Col 3: Source Policy
+  Col 4: Shape/Mask
+  Col 5: Grid
+  Col 6: Arrow Count
+  Col 7: Occupancy
+  Col 8: Length Stats
+  Col 9: Layout Mode
+  Col 10: Difficulty Ref
+  Col 11: Obstacle Overlay
+  Col 12: Status
+  Col 13: Note
+  Col 14: Owner
+
+Row 22:
+  Col 1: 1.0
+  Col 2: ArrowPuzzle_L001
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 23:
+  Col 1: 2.0
+  Col 2: ArrowPuzzle_L002
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 24:
+  Col 1: 3.0
+  Col 2: ArrowPuzzle_L003
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 25:
+  Col 1: 4.0
+  Col 2: ArrowPuzzle_L004
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 26:
+  Col 1: 5.0
+  Col 2: ArrowPuzzle_L005
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 27:
+  Col 1: 6.0
+  Col 2: ArrowPuzzle_L006
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 28:
+  Col 1: 7.0
+  Col 2: ArrowPuzzle_L007
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 29:
+  Col 1: 8.0
+  Col 2: ArrowPuzzle_L008
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 30:
+  Col 1: 9.0
+  Col 2: ArrowPuzzle_L009
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 31:
+  Col 1: 10.0
+  Col 2: ArrowPuzzle_L010
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 32:
+  Col 1: 11.0
+  Col 2: ArrowPuzzle_L011
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 33:
+  Col 1: 12.0
+  Col 2: ArrowPuzzle_L012
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 34:
+  Col 1: 13.0
+  Col 2: ArrowPuzzle_L013
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 35:
+  Col 1: 14.0
+  Col 2: ArrowPuzzle_L014
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 36:
+  Col 1: 15.0
+  Col 2: ArrowPuzzle_L015
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 37:
+  Col 1: 16.0
+  Col 2: ArrowPuzzle_L016
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 38:
+  Col 1: 17.0
+  Col 2: ArrowPuzzle_L017
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 39:
+  Col 1: 18.0
+  Col 2: ArrowPuzzle_L018
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 40:
+  Col 1: 19.0
+  Col 2: ArrowPuzzle_L019
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 41:
+  Col 1: 20.0
+  Col 2: ArrowPuzzle_L020
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 42:
+  Col 1: 21.0
+  Col 2: ArrowPuzzle_L021
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 43:
+  Col 1: 22.0
+  Col 2: ArrowPuzzle_L022
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 44:
+  Col 1: 23.0
+  Col 2: ArrowPuzzle_L023
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 45:
+  Col 1: 24.0
+  Col 2: ArrowPuzzle_L024
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 46:
+  Col 1: 25.0
+  Col 2: ArrowPuzzle_L025
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 47:
+  Col 1: 26.0
+  Col 2: ArrowPuzzle_L026
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 48:
+  Col 1: 27.0
+  Col 2: ArrowPuzzle_L027
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 49:
+  Col 1: 28.0
+  Col 2: ArrowPuzzle_L028
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
+Row 50:
+  Col 1: 29.0
+  Col 2: ArrowPuzzle_L029
+  Col 3: BENCHMARK_LOCKED
+  Col 4: IMPORT
+  Col 5: IMPORT
+  Col 6: IMPORT
+  Col 7: IMPORT
+  Col 8: IMPORT
+  Col 9: IMPORT
+  Col 10: IMPORT
+  Col 11: See 06 Obstacle Overlay
+  Col 12: BENCHMARK_EXTERNAL_LOCKED
+  Col 13: Base stats not invented in GDD
+  Col 14: GD Content
+
